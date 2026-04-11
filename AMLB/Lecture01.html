@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lecture 01 - Applied Machine Learning</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
   <header class="topbar">
@@ -59,7 +60,7 @@
           <div class="hero-image-card">
             <img src="images/lecture01/hero-cover.jpg" alt="Abstract machine learning and data systems visual">
           </div>
-          <div class="hero-badge">Lecture 1 visual summary</div>
+          <div class="hero-badge">A representation of a neuronal network</div>
         </div>
       </div>
     </section>
@@ -459,19 +460,19 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>m</td>
+                  <td>$$m$$</td>
                   <td>Number of training examples</td>
                 </tr>
                 <tr>
-                  <td>x</td>
+                  <td>$$x$$</td>
                   <td>Input feature (independent variable)</td>
                 </tr>
                 <tr>
-                  <td>y</td>
+                  <td>$$y$$</td>
                   <td>Target value (output)</td>
                 </tr>
                 <tr>
-                  <td>(x⁽ⁱ⁾, y⁽ⁱ⁾)</td>
+                  <td>$$[x^{(i)}, y^{(i)}]$$</td>
                   <td>The i-th training example</td>
                 </tr>
               </tbody>
@@ -481,7 +482,7 @@
           <h3>Model (Hypothesis)</h3>
 
           <div class="formula">
-            hθ(x) = θ₀ + θ₁x
+            $$h_\theta(x) = \theta_0 + \theta_1 x$$
           </div>
 
           <p>
@@ -501,11 +502,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>θ₀</td>
+                  <td>$$\theta_0$$</td>
                   <td>Intercept (where the line crosses the y-axis)</td>
                 </tr>
                 <tr>
-                  <td>θ₁</td>
+                  <td>$$\theta_1$$</td>
                   <td>Slope (how much y changes when x increases)</td>
                 </tr>
               </tbody>
@@ -515,7 +516,7 @@
           <h3>Cost Function</h3>
 
           <div class="formula">
-            J(θ₀, θ₁) = (1 / 2m) Σ (hθ(xᵢ) − yᵢ)²
+            $$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^m (h_\theta(x^{(i)}) - y^{(i)})^2$$
           </div>
 
           <p>
@@ -779,7 +780,14 @@
           </div>
         </div>
 
-        <div class="footer-note">Lecture 01 study page</div>
+        <div class="footer-note">
+          Lecture 02 study page
+
+          <span class="persian-note" dir="rtl">
+            برای تو، امیدوارم این شروع، یادگیری ماشین رو برات ساده‌تر و قشنگ‌تر کرده باشه ❤️
+          </span>
+        </div>
+        
       </div>
     </div>
   </main>
