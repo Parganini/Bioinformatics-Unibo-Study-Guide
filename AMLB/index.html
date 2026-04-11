@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Applied Machine Learning</title>
+  <style>
+    :root {
+      --bg: #0b0a14;
+      --bg-2: #120f24;
+      --card: #18142f;
+      --card-hover: #241c45;
+      --accent: #b794f6;
+      --accent-2: #8b5cf6;
+      --text: #f5f3ff;
+      --muted: #c4b5fd;
+      --border: #31265f;
+      --done: #34d399;
+      --shadow: rgba(139, 92, 246, 0.25);
+      --shadow-done: rgba(16, 185, 129, 0.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top, #1a1438 0%, var(--bg) 55%),
+        linear-gradient(180deg, var(--bg-2), var(--bg));
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 48px 20px 64px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 2.4rem;
+      color: var(--accent);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .top-link {
+      display: inline-block;
+      margin-bottom: 24px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .panel {
+      background: rgba(24, 20, 47, 0.9);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+      margin-bottom: 24px;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .progress-title {
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .progress-text {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      background: #0f0c1f;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .action-btn,
+    .continue-btn {
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .continue-btn {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: white;
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+
+    .continue-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.04);
+    }
+
+    .action-btn {
+      background: #1e193d;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .action-btn:hover {
+      background: #2a2250;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .lecture-card {
+      display: block;
+      position: relative;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      text-decoration: none;
+      color: var(--text);
+      transition: 0.22s ease;
+    }
+
+    .lecture-card:hover {
+      background: var(--card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+
+    .lecture-card.done {
+      border-color: rgba(52, 211, 153, 0.55);
+      box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.12), 0 12px 28px var(--shadow-done);
+    }
+
+    .lecture-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .lecture-date {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .lecture-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .lecture-subtitle {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.42;
+      margin-top: 8px;
+    }
+
+    .check {
+      font-size: 1.15rem;
+      color: var(--done);
+      opacity: 0;
+      transform: scale(0.9);
+      transition: 0.2s ease;
+    }
+
+    .lecture-card.done .check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 22px;
+      opacity: 0.88;
+    }
+
+    @media (max-width: 760px) {
+      .wrap {
+        padding: 28px 14px 40px;
+      }
+
+      h1 {
+        font-size: 1.95rem;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="top-link" href="../index.html">← Back to subjects</a>
+
+    <section class="hero">
+      <h1>Applied Machine Learning</h1>
+      <p class="subtitle">Lecture archive, materials, and progress tracking</p>
+    </section>
+
+    <section class="panel">
+      <div class="progress-header">
+        <div>
+          <div class="progress-title">Your progress</div>
+          <div class="progress-text" id="progressText">0 / 8 completed</div>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="actions">
+        <a id="continueBtn" class="continue-btn" href="Lecture01.html">Continue</a>
+        <button class="action-btn" onclick="resetProgress()">Reset progress</button>
+      </div>
+    </section>
+
+    <section class="grid" id="lectureGrid"></section>
+
+    <div class="footer-note">Applied Machine Learning · University of Bologna</div>
+  </main>
+
+  <script>
+    const lectures = [
+      {
+        id: "lecture1",
+        title: "Lecture 01",
+        date: "05 Mar 2026",
+        subtitle: "Introduction to ML, AI vs ML, supervised and unsupervised learning",
+        file: "Lecture01.html"
+      },
+      {
+        id: "lecture2",
+        title: "Lecture 02",
+        date: "06 Mar 2026",
+        subtitle: "Gradient descent, multivariate regression, vectorization, feature scaling",
+        file: "Lecture02.html"
+      },
+      {
+        id: "lecture3",
+        title: "Lecture 03",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture03.html"
+      },
+      {
+        id: "lecture4",
+        title: "Lecture 04",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture04.html"
+      },
+      {
+        id: "lecture5",
+        title: "Lecture 05",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture05.html"
+      },
+      {
+        id: "lecture6",
+        title: "Lecture 06",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture06.html"
+      },
+      {
+        id: "lecture7",
+        title: "Lecture 07",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture07.html"
+      },
+      {
+        id: "lecture8",
+        title: "Lecture 08",
+        date: "Add date",
+        subtitle: "Add subtitle here",
+        file: "Lecture08.html"
+      }
+    ];
+
+    function getProgress() {
+      return JSON.parse(localStorage.getItem("aml_progress")) || {};
+    }
+
+    function getCompletedCount(progress) {
+      return lectures.filter(lecture => progress[lecture.id]).length;
+    }
+
+    function getNextLecture(progress) {
+      return lectures.find(lecture => !progress[lecture.id]) || lectures[lectures.length - 1];
+    }
+
+    function updateProgressUI() {
+      const progress = getProgress();
+      const completed = getCompletedCount(progress);
+      const total = lectures.length;
+      const percent = (completed / total) * 100;
+
+      document.getElementById("progressText").textContent = `${completed} / ${total} completed`;
+      document.getElementById("progressFill").style.width = `${percent}%`;
+
+      const nextLecture = getNextLecture(progress);
+      const continueBtn = document.getElementById("continueBtn");
+      continueBtn.href = nextLecture.file;
+      continueBtn.textContent = completed === total
+        ? "Review last lecture"
+        : `Continue: ${nextLecture.title}`;
+    }
+
+    function buildCards() {
+      const grid = document.getElementById("lectureGrid");
+      const progress = getProgress();
+      grid.innerHTML = "";
+
+      lectures.forEach((lecture) => {
+        const card = document.createElement("a");
+        card.href = lecture.file;
+        card.className = "lecture-card";
+        if (progress[lecture.id]) card.classList.add("done");
+
+        card.innerHTML = `
+          <div class="lecture-top">
+            <div>
+              <div class="lecture-date">${lecture.date}</div>
+              <div class="lecture-title">${lecture.title}</div>
+            </div>
+            <div class="check">✔</div>
+          </div>
+          <div class="lecture-subtitle">${lecture.subtitle}</div>
+        `;
+
+        grid.appendChild(card);
+      });
+    }
+
+    function resetProgress() {
+      localStorage.removeItem("aml_progress");
+      buildCards();
+      updateProgressUI();
+    }
+
+    buildCards();
+    updateProgressUI();
+
+    window.addEventListener("storage", () => {
+      buildCards();
+      updateProgressUI();
+    });
+  </script>
+</body>
+</html>

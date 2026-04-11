@@ -746,4 +746,18 @@ sup {
     .section {
         padding: 18px;
     }
+
+    .btn-completed {
+        background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 12px 28px rgba(16, 185, 129, 0.28);
+    }
+
+    .icon-btn-completed {
+        background: linear-gradient(135deg, #34d399 0%, #059669 100%);
+        color: white;
+        border: none;
+        box-shadow: 0 10px 22px rgba(16, 185, 129, 0.28);
+    }
 }
