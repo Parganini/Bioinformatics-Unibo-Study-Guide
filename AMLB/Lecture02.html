@@ -60,7 +60,7 @@
           <div class="hero-image-card">
             <img src="images/lecture02/hero-cover.jpg" alt="Gradient descent and optimization visual">
           </div>
-          <div class="hero-badge">Lecture 2 visual summary</div>
+          <div class="hero-badge">Gradient descent and optimization visual</div>
         </div>
       </div>
     </section>
@@ -79,8 +79,33 @@
         <a href="#batch-gd">Batch Gradient Descent</a>
         <a href="#multivariate">Multivariate Regression</a>
         <a href="#vectorization">Vectorized Notation</a>
-        <a href="#preprocessing">Feature Scaling</a>
-        <a href="#alternatives">Alternative to GD</a>
+        <a href="#preprocessing">Feature Scaling and Normalization</a>
+        <a href="#practical-gd">Practical GD Tips</a>
+        <a href="#choosing-alpha">Choosing the Learning Rate</a>
+        <a href="#limits">Limits of Straight Lines</a>
+        <a href="#feature-engineering">Feature Engineering</a>
+        <a href="#polynomial">Polynomial Regression</a>
+        <a href="#normal-equation">Normal Equation</a>
+        <a href="#classification">From Regression to Classification</a>
+        <a href="#binary-classification">Binary Classification</a>
+        <a href="#linear-problem">Why Linear Regression Fails for Classification</a>
+        <a href="#logistic-intro">Logistic Regression</a>
+        <a href="#sigmoid">Sigmoid Function</a>
+        <a href="#logistic-hypothesis">Logistic Regression Hypothesis</a>
+        <a href="#probability">Probability Interpretation</a>
+        <a href="#decision-rule">Classification Decision Rule</a>
+        <a href="#decision-boundary-concept">Decision Boundary</a>
+        <a href="#nonlinear-boundary">Non-linear Decision Boundaries</a>
+        <a href="#boundry-insight">Boundary Insight</a>
+        <a href="#logistic-cost-problem">Logistic Cost Problem</a>
+        <a href="#logistic-cost">Logistic Cost Function</a>
+        <a href="#cost-intuition">Cost Function Intuition</a>
+        <a href="#cost-combined">Combined Cost Function</a>
+        <a href="#cost-full">Full Logistic Cost Function</a>
+        <a href="#logistic-gd">Gradient Descent for Logistic Regression</a>
+        <a href="#big-picture-final">Big Picture Recap</a>
+        <a href="#choosing">Choosing the Right Approach</a>
+        <a href="#final wrap">Wrap-up</a>
         <a href="#key-visuals">Key Visuals</a>
         <a href="#study-material">Study Material</a>
         <a href="#quiz">Review Quiz</a>
@@ -649,10 +674,6 @@
             </table>
           </div>
 
-          <div class="callout">
-            In practice, feature scaling and mean normalization are often applied together using this formula.
-          </div>
-
           <div class="comparison">
             <div class="column">
               <h3>Without Scaling</h3>
@@ -670,51 +691,1033 @@
           </div>
 
 
-          <p>
-            These preprocessing steps do not change the underlying model, but they significantly improve
-            how efficiently gradient descent finds a good solution.
-          </p>
+          <div class="callout">
+            Feature scaling and mean normalisation are simple tricks that help to make GD run much faster and converge in a lot fewer iterations. They are not strictly required for GD to work, but they are very helpful in practice.
+          </div>
         </section>
 
-        <section class="section" id="alternatives">
-          <h2 class="section-title">Alternative to Gradient Descent</h2>
+        <section class="section" id="practical-gd">
+          <h2 class="section-title">Practical Gradient Descent Tips</h2>
 
-          <p>
-            The lecture briefly mentions that there is also a direct numerical solution for linear regression:
-            the <strong>normal equation</strong>.
+          <p class="lead">
+            In practice, optimization is not just about formulas — it is also about checking behavior.
           </p>
 
-          <div class="formula">
-            $$\theta = (X^T X)^{-1} X^T y$$
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">If training is slow</div>
+              <ul>
+                <li>Learning rate may be too small</li>
+                <li>Features may need scaling</li>
+                <li>The model may need better feature design</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">If training is unstable</div>
+              <ul>
+                <li>Learning rate may be too large</li>
+                <li>Cost may oscillate or increase</li>
+                <li>Input ranges may be badly unbalanced</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="choosing-alpha">
+          <h2 class="section-title">Choosing the Learning Rate</h2>
+
+          <p class="lead">
+            In practice, choosing a good learning rate α is one of the most important parts of using gradient descent.
+          </p>
+
+          <p>
+            A useful way to evaluate gradient descent is to plot the cost function J(θ) over the number of iterations.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture02/cost-vs-iterations.png" alt="Cost function vs iterations for different learning rates">
+            <div class="figure-body">
+              <div class="figure-kicker">Training behavior</div>
+              <div class="figure-caption">
+                A well-chosen learning rate leads to a smooth decrease in cost.
+                A too-large learning rate may cause divergence, while a too-small one slows convergence.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Good α</div>
+              <p>
+                The cost decreases smoothly and converges to a minimum.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Too Small α</div>
+              <p>
+                The cost decreases very slowly, requiring many iterations.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Too Large α</div>
+              <p>
+                The cost may increase or oscillate, indicating divergence.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            A simple debugging rule: if the cost function increases after an iteration,
+            the learning rate is likely too large.
           </div>
 
           <p>
-            The main trade-off is practical: gradient descent is iterative and needs a learning rate,
-            while the normal equation avoids iteration but becomes computationally expensive when the number of features is large.
+            In practice, it is common to try several values of α and observe how the cost evolves.
+            This empirical approach helps identify a good learning rate quickly.
+          </p>
+        </section>
+
+        <section class="section" id="limits">
+          <h2 class="section-title">Limits of Straight Lines</h2>
+
+          <p class="lead">
+            A single straight line is not always a good match for real data.
+          </p>
+
+          <p>
+            Some relationships are curved or more complex than a basic linear trend. In those cases,
+            a plain line may underfit the data and fail to capture the real pattern.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture02/nonlinear-data.png" alt="Non-linear data that a straight line cannot fit well">
+            <div class="figure-body">
+              <div class="figure-kicker">Model limitation</div>
+              <div class="figure-caption">
+                A straight line may miss the true structure when the relationship between input and output is curved.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="feature-engineering">
+          <h2 class="section-title">Feature Engineering</h2>
+
+          <p class="lead">
+            In many practical problems, model quality depends heavily on how the input features are represented.
+          </p>
+
+          <p>
+            Feature engineering means creating new variables from existing ones in order to capture structure
+            that the raw inputs do not expose clearly.
           </p>
 
           <div class="table-wrapper">
             <table class="custom-table">
               <thead>
                 <tr>
-                  <th>Method</th>
-                  <th>Main Strength</th>
-                  <th>Main Limitation</th>
+                  <th>Original Inputs</th>
+                  <th>Derived Feature</th>
+                  <th>Why It Helps</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Gradient Descent</td>
-                  <td>Scales better to large feature spaces</td>
-                  <td>Needs tuning of α and iterative optimization</td>
+                  <td>width, depth</td>
+                  <td>area = width × depth</td>
+                  <td>Encodes a more meaningful property</td>
                 </tr>
                 <tr>
-                  <td>Normal Equation</td>
-                  <td>Direct analytical solution</td>
-                  <td>Can become slow for large n</td>
+                  <td>x</td>
+                  <td>x², x³</td>
+                  <td>Captures non-linear trends</td>
+                </tr>
+                <tr>
+                  <td>multiple raw variables</td>
+                  <td>ratios, products, grouped terms</td>
+                  <td>Can reveal hidden relationships</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture02/feature-engineering.png" alt="Feature engineering examples and derived variables">
+            <div class="figure-body">
+              <div class="figure-kicker">Better representation</div>
+              <div class="figure-caption">
+                New features can make the underlying structure of a problem easier for the model to learn.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="polynomial">
+          <h2 class="section-title">Polynomial Regression</h2>
+
+          <p class="lead">
+            One way to model curved patterns is to create polynomial features from the original variable.
+          </p>
+
+          <p>
+            Instead of using only x, we can use x, x², x³, and so on. This allows the hypothesis to trace
+            more complex shapes while still using the same linear regression machinery.
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) = \theta_0 + \theta_1 x + \theta_2 x^2 + \theta_3 x^3 $$
+          </div>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Feature Set</th>
+                  <th>Model Shape</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>$$x$$</td>
+                  <td>Straight line</td>
+                </tr>
+                <tr>
+                  <td>$$x, x^2$$</td>
+                  <td>Parabolic curve</td>
+                </tr>
+                <tr>
+                  <td>$$x, x^2, x^3$$</td>
+                  <td>More flexible curve</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            Polynomial regression is still linear in the parameters θ. The non-linearity comes from the transformed features, not from the training method.
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture02/polynomial-curve.png" alt="Polynomial regression fitting a curved pattern">
+            <div class="figure-body">
+              <div class="figure-kicker">Flexible fit</div>
+              <div class="figure-caption">
+                By adding polynomial terms, linear regression can model curved relationships much better than a single straight line.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="normal-equation">
+          <h2 class="section-title">Normal Equation</h2>
+
+          <p class="lead">
+            Instead of using gradient descent, linear regression can also be solved directly
+            using a closed-form solution known as the normal equation.
+          </p>
+
+          <p>
+            This approach computes the optimal parameters in one step, without iterative updates.
+          </p>
+
+          <div class="formula">
+            $$ \theta = (X^T X)^{-1} X^T y $$
+          </div>
+
+          <h3>What do these terms mean?</h3>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>$$X$$</td>
+                  <td>Matrix of input features (each row = one training example)</td>
+                </tr>
+                <tr>
+                  <td>$$y$$</td>
+                  <td>Vector of target values</td>
+                </tr>
+                <tr>
+                  <td>$$\theta$$</td>
+                  <td>Vector of parameters we want to learn</td>
+                </tr>
+                <tr>
+                  <td>$$ (X^T X)^{-1} $$</td>
+                  <td>Matrix inverse (used to solve the system exactly)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            The normal equation finds the parameter values that minimize the cost function directly,
+            without needing a learning rate or repeated updates.
+          </div>
+
+          <h3>Intuition</h3>
+
+          <p>
+            While gradient descent “walks downhill” step by step, the normal equation
+            jumps directly to the point where the cost function is minimized.
+          </p>
+
+          <p>
+            You can think of it as solving a system of equations that describes the best fit
+            for all training examples at once.
+          </p>
+
+          <h3>Advantages</h3>
+
+          <ul>
+            <li>No need to choose a learning rate α</li>
+            <li>No iterative process (no need to monitor convergence)</li>
+            <li>Gives the exact optimal solution (for linear regression)</li>
+          </ul>
+
+          <h3>Limitations</h3>
+
+          <ul>
+            <li>Requires computing a matrix inverse, which can be expensive</li>
+            <li>Becomes very slow when the number of features is large</li>
+            <li>Less practical for very large datasets</li>
+          </ul>
+
+          <h3>Gradient Descent vs Normal Equation</h3>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Aspect</th>
+                  <th>Gradient Descent</th>
+                  <th>Normal Equation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Computation</td>
+                  <td>Iterative</td>
+                  <td>Direct (one-step)</td>
+                </tr>
+                <tr>
+                  <td>Learning Rate</td>
+                  <td>Required</td>
+                  <td>Not needed</td>
+                </tr>
+                <tr>
+                  <td>Scalability</td>
+                  <td>Good for large feature sets</td>
+                  <td>Slow for large number of features</td>
+                </tr>
+                <tr>
+                  <td>Feature Scaling</td>
+                  <td>Important</td>
+                  <td>Not required</td>
+                </tr>
+                <tr>
+                  <td>Implementation</td>
+                  <td>More tuning</td>
+                  <td>Simpler for small problems</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            In practice, gradient descent is preferred for large-scale problems,
+            while the normal equation is useful for smaller datasets or when simplicity is desired.
+          </div>
+        </section>
+
+        <section class="section" id="classification">
+          <h2 class="section-title">From Regression to Classification</h2>
+
+          <p class="lead">
+            So far, we have focused on predicting continuous values.  
+            But many real-world problems require predicting categories instead.
+          </p>
+
+          <p>
+            This type of problem is called <strong>classification</strong>.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Problem Type</th>
+                  <th>Example</th>
+                  <th>Output</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Regression</td>
+                  <td>Predict house price</td>
+                  <td>Continuous value (e.g. $250,000)</td>
+                </tr>
+                <tr>
+                  <td>Classification</td>
+                  <td>Spam or not spam</td>
+                  <td>Discrete class (0 or 1)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            Classification answers: “which category does this belong to?”
+          </div>
+
+        </section>
+
+        <section class="section" id="binary-classification">
+          <h2 class="section-title">Binary Classification</h2>
+
+          <p class="lead">
+            The simplest form of classification is binary classification.
+          </p>
+
+          <p>
+            In binary classification, the output can take only two possible values:
+          </p>
+
+          <div class="formula">
+            $$ y \in \{0, 1\} $$
+          </div>
+
+          <ul>
+            <li>0 → negative class (e.g. not spam)</li>
+            <li>1 → positive class (e.g. spam)</li>
+          </ul>
+
+          <div class="figure">
+            <img src="images/lecture02/classification-example.png" alt="Binary classification example">
+            <div class="figure-body">
+              <div class="figure-kicker">Classification task</div>
+              <div class="figure-caption">
+                The model separates data into two categories instead of predicting a continuous value.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="linear-problem">
+          <h2 class="section-title">Why Linear Regression Fails for Classification</h2>
+
+          <p>
+            At first, it may seem that we can use linear regression and then apply a threshold:
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) \geq 0.5 \rightarrow y = 1 $$
+          </div>
+
+          <p>
+            However, this approach has serious problems.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Problem</h3>
+              <ul>
+                <li>Predictions can go below 0 or above 1</li>
+                <li>Outliers can drastically change the decision boundary</li>
+              </ul>
+            </div>
+
+            <div class="column">
+              <h3>Result</h3>
+              <ul>
+                <li>Unstable predictions</li>
+                <li>Poor classification performance</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture02/linear-vs-classification.png" alt="Linear regression failing for classification">
+            <div class="figure-body">
+              <div class="figure-kicker">Limitation</div>
+              <div class="figure-caption">
+                A straight line can produce values outside the range [0,1], making it unsuitable for classification.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="logistic-intro">
+          <h2 class="section-title">Towards Logistic Regression</h2>
+
+          <p class="lead">
+            To solve classification problems, we need a model that produces outputs between 0 and 1.
+          </p>
+
+          <p>
+            This output can be interpreted as a probability:
+          </p>
+
+          <div class="formula">
+            $$ 0 \leq h_\theta(x) \leq 1 $$
+          </div>
+
+          <div class="callout">
+            Logistic regression will allow us to model probabilities instead of unrestricted values.
+          </div>
+
+          <p>
+            In the next section, we will introduce the sigmoid function,
+            which transforms linear predictions into valid probabilities.
+          </p>
+        </section>
+
+        <section class="section" id="sigmoid">
+          <h2 class="section-title">The Sigmoid Function</h2>
+
+          <p class="lead">
+            To model probabilities, we need a function that always outputs values between 0 and 1.
+          </p>
+
+          <p>
+            The sigmoid (or logistic) function transforms any real number into a value in the range [0, 1].
+          </p>
+
+          <div class="formula">
+            $$ g(z) = \frac{1}{1 + e^{-z}} $$
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture02/sigmoid-curve.png" alt="Sigmoid function curve">
+            <div class="figure-body">
+              <div class="figure-kicker">Sigmoid function</div>
+              <div class="figure-caption">
+                The sigmoid function smoothly maps any input value to a number between 0 and 1.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">z → −∞</div>
+              <p>$$g(z) → 0$$</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">z = 0</div>
+              <p>$$g(z) = 0.5$$</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">z → +∞</div>
+              <p>$$g(z) → 1$$</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="logistic-hypothesis">
+          <h2 class="section-title">Logistic Regression Hypothesis</h2>
+
+          <p class="lead">
+            Logistic regression uses the sigmoid function applied to a linear combination of inputs.
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) = \theta_0 x_0 + \theta_1 x_1 + \cdots + \theta_n x_n = g(\theta^T x) $$
+          </div>
+
+          <div class="formula">
+            $$ h_\theta(x) =  \frac{1}{1 + e^{-\theta^T x}} $$
+          </div>
+
+          <p>
+            This means we first compute a linear combination of features,
+            and then pass it through the sigmoid function to obtain a probability.
+          </p>
+
+          <div class="callout">
+            Logistic regression is still a linear model — the non-linearity comes from the sigmoid function.
+          </div>
+        </section>
+
+        <section class="section" id="probability">
+          <h2 class="section-title">Interpreting the Output as a Probability</h2>
+
+          <p class="lead">
+            The output of logistic regression can be interpreted as a probability.
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) = P(y = 1 \mid x; \theta) $$
+          </div>
+
+          <p>
+            This means:
+          </p>
+
+          <ul>
+            <li>If hθ(x) ≈ 1 → high probability of class 1</li>
+            <li>If hθ(x) ≈ 0 → high probability of class 0</li>
+          </ul>
+
+          <div class="callout">
+            Logistic regression predicts probabilities, not just labels.
+          </div>
+        </section>
+
+        <section class="section" id="decision-rule">
+          <h2 class="section-title">Making a Decision</h2>
+
+          <p>
+            To turn probabilities into predictions, we apply a threshold:
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) \geq 0.5 \rightarrow y = 1 $$
+          </div>
+
+          <div class="formula">
+            $$ h_\theta(x) < 0.5 \rightarrow y = 0 $$
+          </div>
+
+          <p>
+            This threshold defines the decision boundary that separates the two classes.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture02/decision-boundary.png" alt="Decision boundary example">
+            <div class="figure-body">
+              <div class="figure-kicker">Decision boundary</div>
+              <div class="figure-caption">
+                The model separates the input space into regions corresponding to different classes.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="decision-boundary-concept">
+          <h2 class="section-title">Decision Boundary</h2>
+
+          <p class="lead">
+            The decision boundary is the line (or surface) that separates different classes.
+          </p>
+
+          <p>
+            It is defined by the set of points where the model is uncertain between the two classes:
+          </p>
+
+          <div class="formula">
+            $$ h_\theta(x) = 0.5 $$
+          </div>
+
+          <div class="formula">
+            $$ \theta^T x = 0 $$
+          </div>
+
+          <p>
+            This boundary divides the input space into regions where the model predicts class 0 or class 1.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture02/decision-boundary-line.png" alt="Linear decision boundary">
+            <div class="figure-body">
+              <div class="figure-kicker">Linear boundary</div>
+              <div class="figure-caption">
+                A straight line separates the two classes when the model is linear.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="linear-boundary">
+          <h2 class="section-title">Linear Decision Boundaries</h2>
+
+          <p class="lead">
+            When we use only the original features, the decision boundary is a straight line.
+          </p>
+
+          <p>
+            This works well when the data can be separated linearly.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Good case</h3>
+              <p>Data is roughly separable by a straight line</p>
+            </div>
+
+            <div class="column">
+              <h3>Bad case</h3>
+              <p>Data has a curved or complex structure</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="nonlinear-boundary">
+          <h2 class="section-title">Non-linear Decision Boundaries</h2>
+
+          <p class="lead">
+            By adding polynomial features, we can create non-linear decision boundaries.
+          </p>
+
+          <p>
+            For example, using features like x₁² and x₂² allows the model to create circular or curved boundaries.
+          </p>
+
+          <div class="formula">
+            $$ \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \theta_3 x_1^2 + \theta_4 x_2^2 = 0 $$
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture02/nonlinear-boundary.png" alt="Non-linear decision boundary">
+            <div class="figure-body">
+              <div class="figure-kicker">Non-linear boundary</div>
+              <div class="figure-caption">
+                Feature transformations allow the model to separate complex patterns.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The model is still linear in θ — the complexity comes from the features.
+          </div>
+        </section>
+
+        <section class="section" id="boundary-insight">
+          <h2 class="section-title">Key Insight</h2>
+
+          <p class="lead">
+            The shape of the decision boundary depends on the features, not the algorithm.
+          </p>
+
+          <div class="callout">
+            Better features → better boundaries → better predictions
+          </div>
+
+          <p>
+            This connects directly with what we learned earlier:
+            feature engineering and polynomial expansion are powerful tools
+            for increasing model flexibility.
+          </p>
+        </section>
+
+        <section class="section" id="logistic-cost-problem">
+          <h2 class="section-title">Why Not Use Squared Error?</h2>
+
+          <p class="lead">
+            In linear regression, we used squared error as a cost function.
+            However, this does not work well for logistic regression.
+          </p>
+
+          <p>
+            When we apply squared error to logistic regression, the cost function becomes non-convex.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture02/non-convex-cost.png" alt="Non-convex cost function">
+            <div class="figure-body">
+              <div class="figure-kicker">Problem</div>
+              <div class="figure-caption">
+                A non-convex cost function can have multiple local minima, making optimization difficult.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            Gradient descent may fail to find the global minimum if the cost function is non-convex.
+          </div>
+        </section>
+
+        <section class="section" id="logistic-cost">
+          <h2 class="section-title">Logistic Regression Cost Function</h2>
+
+          <p class="lead">
+            Instead of squared error, logistic regression uses a different cost function
+            designed for classification.
+          </p>
+
+          <p>For a single training example:</p>
+
+          <div class="formula">
+            $$ 
+            \text{cost}(h_\theta(x), y) =
+            \begin{cases}
+              -\log(h_\theta(x)) & \text{if } y = 1 \\
+              -\log(1 - h_\theta(x)) & \text{if } y = 0
+            \end{cases}
+            $$
+          </div>
+
+          <div class="callout">
+            This cost function heavily penalizes confident but wrong predictions.
+          </div>
+        </section>
+
+        <section class="section" id="cost-intuition">
+          <h2 class="section-title">Understanding the Cost Function</h2>
+
+          <div class="figure">
+            <img src="images/lecture02/log-cost.png" alt="Logistic cost function for y=1 and y=0">
+
+            <div class="figure-body">
+              <div class="figure-kicker">Logistic cost behavior</div>
+              <div class="figure-caption">
+                Left: when y = 1, the cost decreases as the prediction approaches 1.
+                Right: when y = 0, the cost decreases as the prediction approaches 0.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">If y = 1</div>
+              <ul>
+                <li>h(x) → 1 → cost ≈ 0 ✅</li>
+                <li>h(x) → 0 → cost → ∞ ❌</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">If y = 0</div>
+              <ul>
+                <li>h(x) → 0 → cost ≈ 0 ✅</li>
+                <li>h(x) → 1 → cost → ∞ ❌</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            The model is rewarded when predictions are correct and confident,
+            and strongly penalized when they are confidently wrong.
+          </p>
+        </section>
+
+        <section class="section" id="cost-combined">
+          <h2 class="section-title">Unified Cost Function</h2>
+
+          <p>
+            The two cases can be combined into a single expression:
+          </p>
+
+          <div class="formula">
+            $$ 
+            \text{cost}(h_\theta(x), y) =
+            -y \log(h_\theta(x)) - (1 - y)\log(1 - h_\theta(x))
+            $$
+          </div>
+
+          <p>
+            This compact formula works for both y = 0 and y = 1.
+          </p>
+
+
+          <p>
+            This is one of the reasons linear models remain important: with the right features,
+            simple algorithms can become surprisingly powerful.
+          </p>
+        </section>
+
+        <section class="section" id="cost-full">
+          <h2 class="section-title">Cost Function for All Examples</h2>
+
+          <p>
+            For the entire dataset, we average over all training examples:
+          </p>
+
+          <div class="formula">
+            $$ 
+            J(\theta) = -\frac{1}{m} \sum_{i=1}^{m}
+            \left[
+              y^{(i)} \log(h_\theta(x^{(i)})) +
+              (1 - y^{(i)}) \log(1 - h_\theta(x^{(i)}))
+            \right]
+            $$
+          </div>
+
+          <div class="callout">
+            This function is convex, which allows gradient descent to reliably find the global minimum.
+          </div>
+
+          <div class="callout">
+            One of the simplest debugging tools is to monitor the cost function over time. If it is not decreasing sensibly, something is wrong.
+          </div>
+        </section>
+
+        <section class="section" id="logistic-gd">
+          <h2 class="section-title">Gradient Descent for Logistic Regression</h2>
+
+          <p class="lead">
+            Logistic regression is trained using gradient descent, just like linear regression.
+          </p>
+
+          <p>
+            The update rule looks the same:
+          </p>
+
+          <div class="formula">
+            $$ \theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta) $$
+          </div>
+
+          <p>
+            The key difference is the cost function.  
+            Instead of squared error, we now use the logistic cost function.
+          </p>
+
+          <div class="callout">
+            Same optimization method, different cost function.
+          </div>
+
+          <p>
+            Because the cost function is convex, gradient descent will converge to a global minimum.
+          </p>
+        </section>
+
+        <section class="section" id="big-picture-final">
+          <h2 class="section-title">Putting Everything Together</h2>
+
+          <p class="lead">
+            Despite their differences, linear and logistic regression follow the same core idea.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Component</th>
+                  <th>Linear Regression</th>
+                  <th>Logistic Regression</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Output</td>
+                  <td>Continuous value</td>
+                  <td>Probability (0–1)</td>
+                </tr>
+                <tr>
+                  <td>Hypothesis</td>
+                  <td>θᵀx</td>
+                  <td>g(θᵀx)</td>
+                </tr>
+                <tr>
+                  <td>Cost Function</td>
+                  <td>Squared error</td>
+                  <td>Log loss</td>
+                </tr>
+                <tr>
+                  <td>Task</td>
+                  <td>Regression</td>
+                  <td>Classification</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            The structure is the same — only the interpretation changes.
+          </div>
+        </section>
+
+        <section class="section" id="choosing">
+          <h2 class="section-title">Choosing the Right Approach</h2>
+
+          <p class="lead">
+            Now that we have explored both regression and classification models,
+            we can decide which approach to use depending on the problem.
+          </p>
+
+          <p>
+            The choice depends on the type of output, the complexity of the data,
+            and the size of the feature space.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Situation</th>
+                  <th>Recommended Approach</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Predict continuous values</td>
+                  <td>Linear Regression</td>
+                  <td>Outputs real-valued predictions</td>
+                </tr>
+                <tr>
+                  <td>Predict categories (0 or 1)</td>
+                  <td>Logistic Regression</td>
+                  <td>Models probabilities between 0 and 1</td>
+                </tr>
+                <tr>
+                  <td>Curved or complex patterns</td>
+                  <td>Polynomial Features</td>
+                  <td>Allows linear models to capture non-linear relationships</td>
+                </tr>
+                <tr>
+                  <td>Many features (large n)</td>
+                  <td>Gradient Descent</td>
+                  <td>Scales well with large datasets</td>
+                </tr>
+                <tr>
+                  <td>Small feature set</td>
+                  <td>Normal Equation</td>
+                  <td>Provides a direct solution without iteration</td>
+                </tr>
+                <tr>
+                  <td>Slow or unstable training</td>
+                  <td>Feature Scaling + Normalization</td>
+                  <td>Improves convergence speed and stability</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            There is no single “best” method — the right choice depends on the problem,
+            the data, and computational constraints.
+          </div>
+
+          <p>
+            In practice, machine learning often involves trying different approaches,
+            observing their behavior, and refining both the model and the features.
+          </p>
+        </section>
+
+        <section class="section" id="final-wrap">
+          <h2 class="section-title">Lecture Wrap-up</h2>
+
+          <p class="lead">
+            This lecture introduced two fundamental types of machine learning models:
+            regression and classification.
+          </p>
+
+          <ul>
+            <li>Linear regression predicts continuous values</li>
+            <li>Gradient descent is used to optimize model parameters</li>
+            <li>Feature scaling improves optimization performance</li>
+            <li>Logistic regression models probabilities using the sigmoid function</li>
+            <li>Decision boundaries define how classes are separated</li>
+            <li>The logistic cost function enables stable optimization</li>
+          </ul>
+
+          <p>
+            These ideas form the foundation for many more advanced machine learning models.
+          </p>
+
+          <div class="callout">
+            Most machine learning models follow the same pattern:
+            define a hypothesis, define a cost, and optimize the parameters.
           </div>
         </section>
 
@@ -778,133 +1781,238 @@
         </section>
 
         <section class="section" id="quiz">
-          <h2 class="section-title">Quick Review Quiz</h2>
+          <h2 class="section-title">Comprehensive Review Quiz</h2>
+
+          <!-- BASICS -->
 
           <details>
-            <summary>1. What is the main goal of gradient descent?</summary>
+            <summary>1. What is the goal of linear regression?</summary>
             <div class="details-body">
-              <p>
-                To iteratively update parameters so that the cost function becomes smaller and eventually reaches a minimum.
-              </p>
+              <p>To predict continuous values by fitting a function to the data.</p>
             </div>
           </details>
 
           <details>
-            <summary>2. In plain language, what does the derivative term tell you?</summary>
+            <summary>2. What does gradient descent do?</summary>
             <div class="details-body">
-              <p>
-                It tells you the local slope and therefore which direction will reduce the cost on the next step.
-              </p>
+              <p>It iteratively updates parameters to minimize a cost function.</p>
             </div>
           </details>
 
           <details>
-            <summary>3. Why must parameter updates be simultaneous?</summary>
+            <summary>3. What is the learning rate α?</summary>
             <div class="details-body">
-              <p>
-                Because every parameter in one iteration must be updated from the same previous state. Mixing old and newly updated values gives an incorrect implementation.
-              </p>
+              <p>A parameter that controls how big each update step is during gradient descent.</p>
             </div>
           </details>
 
           <details>
-            <summary>4. What happens if the learning rate is too small?</summary>
+            <summary>4. What happens if α is too small?</summary>
             <div class="details-body">
-              <p>
-                Gradient descent still moves in the right direction, but convergence becomes very slow.
-              </p>
+              <p>Convergence becomes very slow.</p>
             </div>
           </details>
 
           <details>
-            <summary>5. What happens if the learning rate is too large?</summary>
+            <summary>5. What happens if α is too large?</summary>
             <div class="details-body">
-              <p>
-                The algorithm may overshoot the minimum, oscillate, fail to converge, or diverge.
-              </p>
+              <p>The algorithm may diverge or oscillate.</p>
+            </div>
+          </details>
+
+          <!-- GD PRACTICAL -->
+
+          <details>
+            <summary>6. What does a decreasing cost function over iterations indicate?</summary>
+            <div class="details-body">
+              <p>That gradient descent is working correctly and converging.</p>
             </div>
           </details>
 
           <details>
-            <summary>6. Why can gradient descent converge even with a fixed learning rate?</summary>
+            <summary>7. What does it mean if the cost increases after an iteration?</summary>
             <div class="details-body">
-              <p>
-                Because the derivative naturally approaches zero near the minimum, so the updates become smaller automatically.
-              </p>
+              <p>The learning rate is likely too large.</p>
             </div>
           </details>
 
           <details>
-            <summary>7. In general optimization, can gradient descent end at different minima?</summary>
+            <summary>8. Why is it useful to plot cost vs iterations?</summary>
             <div class="details-body">
-              <p>
-                Yes. Depending on the starting point, basic gradient descent can converge to different local minima.
-              </p>
+              <p>To monitor convergence and detect problems with training.</p>
+            </div>
+          </details>
+
+          <!-- SCALING -->
+
+          <details>
+            <summary>9. Why is feature scaling important?</summary>
+            <div class="details-body">
+              <p>It helps gradient descent converge faster and more efficiently.</p>
             </div>
           </details>
 
           <details>
-            <summary>8. Why is linear regression a special case for gradient descent?</summary>
+            <summary>10. What is mean normalization?</summary>
             <div class="details-body">
-              <p>
-                Because its cost function is convex, so there is only one global optimum and no bad local minima.
-              </p>
+              <p>Centering features around zero by subtracting the mean.</p>
+            </div>
+          </details>
+
+          <!-- PROBLEM TYPES -->
+
+          <details>
+            <summary>11. What type of problem is regression, and why?</summary>
+            <div class="details-body">
+              <p>It is supervised learning because it predicts continuous outputs from labeled data.</p>
             </div>
           </details>
 
           <details>
-            <summary>9. What does “batch” mean in batch gradient descent?</summary>
+            <summary>12. What type of problem is classification, and why?</summary>
             <div class="details-body">
-              <p>
-                It means that each gradient update is computed using the entire training set.
-              </p>
+              <p>It is supervised learning because it predicts discrete labels from labeled data.</p>
             </div>
           </details>
 
           <details>
-            <summary>10. Univariate or multivariate: which kind of regression problem uses more than one feature, and why?</summary>
+            <summary>13. What is binary classification?</summary>
             <div class="details-body">
-              <p>
-                It is <strong>multivariate linear regression</strong>, because the prediction depends on multiple input features rather than only one.
-              </p>
+              <p>A classification problem with two possible outputs (e.g., 0 or 1).</p>
+            </div>
+          </details>
+
+          <!-- LOGISTIC -->
+
+          <details>
+            <summary>14. What does the sigmoid function do?</summary>
+            <div class="details-body">
+              <p>Maps any real number to a value between 0 and 1.</p>
             </div>
           </details>
 
           <details>
-            <summary>11. Why do we define x₀ = 1 in vectorized notation?</summary>
+            <summary>15. What is the formula of the sigmoid function?</summary>
             <div class="details-body">
-              <p>
-                So the intercept term θ₀ can be included in the same vector expression as the other parameters and features.
-              </p>
+              <p>g(z) = 1 / (1 + e<sup>-z</sup>)</p>
             </div>
           </details>
 
           <details>
-            <summary>12. What is the benefit of writing the hypothesis as hθ(x) = θᵀx?</summary>
+            <summary>16. What does hθ(x) represent in logistic regression?</summary>
             <div class="details-body">
-              <p>
-                It gives a compact, scalable notation that works naturally with many features and linear algebra operations.
-              </p>
+              <p>The probability that y = 1 given x.</p>
             </div>
           </details>
 
           <details>
-            <summary>13. Why is feature scaling useful for gradient descent?</summary>
+            <summary>17. What is the decision rule in logistic regression?</summary>
             <div class="details-body">
-              <p>
-                Because it makes features more comparable in scale, which usually leads to a better-shaped optimization landscape and faster convergence.
-              </p>
+              <p>If hθ(x) ≥ 0.5 → predict 1, otherwise predict 0.</p>
+            </div>
+          </details>
+
+          <!-- DECISION BOUNDARY -->
+
+          <details>
+            <summary>18. What is a decision boundary?</summary>
+            <div class="details-body">
+              <p>The boundary that separates different classes in the input space.</p>
             </div>
           </details>
 
           <details>
-            <summary>14. What is one advantage of the normal equation compared with gradient descent?</summary>
+            <summary>19. What defines the decision boundary mathematically?</summary>
             <div class="details-body">
-              <p>
-                It provides a direct analytical solution and does not require choosing a learning rate.
-              </p>
+              <p>The set of points where θᵀx = 0.</p>
             </div>
           </details>
+
+          <details>
+            <summary>20. How can we create non-linear decision boundaries?</summary>
+            <div class="details-body">
+              <p>By adding polynomial or engineered features.</p>
+            </div>
+          </details>
+
+          <!-- COST FUNCTION -->
+
+          <details>
+            <summary>21. Why can’t we use squared error for logistic regression?</summary>
+            <div class="details-body">
+              <p>Because it can produce a non-convex cost function.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>22. What does the logistic cost function penalize most?</summary>
+            <div class="details-body">
+              <p>Confident but incorrect predictions.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>23. What happens to cost when prediction is correct and confident?</summary>
+            <div class="details-body">
+              <p>The cost is close to zero.</p>
+            </div>
+          </details>
+
+          <!-- NORMAL EQUATION -->
+
+          <details>
+            <summary>24. What does the normal equation do?</summary>
+            <div class="details-body">
+              <p>Computes the optimal parameters directly without iteration.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>25. When is the normal equation preferred?</summary>
+            <div class="details-body">
+              <p>When the number of features is small.</p>
+            </div>
+          </details>
+
+          <!-- FEATURE ENGINEERING -->
+
+          <details>
+            <summary>26. What is feature engineering?</summary>
+            <div class="details-body">
+              <p>Creating new features from existing ones to improve the model.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>27. Why are polynomial features useful?</summary>
+            <div class="details-body">
+              <p>They allow linear models to capture non-linear relationships.</p>
+            </div>
+          </details>
+
+          <!-- ADVANCED UNDERSTANDING -->
+
+          <details>
+            <summary>28. What is the key difference between linear and logistic regression?</summary>
+            <div class="details-body">
+              <p>Linear predicts continuous values, logistic predicts probabilities for classification.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>29. What is the most important factor for model flexibility?</summary>
+            <div class="details-body">
+              <p>The choice and design of features.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>30. What is the core pattern shared by most ML models?</summary>
+            <div class="details-body">
+              <p>Define a hypothesis, define a cost function, and optimize the parameters.</p>
+            </div>
+          </details>
+
         </section>
 
         <div class="bottom-nav">
