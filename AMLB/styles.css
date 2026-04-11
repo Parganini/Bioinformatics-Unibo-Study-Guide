@@ -1,23 +1,31 @@
-/* styles.css */
-
 :root {
     --bg: #090812;
     --bg-2: #120f24;
     --bg-3: #1a1438;
+
     --panel: rgba(22, 18, 43, 0.88);
+    --panel-strong: rgba(28, 22, 55, 0.96);
     --panel-soft: rgba(255, 255, 255, 0.03);
+
     --accent: #c4a7ff;
     --accent-2: #8b5cf6;
     --accent-3: #ddd6fe;
+
     --text: #f6f2ff;
     --muted: #cbbef5;
     --muted-2: #a798d8;
+
     --border: rgba(126, 92, 255, 0.18);
     --done: #34d399;
+
     --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
     --radius: 22px;
     --max-width: 1120px;
 }
+
+/* =========================
+   Base
+========================= */
 
 * {
     box-sizing: border-box;
@@ -47,6 +55,40 @@ a:hover {
     color: white;
 }
 
+img {
+    max-width: 100%;
+}
+
+/* =========================
+   Layout containers
+========================= */
+
+.topbar-inner,
+.container {
+    width: min(var(--max-width), calc(100% - 24px));
+    margin: 0 auto;
+}
+
+.container {
+    padding: 28px 0 64px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 22px;
+    margin-top: 22px;
+    align-items: start;
+}
+
+.content {
+    min-width: 0;
+}
+
+/* =========================
+   Topbar - hybrid version
+========================= */
+
 .topbar {
     position: sticky;
     top: 0;
@@ -56,17 +98,11 @@ a:hover {
     border-bottom: 1px solid rgba(126, 92, 255, 0.14);
 }
 
-.topbar-inner,
-.container {
-    width: min(var(--max-width), calc(100% - 24px));
-    margin: 0 auto;
-}
-
 .hybrid-topbar {
     padding: 10px 0;
 }
 
-/* Desktop version */
+/* Desktop topbar */
 .topbar-desktop {
     display: flex;
     justify-content: space-between;
@@ -114,7 +150,7 @@ a:hover {
     box-shadow: 0 12px 30px rgba(139, 92, 246, 0.28);
 }
 
-/* Mobile version */
+/* Mobile topbar */
 .topbar-mobile {
     display: none;
     align-items: center;
@@ -176,29 +212,9 @@ a:hover {
     flex: 0 0 auto;
 }
 
-@media (max-width: 760px) {
-
-    .topbar-inner,
-    .container {
-        width: min(var(--max-width), calc(100% - 16px));
-    }
-
-    .hybrid-topbar {
-        padding: 7px 0;
-    }
-
-    .topbar-desktop {
-        display: none;
-    }
-
-    .topbar-mobile {
-        display: flex;
-    }
-}
-
-.container {
-    padding: 28px 0 64px;
-}
+/* =========================
+   Hero
+========================= */
 
 .hero {
     position: relative;
@@ -211,6 +227,17 @@ a:hover {
         rgba(24, 18, 48, 0.92);
     box-shadow: var(--shadow);
     padding: 32px 28px;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    inset: auto -40px -40px auto;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(183, 148, 246, 0.20), transparent 70%);
+    pointer-events: none;
 }
 
 .hero-split {
@@ -312,13 +339,9 @@ h1 {
     backdrop-filter: blur(8px);
 }
 
-.layout {
-    display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
-    gap: 22px;
-    margin-top: 22px;
-    align-items: start;
-}
+/* =========================
+   Table of contents
+========================= */
 
 .toc {
     position: sticky;
@@ -352,9 +375,9 @@ h1 {
     color: white;
 }
 
-.content {
-    min-width: 0;
-}
+/* =========================
+   Content sections
+========================= */
 
 .section {
     border: 1px solid var(--border);
@@ -398,6 +421,10 @@ li {
     color: var(--muted);
 }
 
+.muted {
+    color: var(--muted);
+}
+
 .callout {
     margin: 14px 0 4px;
     padding: 16px 18px;
@@ -406,6 +433,10 @@ li {
     background: linear-gradient(180deg, rgba(196, 167, 255, 0.09), rgba(196, 167, 255, 0.05));
     color: var(--text);
 }
+
+/* =========================
+   Grids and cards
+========================= */
 
 .grid-2,
 .grid-3 {
@@ -436,41 +467,13 @@ li {
     margin-bottom: 8px;
 }
 
-.figure-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+.card strong {
+    color: #faf7ff;
 }
 
-.figure {
-    border: 1px solid rgba(196, 167, 255, 0.10);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.02);
-    overflow: hidden;
-}
-
-.figure img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.figure-body {
-    padding: 14px 16px 16px;
-}
-
-.figure-kicker {
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--muted-2);
-    margin-bottom: 6px;
-}
-
-.figure-caption {
-    color: var(--muted);
-    font-size: 0.93rem;
-}
+/* =========================
+   Comparisons
+========================= */
 
 .comparison {
     display: grid;
@@ -490,6 +493,10 @@ li {
     color: var(--accent-3);
 }
 
+/* =========================
+   Formulas / code-like blocks
+========================= */
+
 .formula {
     display: block;
     margin: 12px 0;
@@ -502,6 +509,53 @@ li {
     white-space: nowrap;
     color: #f3edff;
 }
+
+/* =========================
+   Figures / images
+========================= */
+
+.figure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.figure,
+.image-frame {
+    border: 1px solid rgba(196, 167, 255, 0.10);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    overflow: hidden;
+}
+
+.figure img,
+.image-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.figure-body {
+    padding: 14px 16px 16px;
+}
+
+.figure-kicker {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted-2);
+    margin-bottom: 6px;
+}
+
+.figure-caption,
+.image-note {
+    color: var(--muted);
+    font-size: 0.93rem;
+}
+
+/* =========================
+   Video / YouTube card
+========================= */
 
 .video-card {
     border: 1px solid rgba(196, 167, 255, 0.10);
@@ -538,6 +592,10 @@ li {
     padding: 16px 18px 18px;
 }
 
+/* =========================
+   Details / quiz
+========================= */
+
 details {
     margin-top: 12px;
     border: 1px solid rgba(196, 167, 255, 0.12);
@@ -567,6 +625,20 @@ summary::-webkit-details-marker {
     margin-bottom: 0;
 }
 
+/* =========================
+   References
+========================= */
+
+.ref-link {
+    text-decoration: none;
+    margin-left: 2px;
+}
+
+sup {
+    font-size: 0.74em;
+    vertical-align: super;
+}
+
 .references ol {
     margin: 0;
     padding-left: 1.2rem;
@@ -576,6 +648,10 @@ summary::-webkit-details-marker {
     margin-bottom: 0.9rem;
     color: var(--text);
 }
+
+/* =========================
+   Bottom nav / footer
+========================= */
 
 .bottom-nav {
     display: flex;
@@ -591,6 +667,37 @@ summary::-webkit-details-marker {
     font-size: 0.92rem;
     margin-top: 16px;
 }
+
+/* =========================
+   Completion toast
+========================= */
+
+.completion-toast {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 1px solid rgba(52, 211, 153, 0.35);
+    background: rgba(14, 24, 20, 0.92);
+    color: #dcfce7;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(10px);
+}
+
+.completion-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================
+   Responsive
+========================= */
 
 @media (max-width: 980px) {
     .layout {
@@ -608,6 +715,23 @@ summary::-webkit-details-marker {
 
 @media (max-width: 760px) {
 
+    .topbar-inner,
+    .container {
+        width: min(var(--max-width), calc(100% - 16px));
+    }
+
+    .hybrid-topbar {
+        padding: 7px 0;
+    }
+
+    .topbar-desktop {
+        display: none;
+    }
+
+    .topbar-mobile {
+        display: flex;
+    }
+
     .grid-2,
     .grid-3,
     .comparison,
@@ -621,25 +745,5 @@ summary::-webkit-details-marker {
 
     .section {
         padding: 18px;
-    }
-
-    .topbar-inner {
-        padding: 8px 0;
-        gap: 8px;
-    }
-
-    .nav-group {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-    }
-
-    .btn,
-    .btn-link {
-        width: 100%;
-        min-height: 40px;
-        padding: 8px 10px;
-        font-size: 0.85rem;
     }
 }
