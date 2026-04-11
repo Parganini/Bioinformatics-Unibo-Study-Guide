@@ -39,16 +39,17 @@
           <div class="eyebrow">Applied Machine Learning · Basic</div>
           <h1>Lecture 01 — Introduction to Machine Learning</h1>
           <p class="subtitle">
-            Definitions of machine learning, the practical meaning of AI, why ML accelerated recently,
-            and the first distinction between supervised and unsupervised learning.
+            A practical introduction to machine learning: what it is, how it relates to AI,
+            why it matters now, how to frame learning problems with Task / Experience / Performance,
+            and how supervised and unsupervised learning differ.
           </p>
 
           <div class="hero-meta">
+            <div class="pill">Applied ML</div>
             <div class="pill">Definitions of ML</div>
-            <div class="pill">AI vs ML</div>
-            <div class="pill">Why now?</div>
-            <div class="pill">Supervised Learning</div>
-            <div class="pill">Unsupervised Learning</div>
+            <div class="pill">AI vs ML vs DL</div>
+            <div class="pill">T / E / P</div>
+            <div class="pill">Supervised vs Unsupervised</div>
           </div>
 
           <div class="status" id="completionStatus">Not completed yet</div>
@@ -68,14 +69,16 @@
         <h2>On this page</h2>
         <a href="#big-picture">Big Picture</a>
         <a href="#course-approach">Course Approach</a>
+        <a href="#expectations">What This Course Is</a>
         <a href="#definitions">Definitions of ML</a>
         <a href="#ai-ml-dl">AI, ML, and Deep Learning</a>
         <a href="#tep">T / E / P Framework</a>
         <a href="#why-now">Why Now?</a>
         <a href="#types">Types of Machine Learning</a>
+        <a href="#math-preview">Math Preview</a>
         <a href="#examples">Examples</a>
         <a href="#key-visuals">Key Visuals</a>
-        <a href="#recording">Class Recording</a>
+        <a href="#study-material">Study Material</a>
         <a href="#quiz">Review Quiz</a>
         <a href="#references">References</a>
       </aside>
@@ -84,15 +87,20 @@
         <section class="section" id="big-picture">
           <h2 class="section-title">Big Picture</h2>
           <p class="lead">
-            This lecture frames machine learning as a practical response to problems that are difficult to solve
-            with explicit programming alone. It also sets the tone of the course: not theory for its own sake,
-            but intuition, methodology, and tools that help in real applications.
+            Machine Learning is introduced here not as abstract theory, but as a practical tool
+            for solving real-world problems. The lecture frames ML as a way to build systems that
+            improve from data, while the course itself is centered on intuition, methodology, and application.
           </p>
 
           <div class="callout">
-            The course is presented explicitly as an <strong>applied ML course</strong>. The goal is to learn how to
-            approach data and solve problems, not just memorize formal definitions.
+            This is explicitly an <strong>applied machine learning course</strong>: the goal is to understand
+            how to approach problems with data and build useful solutions, not to memorize isolated formulas.
           </div>
+
+          <p>
+            The lecture sets the tone for the rest of the module: first build a clear conceptual map,
+            then use that map to reason about methods, data, and decisions.
+          </p>
         </section>
 
         <section class="section" id="course-approach">
@@ -103,52 +111,97 @@
               <div class="card-title">Teaching Style</div>
               <ul>
                 <li>Applied and intuition-driven</li>
-                <li>Not a full programming course</li>
-                <li>Python used at an entry level</li>
-                <li>Slides and notebooks provided</li>
+                <li>Focused on understanding real use cases</li>
+                <li>Light on formal proofs</li>
+                <li>Designed to build usable methodology</li>
               </ul>
             </div>
 
             <div class="card">
-              <div class="card-title">Logistics</div>
+              <div class="card-title">How You Work</div>
               <ul>
-                <li>Eight lectures in the basic module</li>
-                <li>Roughly 45 minutes lecture + 15 minutes break</li>
-                <li>Hands-on work with notebooks</li>
-                <li>Material shared during the course</li>
+                <li>Slides are shared for study</li>
+                <li>Hands-on material supports the lectures</li>
+                <li>Students can experiment with code and notebooks</li>
+                <li>The emphasis is on reasoning, not rote repetition</li>
               </ul>
             </div>
           </div>
 
           <p>
-            The lecture makes it clear from the beginning that the course is not intended to teach Python from zero,
-            and not intended to be purely theorem-proof-theorem. Instead, it aims to help students build methodological
-            intuition for real ML work.
+            The professor makes it clear that the course is meant to help students become better at
+            approaching machine learning problems in practice, including how to think about data,
+            model choices, and methodology.
+          </p>
+        </section>
+
+        <section class="section" id="expectations">
+          <h2 class="section-title">What This Course Is (and Is Not)</h2>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>This course IS</h3>
+              <ul>
+                <li>Applied and intuition-driven</li>
+                <li>Focused on real-world problem solving</li>
+                <li>Built around methodology and reasoning</li>
+                <li>A foundation for more advanced ML topics</li>
+              </ul>
+            </div>
+
+            <div class="column">
+              <h3>This course is NOT</h3>
+              <ul>
+                <li>A pure theory course</li>
+                <li>A formal proof-based course</li>
+                <li>A Python tutorial from zero</li>
+                <li>Just a collection of definitions to memorize</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            Basic programming familiarity is helpful, but the lecture does not treat programming itself
+            as the learning objective. The real goal is understanding how machine learning systems are framed,
+            trained, and evaluated in practical settings.
           </p>
         </section>
 
         <section class="section" id="definitions">
           <h2 class="section-title">Core Definitions of Machine Learning</h2>
 
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Arthur Samuel</div>
-              <strong>Learning without being explicitly programmed</strong>
-              <p>A foundational early formulation of machine learning.</p>
-            </div>
+          <div class="callout">
+            Machine Learning can be understood as systems that improve performance by learning from data
+            rather than relying only on explicitly programmed rules.
+          </div>
 
-            <div class="card">
-              <div class="card-title">Tom Mitchell</div>
-              <strong>Performance improves with experience</strong>
-              <p>
-                A machine learns from experience <em>E</em>, on task <em>T</em>, measured by performance <em>P</em>.
-              </p>
-            </div>
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Author</th>
+                  <th>Definition</th>
+                  <th>Main Idea</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Arthur Samuel (1959)</td>
+                  <td>The field of study that gives computers the ability to learn without being explicitly programmed.</td>
+                  <td>Learning replaces hand-written rules</td>
+                </tr>
+                <tr>
+                  <td>Tom Mitchell (1997)</td>
+                  <td>A program learns from experience E with respect to task T and performance measure P if its performance improves with experience.</td>
+                  <td>Learning is framed through task, experience, and measurable improvement</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <p>
-            The lecture presents both classic definitions and then adds a synthesized one:
-            ML can be seen as building a model and improving it over time by fitting more data under an underlying hypothesis.
+            These definitions can be unified into a modern view: machine learning systems improve their
+            performance on a specific task by learning patterns from data rather than depending only on fixed logic.
           </p>
         </section>
 
@@ -170,31 +223,36 @@
               </div>
               <div class="figure-kicker">Conceptual diagram</div>
               <div class="figure-caption">
-                A clean restatement of the nested idea from the lecture: ML is part of AI, and Deep Learning is part of ML.
+                A compact visual summary of the hierarchy: Machine Learning is a subfield of AI,
+                and Deep Learning is a subfield of Machine Learning.
               </div>
             </div>
           </div>
 
           <p>
-            The lecture also argues that the term “AI” is often misleading in practical discussions.
-            In the context of this course, AI is mainly treated as <strong>automation of task execution and decision making</strong>
-            rather than as general human-like intelligence.
+            The lecture emphasizes that, in practice, “AI” should not be interpreted as human-like general intelligence.
+            Instead, it usually refers to the automation of specific tasks, often called <strong>narrow AI</strong>.
           </p>
 
           <div class="callout">
-            The key idea is not “machines becoming human,” but machines helping perform specific tasks at a scale and speed
-            humans cannot match in practice.
+            The practical meaning of AI in this course is task automation at scale:
+            systems that help perform specific actions or support decisions more efficiently than manual work alone.
           </div>
         </section>
 
         <section class="section" id="tep">
           <h2 class="section-title">Mitchell’s T / E / P Framework</h2>
 
+          <p class="lead">
+            Tom Mitchell’s formulation is especially useful because it gives a clean way to describe
+            almost any machine learning problem.
+          </p>
+
           <div class="grid-3">
             <div class="card">
               <div class="card-title">T</div>
               <strong>Task</strong>
-              <p>What the system is trying to do.</p>
+              <p>What the system is supposed to do.</p>
             </div>
 
             <div class="card">
@@ -206,30 +264,42 @@
             <div class="card">
               <div class="card-title">P</div>
               <strong>Performance</strong>
-              <p>How success is measured.</p>
+              <p>How success is measured objectively.</p>
             </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Application</th>
+                  <th>Task (T)</th>
+                  <th>Experience (E)</th>
+                  <th>Performance (P)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Checkers Program</td>
+                  <td>Play checkers</td>
+                  <td>Games played against itself</td>
+                  <td>Probability of winning</td>
+                </tr>
+                <tr>
+                  <td>Spam Filter</td>
+                  <td>Classify emails as spam / not spam</td>
+                  <td>User-labeled messages</td>
+                  <td>Fraction of correctly classified emails</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
           <p>
-            This framework is made concrete with the spam filter example from the lecture:
-            classify emails as spam or not spam, observe user labels, and measure the fraction of correctly classified emails.
+            This framework matters because it forces you to define what counts as learning.
+            A system is not “intelligent” just because it produces output; it must improve on a task
+            through experience according to a measurable criterion.
           </p>
-
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Spam Filter Example</div>
-              <p><strong>T:</strong> classify emails as spam or not spam</p>
-              <p><strong>E:</strong> observe how the user labels emails</p>
-              <p><strong>P:</strong> fraction of correctly classified emails</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Why it matters</div>
-              <p>
-                Once you understand T / E / P, you can restate many practical ML problems using the same logic.
-              </p>
-            </div>
-          </div>
         </section>
 
         <section class="section" id="why-now">
@@ -237,27 +307,37 @@
 
           <div class="grid-3">
             <div class="card">
-              <div class="card-title">Big Data</div>
-              <strong>Massive data availability</strong>
-              <p>Learning becomes more useful when large, rich datasets exist.</p>
+              <div class="card-title">Fuel</div>
+              <strong>Big Data</strong>
+              <p>Large, rich, and diverse datasets make learning methods far more useful and effective.</p>
             </div>
 
             <div class="card">
-              <div class="card-title">Hardware</div>
-              <strong>GPUs and acceleration</strong>
-              <p>Modern compute makes more demanding learning workflows feasible.</p>
+              <div class="card-title">Engine</div>
+              <strong>Hardware Progress</strong>
+              <p>GPUs and other accelerators make demanding learning workloads computationally feasible.</p>
             </div>
 
             <div class="card">
-              <div class="card-title">Cloud</div>
-              <strong>Accessible large-scale compute</strong>
-              <p>Teams can access infrastructure without owning it directly.</p>
+              <div class="card-title">Access</div>
+              <strong>Cloud Computing</strong>
+              <p>Teams can use large-scale infrastructure without owning physical data centers.</p>
             </div>
           </div>
 
+          <div class="card" style="margin-top: 16px;">
+            <div class="card-title">Big Data (4 Vs)</div>
+            <ul>
+              <li><strong>Volume:</strong> massive quantities of data</li>
+              <li><strong>Variety:</strong> many forms such as text, images, and signals</li>
+              <li><strong>Velocity:</strong> rapid generation and flow of data</li>
+              <li><strong>Veracity:</strong> uncertainty, noise, and inconsistency in real data</li>
+            </ul>
+          </div>
+
           <p>
-            The lecture attributes the recent acceleration of ML to these three factors:
-            the rise of Big Data, technology progress such as GPUs, and the democratization of compute through cloud access.
+            The lecture’s message is that modern ML did not appear “all at once.”
+            It became practical because data grew, computation improved, and access to computing infrastructure became easier.
           </p>
         </section>
 
@@ -267,40 +347,64 @@
           <div class="comparison">
             <div class="column">
               <h3>Supervised Learning</h3>
-              <p>Learn from data where the correct output is already known.</p>
+              <p>Learn from examples where the correct output is already known.</p>
               <ul>
-                <li><strong>Regression</strong> → continuous output</li>
-                <li><strong>Classification</strong> → discrete output</li>
+                <li><strong>Regression</strong> → predict continuous values</li>
+                <li><strong>Classification</strong> → predict discrete labels</li>
               </ul>
             </div>
 
             <div class="column">
               <h3>Unsupervised Learning</h3>
-              <p>Learn from data without labels and discover structure.</p>
+              <p>Learn from unlabeled data and discover useful structure.</p>
               <ul>
-                <li>group similar items</li>
-                <li>discover hidden structure</li>
-                <li>find patterns in unlabeled data</li>
+                <li>Find clusters or patterns</li>
+                <li>Detect hidden relationships</li>
+                <li>Organize data without given answers</li>
               </ul>
             </div>
           </div>
 
           <div class="card" style="margin-top: 16px;">
             <div class="card-title">Reinforcement Learning</div>
-            <strong>Learn from feedback</strong>
-            <p>Improve behavior through rewards, penalties, and repeated interaction over time.</p>
+            <strong>Learning from feedback</strong>
+            <p>
+              The system improves behavior by receiving rewards or penalties over repeated interaction.
+            </p>
+          </div>
+        </section>
+
+        <section class="section" id="math-preview">
+          <h2 class="section-title">Math Preview: A First Look at Regression</h2>
+
+          <p>
+            The notes for this lecture also preview one of the simplest supervised learning models:
+            univariate linear regression, where one input feature is used to predict one continuous output.
+          </p>
+
+          <div class="formula">hθ(x) = θ₀ + θ₁x</div>
+          <div class="formula">J(θ₀, θ₁) = (1 / 2m) Σ (hθ(xᵢ) − yᵢ)²</div>
+
+          <p>
+            The first equation is the <strong>hypothesis</strong>, which maps an input to a prediction.
+            The second is the <strong>cost function</strong>, which measures how far predictions are from the true values.
+          </p>
+
+          <div class="callout">
+            This is an important pattern in ML: define a model, define a way to measure error,
+            and then adjust parameters to reduce that error.
           </div>
         </section>
 
         <section class="section" id="examples">
           <h2 class="section-title">Examples</h2>
 
-          <div class="grid-2">
+          <div class="grid-3">
             <div class="card">
               <div class="card-title">Regression Example</div>
               <strong>House Price Prediction</strong>
               <p>
-                Predicting a house price is a regression problem because the target is a continuous numeric value.
+                Predicting a house price is a regression task because the output is a continuous numeric value.
               </p>
             </div>
 
@@ -308,14 +412,22 @@
               <div class="card-title">Classification Example</div>
               <strong>Tumor Diagnosis</strong>
               <p>
-                Predicting whether a tumor is benign or malignant is classification because the output is discrete.
+                Predicting whether a tumor is benign or malignant is classification because the output is a discrete label.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Unsupervised Example</div>
+              <strong>Customer Segmentation</strong>
+              <p>
+                Grouping similar customers without predefined labels is an example of discovering structure in unlabeled data.
               </p>
             </div>
           </div>
 
           <p>
-            The lecture also emphasizes that adding more useful input variables can improve predictive performance,
-            which hints at the broader idea of richer datasets enabling stronger models.
+            These examples matter because they show that choosing the right learning setup depends first
+            on the kind of target you have: continuous, categorical, or completely unlabeled.
           </p>
         </section>
 
@@ -328,105 +440,121 @@
               <div class="figure-body">
                 <div class="figure-kicker">From the lecture slides</div>
                 <div class="figure-caption">
-                  A visual anchor for one of the core ideas introduced in this lecture.
+                  A visual anchor for one of the lecture’s central ideas about how ML fits into the broader AI landscape.
                 </div>
               </div>
             </div>
 
             <div class="figure">
-              <img src="images/lecture01/supervised-vs-unsupervised.png" alt="Supervised vs unsupervised visual comparison">
+              <img src="images/lecture01/supervised-vs-unsupervised.png" alt="Supervised versus unsupervised learning comparison">
               <div class="figure-body">
                 <div class="figure-kicker">Concept snapshot</div>
                 <div class="figure-caption">
-                  A compact visual reminder of the difference between labeled and unlabeled learning settings.
+                  A compact reminder of the difference between learning with labels and learning without them.
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section class="section" id="recording">
-          <h2 class="section-title">Class Recording</h2>
+        <section class="section" id="study-material">
+          <h2 class="section-title">Study Material</h2>
 
-          <div class="video-card">
-            <a class="video-thumb" href="https://www.youtube.com/watch?v=VIDEO_ID_LECTURE01" target="_blank" rel="noopener noreferrer">
-              <img src="https://img.youtube.com/vi/VIDEO_ID_LECTURE01/maxresdefault.jpg" alt="Lecture 1 recording thumbnail">
-              <div class="play-badge">▶ Watch on YouTube</div>
-            </a>
-
-            <div class="video-meta">
-              <div class="card-title">Lecture recording</div>
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Slides</div>
+              <strong>Lecture 1 Slides</strong>
               <p>
-                Open the full class recording on YouTube for a complete walkthrough of the lecture.
+                Use the official slide deck as the main visual reference for definitions, diagrams, and examples.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Transcript</div>
+              <strong>Lecture 1 Transcript</strong>
+              <p>
+                Use the transcript to capture the lecturer’s framing, clarifications, and practical interpretation of the material.
               </p>
             </div>
           </div>
+
+          <p>
+            This study page is designed to work as a compact companion to the slides and transcript:
+            faster to review, easier to navigate, and structured around the lecture’s main ideas.
+          </p>
         </section>
 
         <section class="section" id="quiz">
           <h2 class="section-title">Quick Review Quiz</h2>
 
           <details>
-            <summary>1. What are T, E, and P in Mitchell’s definition?</summary>
+            <summary>1. How does Arthur Samuel define Machine Learning?</summary>
             <div class="details-body">
-              <p><strong>T</strong> is the task, <strong>E</strong> is the experience, and <strong>P</strong> is the performance measure.</p>
-              <p>A machine learns if performance on the task improves because of experience.</p>
+              <p>
+                He describes it as the field of study that gives computers the ability to learn without being explicitly programmed.
+              </p>
             </div>
           </details>
 
           <details>
-            <summary>2. What is the task in the spam filter example?</summary>
+            <summary>2. What are T, E, and P in Mitchell’s framework?</summary>
+            <div class="details-body">
+              <p><strong>T</strong> is the task, <strong>E</strong> is the experience, and <strong>P</strong> is the performance measure.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. What is the task in the spam filter example?</summary>
             <div class="details-body">
               <p>The task is classifying emails as spam or not spam.</p>
             </div>
           </details>
 
           <details>
-            <summary>3. What counts as experience in the spam filter example?</summary>
+            <summary>4. What counts as experience in the spam filter example?</summary>
             <div class="details-body">
-              <p>The system observes how the user labels or flags emails.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>4. What is the performance measure in the spam filter example?</summary>
-            <div class="details-body">
-              <p>The number or fraction of correctly classified emails.</p>
+              <p>The system learns from how users label or identify emails over time.</p>
             </div>
           </details>
 
           <details>
             <summary>5. How are AI, ML, and Deep Learning related?</summary>
             <div class="details-body">
-              <p>ML is a sub-domain of AI, and Deep Learning is a sub-domain of ML.</p>
+              <p>Machine Learning is a subset of AI, and Deep Learning is a subset of Machine Learning.</p>
             </div>
           </details>
 
           <details>
-            <summary>6. What practical meaning of AI does the lecture emphasize?</summary>
+            <summary>6. What practical meaning of AI does this lecture emphasize?</summary>
             <div class="details-body">
-              <p>Automation of task execution and decision making at scale, rather than general human intelligence.</p>
+              <p>
+                AI is presented mainly as automation of specific tasks and decision support, rather than as general human-like intelligence.
+              </p>
             </div>
           </details>
 
           <details>
-            <summary>7. Why has ML adoption accelerated in recent years?</summary>
+            <summary>7. Why has ML grown so quickly in recent years?</summary>
             <div class="details-body">
-              <p>Because of Big Data, hardware progress such as GPUs, and access to large-scale cloud computing.</p>
+              <p>
+                Because of large-scale data, better hardware such as GPUs, and easier access to computing through the cloud.
+              </p>
             </div>
           </details>
 
           <details>
             <summary>8. What is the difference between supervised and unsupervised learning?</summary>
             <div class="details-body">
-              <p>Supervised learning uses labeled examples, while unsupervised learning discovers structure without labels.</p>
+              <p>
+                Supervised learning uses labeled examples with known answers, while unsupervised learning finds patterns in unlabeled data.
+              </p>
             </div>
           </details>
 
           <details>
             <summary>9. Why is house-price prediction a regression problem?</summary>
             <div class="details-body">
-              <p>Because the output is a continuous numeric value.</p>
+              <p>Because the output is a continuous numerical value.</p>
             </div>
           </details>
 
@@ -436,6 +564,25 @@
               <p>Because the output belongs to discrete categories such as benign or malignant.</p>
             </div>
           </details>
+
+          <details>
+            <summary>11. What do the symbols θ₀ and θ₁ represent in hθ(x) = θ₀ + θ₁x?</summary>
+            <div class="details-body">
+              <p>
+                They are model parameters: θ₀ is the intercept term and θ₁ controls the slope of the line.
+              </p>
+            </div>
+          </details>
+
+          <details>
+            <summary>12. Why does this course focus so much on methodology?</summary>
+            <div class="details-body">
+              <p>
+                Because good machine learning depends not only on results, but on choosing the right framing,
+                understanding the data, and interpreting model behavior correctly.
+              </p>
+            </div>
+          </details>
         </section>
 
         <section class="section references" id="references">
@@ -443,11 +590,11 @@
           <ol>
             <li id="ref1">
               <strong>Lecture 1 Slides</strong> —
-              <a href="slides/lecture01.pdf" target="_blank">View PDF</a>
+              <a href="slides/lecture01.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
             </li>
             <li id="ref2">
               <strong>Lecture 1 Transcript</strong> —
-              <a href="transcriptions/lecture01.pdf" target="_blank">View PDF</a>
+              <a href="transcriptions/lecture01.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
             </li>
           </ol>
         </section>
