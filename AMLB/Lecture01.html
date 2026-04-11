@@ -57,7 +57,7 @@
 
         <div class="hero-visual">
           <div class="hero-image-card">
-            <img src="images/lecture01/hero-cover.jpg" alt="Lecture 1 visual overview">
+            <img src="images/lecture01/hero-cover.jpg" alt="Abstract machine learning and data systems visual">
           </div>
           <div class="hero-badge">Lecture 1 visual summary</div>
         </div>
@@ -295,6 +295,29 @@
             </table>
           </div>
 
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture01/tep-framework.png" alt="Task experience performance conceptual illustration">
+              <div class="figure-body">
+                <div class="figure-kicker">Framework visual</div>
+                <div class="figure-caption">
+                  A visual reminder that every ML problem should be framed through a task, a source of experience,
+                  and a measurable performance criterion.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture01/spam-filter-example.jpg" alt="Spam filtering illustration">
+              <div class="figure-body">
+                <div class="figure-kicker">Applied example</div>
+                <div class="figure-caption">
+                  Spam filtering is one of the cleanest examples of Mitchell’s framework in practice.
+                </div>
+              </div>
+            </div>
+          </div>
+
           <p>
             This framework matters because it forces you to define what counts as learning.
             A system is not “intelligent” just because it produces output; it must improve on a task
@@ -335,6 +358,38 @@
             </ul>
           </div>
 
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture01/big-data.jpg" alt="Big data visualization">
+              <div class="figure-body">
+                <div class="figure-kicker">Driver 1</div>
+                <div class="figure-caption">
+                  The growth of available data is one of the main reasons ML became so powerful in practice.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture01/gpu-computing.jpg" alt="GPU and accelerated computing hardware">
+              <div class="figure-body">
+                <div class="figure-kicker">Driver 2</div>
+                <div class="figure-caption">
+                  Hardware acceleration, especially GPUs, made large-scale learning much more feasible.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="figure" style="margin-top: 16px;">
+            <img src="images/lecture01/cloud-computing.jpg" alt="Cloud computing infrastructure">
+            <div class="figure-body">
+              <div class="figure-kicker">Driver 3</div>
+              <div class="figure-caption">
+                Cloud access democratized computation by letting teams use large infrastructure without building it themselves.
+              </div>
+            </div>
+          </div>
+
           <p>
             The lecture’s message is that modern ML did not appear “all at once.”
             It became practical because data grew, computation improved, and access to computing infrastructure became easier.
@@ -372,28 +427,120 @@
               The system improves behavior by receiving rewards or penalties over repeated interaction.
             </p>
           </div>
+
+          <div class="figure" style="margin-top: 16px;">
+            <img src="images/lecture01/supervised-vs-unsupervised.png" alt="Comparison of supervised and unsupervised learning">
+            <div class="figure-body">
+              <div class="figure-kicker">Learning setup comparison</div>
+              <div class="figure-caption">
+                Supervised learning uses labeled examples, while unsupervised learning searches for structure without labels.
+              </div>
+            </div>
+          </div>
         </section>
 
         <section class="section" id="math-preview">
-          <h2 class="section-title">Math Preview: A First Look at Regression</h2>
+          <h2 class="section-title">Math Preview: Univariate Linear Regression</h2>
 
-          <p>
-            The notes for this lecture also preview one of the simplest supervised learning models:
-            univariate linear regression, where one input feature is used to predict one continuous output.
+          <p class="lead">
+            One of the simplest machine learning models is <strong>univariate linear regression</strong>,
+            where a single input feature is used to predict a continuous output.
           </p>
 
-          <div class="formula">hθ(x) = θ₀ + θ₁x</div>
-          <div class="formula">J(θ₀, θ₁) = (1 / 2m) Σ (hθ(xᵢ) − yᵢ)²</div>
+          <h3>Dataset Notation</h3>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>m</td>
+                  <td>Number of training examples</td>
+                </tr>
+                <tr>
+                  <td>x</td>
+                  <td>Input feature (independent variable)</td>
+                </tr>
+                <tr>
+                  <td>y</td>
+                  <td>Target value (output)</td>
+                </tr>
+                <tr>
+                  <td>(x⁽ⁱ⁾, y⁽ⁱ⁾)</td>
+                  <td>The i-th training example</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Model (Hypothesis)</h3>
+
+          <div class="formula">
+            hθ(x) = θ₀ + θ₁x
+          </div>
 
           <p>
-            The first equation is the <strong>hypothesis</strong>, which maps an input to a prediction.
-            The second is the <strong>cost function</strong>, which measures how far predictions are from the true values.
+            This equation represents a straight line. The goal is to choose parameters
+            θ₀ (intercept) and θ₁ (slope) so that the line best fits the data.
+          </p>
+
+          <h3>Parameters</h3>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>θ₀</td>
+                  <td>Intercept (where the line crosses the y-axis)</td>
+                </tr>
+                <tr>
+                  <td>θ₁</td>
+                  <td>Slope (how much y changes when x increases)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Cost Function</h3>
+
+          <div class="formula">
+            J(θ₀, θ₁) = (1 / 2m) Σ (hθ(xᵢ) − yᵢ)²
+          </div>
+
+          <p>
+            The cost function measures how far predictions are from the true values.
+            It computes the average squared error across all training examples.
           </p>
 
           <div class="callout">
-            This is an important pattern in ML: define a model, define a way to measure error,
-            and then adjust parameters to reduce that error.
+            The objective of learning is to find parameters θ₀ and θ₁ that minimize the cost function.
           </div>
+
+          <div class="figure" style="margin-top: 16px;">
+            <img src="images/lecture01/regression-preview.png" alt="Linear regression example with fitted line">
+            <div class="figure-body">
+              <div class="figure-kicker">Regression intuition</div>
+              <div class="figure-caption">
+                Linear regression fits a line that minimizes the difference between predicted and actual values.
+              </div>
+            </div>
+          </div>
+
+          <p>
+            This introduces a key pattern in machine learning:
+            define a model, define a way to measure error, and then optimize the model to reduce that error.
+          </p>
         </section>
 
         <section class="section" id="examples">
@@ -425,6 +572,28 @@
             </div>
           </div>
 
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture01/house-price.jpg" alt="House price prediction illustration">
+              <div class="figure-body">
+                <div class="figure-kicker">Regression example</div>
+                <div class="figure-caption">
+                  House-price prediction is a standard example of learning a continuous output from input features.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture01/tumor-diagnosis.jpg" alt="Medical diagnosis illustration">
+              <div class="figure-body">
+                <div class="figure-kicker">Classification example</div>
+                <div class="figure-caption">
+                  Medical diagnosis often becomes a classification task when the goal is to assign one of several labels.
+                </div>
+              </div>
+            </div>
+          </div>
+
           <p>
             These examples matter because they show that choosing the right learning setup depends first
             on the kind of target you have: continuous, categorical, or completely unlabeled.
@@ -436,21 +605,21 @@
 
           <div class="figure-grid">
             <div class="figure">
-              <img src="images/lecture01/key-slide.png" alt="Key slide from Lecture 1">
+              <img src="images/lecture01/key-slide.png" alt="Key slide or summary visual from Lecture 1">
               <div class="figure-body">
-                <div class="figure-kicker">From the lecture slides</div>
+                <div class="figure-kicker">Lecture anchor</div>
                 <div class="figure-caption">
-                  A visual anchor for one of the lecture’s central ideas about how ML fits into the broader AI landscape.
+                  A key visual from the lecture that helps anchor one of the main course ideas.
                 </div>
               </div>
             </div>
 
             <div class="figure">
-              <img src="images/lecture01/supervised-vs-unsupervised.png" alt="Supervised versus unsupervised learning comparison">
+              <img src="images/lecture01/ml-workflow-overview.png" alt="Machine learning workflow overview illustration">
               <div class="figure-body">
-                <div class="figure-kicker">Concept snapshot</div>
+                <div class="figure-kicker">Concept map</div>
                 <div class="figure-caption">
-                  A compact reminder of the difference between learning with labels and learning without them.
+                  A compact overview of how learning problems connect tasks, data, models, and evaluation.
                 </div>
               </div>
             </div>
@@ -465,22 +634,31 @@
               <div class="card-title">Slides</div>
               <strong>Lecture 1 Slides</strong>
               <p>
-                Use the official slide deck as the main visual reference for definitions, diagrams, and examples.
+                The official slide deck contains the core definitions, diagrams,
+                and examples discussed during the lecture.
               </p>
+              <a class="btn-link" href="slides/lecture01.pdf" target="_blank">
+                View PDF →
+              </a>
             </div>
 
             <div class="card">
               <div class="card-title">Transcript</div>
               <strong>Lecture 1 Transcript</strong>
               <p>
-                Use the transcript to capture the lecturer’s framing, clarifications, and practical interpretation of the material.
+                The transcript captures the lecturer’s explanations,
+                intuition, and practical interpretation of the material.
               </p>
+              <a class="btn-link" href="transcriptions/lecture01.pdf" target="_blank">
+                View PDF →
+              </a>
             </div>
           </div>
 
           <p>
-            This study page is designed to work as a compact companion to the slides and transcript:
-            faster to review, easier to navigate, and structured around the lecture’s main ideas.
+            Use the slides for structure and visuals, and the transcript
+            for deeper understanding and context. Together they provide
+            a complete view of the lecture.
           </p>
         </section>
 
@@ -552,16 +730,22 @@
           </details>
 
           <details>
-            <summary>9. Why is house-price prediction a regression problem?</summary>
+            <summary>9. House-price prediction: which type of machine learning problem is it, and why?</summary>
             <div class="details-body">
-              <p>Because the output is a continuous numerical value.</p>
+              <p>
+                It is a <strong>regression problem</strong> because the output is a continuous numerical value
+                (the predicted price).
+              </p>
             </div>
           </details>
 
           <details>
-            <summary>10. Why is tumor diagnosis a classification problem?</summary>
+            <summary>10. Tumor diagnosis: which type of machine learning problem is it, and why?</summary>
             <div class="details-body">
-              <p>Because the output belongs to discrete categories such as benign or malignant.</p>
+              <p>
+                It is a <strong>classification problem</strong> because the output belongs to discrete categories
+                such as benign or malignant.
+              </p>
             </div>
           </details>
 
@@ -585,19 +769,6 @@
           </details>
         </section>
 
-        <section class="section references" id="references">
-          <h2 class="section-title">References</h2>
-          <ol>
-            <li id="ref1">
-              <strong>Lecture 1 Slides</strong> —
-              <a href="slides/lecture01.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-            </li>
-            <li id="ref2">
-              <strong>Lecture 1 Transcript</strong> —
-              <a href="transcriptions/lecture01.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-            </li>
-          </ol>
-        </section>
 
         <div class="bottom-nav">
           <a class="btn-link" href="index.html">← Back to Index</a>
