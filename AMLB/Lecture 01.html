@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 01 - Applied Machine Learning</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #1a2244;
+      --text: #edf2ff;
+      --muted: #b8c2e6;
+      --accent: #7aa2ff;
+      --border: #31406e;
+      --code: #0f1530;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background: linear-gradient(180deg, #0a0f1f 0%, #0f1730 100%);
+    }
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 40px 20px 72px;
+    }
+    .card {
+      background: rgba(18, 25, 51, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      backdrop-filter: blur(8px);
+    }
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin-top: 1.4em;
+      margin-bottom: .65em;
+    }
+    h1 { font-size: 2.15rem; margin-top: 0; }
+    h2 { font-size: 1.45rem; padding-top: .35rem; border-top: 1px solid rgba(122,162,255,.15); }
+    h3 { font-size: 1.1rem; color: var(--text); }
+    p, li { color: var(--muted); }
+    strong { color: var(--text); }
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+    hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 2rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0 1.4rem;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.02);
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(49,64,110,.7);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: rgba(122,162,255,.12);
+      color: var(--text);
+    }
+    tr:last-child td { border-bottom: 0; }
+    code {
+      background: var(--code);
+      padding: .15rem .35rem;
+      border-radius: 6px;
+      color: #d7e2ff;
+    }
+    .quiz-note {
+      padding: 14px 16px;
+      border: 1px solid rgba(122,162,255,.25);
+      background: rgba(122,162,255,.08);
+      border-radius: 12px;
+      color: var(--muted);
+      margin: 1rem 0 1.25rem;
+    }
+    details {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      margin: 14px 0 18px;
+      overflow: hidden;
+    }
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 16px 18px;
+      font-weight: 700;
+      color: var(--text);
+      background: rgba(122,162,255,.08);
+    }
+    summary::-webkit-details-marker {
+      display: none;
+    }
+    summary::after {
+      content: "▾";
+      float: right;
+      transition: transform .2s ease;
+      color: var(--accent);
+    }
+    details[open] summary::after {
+      transform: rotate(180deg);
+    }
+    .answer {
+      padding: 18px;
+    }
+    .question {
+      margin: 0 0 .7rem;
+      color: var(--text);
+    }
+    ul { padding-left: 1.3rem; }
+    .footer {
+      margin-top: 28px;
+      color: #97a6d8;
+      font-size: .95rem;
+    }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    @media (max-width: 700px){
+      .container { padding: 18px 12px 36px; }
+      .card { padding: 20px; }
+      h1 { font-size: 1.7rem; }
+      table, thead, tbody, th, td, tr { display: block; }
+      thead { display: none; }
+      tr { border-bottom: 1px solid var(--border); }
+      td {
+        border: 0;
+        padding: 10px 12px;
+      }
+      td::before {
+        content: attr(data-label);
+        display: block;
+        font-size: .85rem;
+        color: #a8b8eb;
+        margin-bottom: 4px;
+        font-weight: 700;
+      }
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <div class="container">
+    <article class="card">
+      <h1>Applied Machine Learning: Basic Course Study Guide</h1>
+      <p class="lead">
+        This study guide synthesizes the introductory material and fundamental concepts for the
+        <strong>Applied Machine Learning (AML) – Basic</strong> course at the University of Bologna.
+        It covers logistics, core definitions, the current state of the field, and the technical foundations
+        of supervised and unsupervised learning.
+      </p>
+
+      <h2>1. Course Overview and Logistics</h2>
+      <p>The Applied Machine Learning – Basic module is a 4-CFU course designed for Master’s students in Bioinformatics and PhD candidates. It serves as a “portal” into data science, focusing on “expectations tuning” to move from theory to practical application.</p>
+
+      <h3>Instructors and Teaching Methodology</h3>
+      <p>The course is led by <strong>Prof. Daniele Bonacorsi</strong>, a physicist with extensive experience at CERN, and <strong>Dr. Luca Clissa</strong>. The teaching approach is “artisan-like,” prioritizing intuitions, best practices, and hands-on toolkits over purely theoretical proofs.</p>
+      <p><strong>Format:</strong> Hybrid lectures (in-person for Bioinformatics students) consisting of frontal instruction and hands-on sessions using <strong>Jupyter/Google Colab</strong> notebooks.</p>
+      <p><strong>Structure:</strong> Each hour is typically divided into 45 minutes of lecture followed by a 15-minute break.</p>
+      <p><strong>Programming:</strong> While not a “programming course,” it utilizes Python. Students are expected to have entry-level familiarity with Python or be willing to learn the basics.</p>
+
+      <h3>Assessment Methods</h3>
+      <p>The final grade is a total of 30 points, divided equally into two components:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Points</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Component">Written Test</td>
+            <td data-label="Points">15</td>
+            <td data-label="Details">Multiple-choice questionnaire (online via EOL/Almaesami or paper). Open-material; focuses on conceptual understanding.</td>
+          </tr>
+          <tr>
+            <td data-label="Component">Project Work</td>
+            <td data-label="Points">15</td>
+            <td data-label="Details">Coding-based project. Evaluated on methodology, code quality, clarity, and documentation. Can be individual or in teams.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Key Rules:</strong></p>
+      <p><strong>Written Test:</strong> Can be taken multiple times; the highest score is retained. Scores remain valid for one calendar year.</p>
+      <p><strong>Project Work:</strong> Maximum of two submissions per project. If the second submission score is unsatisfactory, a new project must be proposed.</p>
+      <p><strong>Honors (30L):</strong> Awarded for excellent performance in both components.</p>
+
+      <h2>2. Fundamental Definitions and Concepts</h2>
+
+      <h3>Defining Machine Learning</h3>
+      <p>Machine Learning (ML) is a sub-domain of Artificial Intelligence (AI). The course highlights three primary definitions:</p>
+      <p><strong>Arthur Samuel (1959):</strong> Giving computers the ability to learn without being explicitly programmed.</p>
+      <p><strong>Tom Mitchell (1997):</strong> A computer program is said to learn from experience <strong>E</strong> with respect to some task <strong>T</strong> and some performance measure <strong>P</strong>, if its performance on <strong>T</strong>, as measured by <strong>P</strong>, improves with experience <strong>E</strong>.</p>
+      <p><strong>Synthesized Definition:</strong> A software system that improves through fitting data into a model over time based on an underlying hypothesis.</p>
+
+      <h3>The “Why Now?” of Machine Learning</h3>
+      <p>ML concepts have existed for decades, but three factors led to the current acceleration:</p>
+      <p><strong>Big Data:</strong> The rise of massive volumes of data characterized by the 4 Vs: Volume, Variety, Velocity, and Veracity.</p>
+      <p><strong>Hardware (GPUs):</strong> The use of General-Purpose Graphical Processing Units to perform parallel calculations originally designed for gaming.</p>
+      <p><strong>Cloud Democratization:</strong> Access to massive computing resources (e.g., AWS, Google Cloud) without needing to own the hardware.</p>
+
+      <h3>Data Science and the “Unicorn”</h3>
+      <p>A Data Scientist is often described as a “unicorn” because the role requires a rare blend of three domains:</p>
+      <ul>
+        <li><strong>Mathematics &amp; Statistics</strong></li>
+        <li><strong>Computer Science</strong></li>
+        <li><strong>Domain Knowledge &amp; Communication</strong></li>
+      </ul>
+      <p>The course suggests that while a single “data scientist” may be rare, a <strong>Data Science Team</strong> effectively bridges these gaps.</p>
+
+      <h2>3. Types of Machine Learning</h2>
+      <p>Learning algorithms are categorized based on how they process information:</p>
+
+      <h3>Supervised Learning</h3>
+      <p>The machine is provided with a training set containing “labels” or “right answers.”</p>
+      <p><strong>Regression:</strong> Predicting a continuous output (e.g., housing prices based on square footage).</p>
+      <p><strong>Classification:</strong> Predicting a discrete/categorical output (e.g., determining if a tumor is malignant [1] or benign [0]).</p>
+
+      <h3>Unsupervised Learning</h3>
+      <p>The machine is provided with unlabeled data and must find structure on its own.</p>
+      <p><strong>Clustering:</strong> Grouping data into cohesive categories (e.g., Google News grouping stories, social network analysis, or market segmentation).</p>
+      <p><strong>Non-Clustering:</strong> Identifying structure in chaotic environments (e.g., the “Cocktail Party Problem,” where an algorithm separates individual voices from a mixed recording).</p>
+
+      <h3>Reinforcement Learning</h3>
+      <p>Learning occurs through a feedback loop of rewards and penalties (e.g., a robotic goalkeeper learning through trial and error).</p>
+
+      <h2>4. Univariate Linear Regression</h2>
+      <p>Univariate linear regression is the simplest building block of ML modeling. It uses one input variable (<span class="mono">x</span>) to predict a target variable (<span class="mono">y</span>).</p>
+
+      <h3>Notation and Terminology</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="Symbol">$m$</td><td data-label="Meaning">Number of training examples in the dataset.</td></tr>
+          <tr><td data-label="Symbol">$x$</td><td data-label="Meaning">Input variables or “features.”</td></tr>
+          <tr><td data-label="Symbol">$y$</td><td data-label="Meaning">Output variable or “target.”</td></tr>
+          <tr><td data-label="Symbol">$(x,y)$</td><td data-label="Meaning">A single training example.</td></tr>
+          <tr><td data-label="Symbol">$(x^{(i)},y^{(i)})$</td><td data-label="Meaning">The <em>i</em>th training example in the dataset.</td></tr>
+          <tr><td data-label="Symbol">$\theta_0,\theta_1$</td><td data-label="Meaning">Parameters of the model (intercept and slope).</td></tr>
+        </tbody>
+      </table>
+
+      <h3>The Hypothesis and Cost Function</h3>
+      <p><strong>Hypothesis ($h$):</strong> $h_{\theta}(x)=\theta_0+\theta_1x$. This function maps the input $x$ to a predicted $y$.</p>
+      <p><strong>Cost Function ($J$):</strong> $J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)})^2$. This “Squared Error Cost Function” measures the accuracy of the hypothesis.</p>
+      <p><strong>Goal:</strong> Minimize $J(\theta_0,\theta_1)$ to find the parameters $\theta_0$ and $\theta_1$ that produce the “best fit” line for the data.</p>
+
+      <h2>5. Short-Answer Quiz</h2>
+      <div class="quiz-note">
+        Haz clic en cada pregunta para ver la respuesta.
+      </div>
+
+      <details>
+        <summary>Explain Tom Mitchell’s definition of Machine Learning using the example of a checkers-playing program.</summary>
+        <div class="answer">
+          
+        <p>In Mitchell’s definition:</p>
+        <ul>
+          <li><strong>Task (T):</strong> playing checkers</li>
+          <li><strong>Experience (E):</strong> the games played against itself</li>
+          <li><strong>Performance (P):</strong> the probability of winning the next game</li>
+        </ul>
+        <p>Learning occurs if <strong>P</strong> improves on <strong>T</strong> because of <strong>E</strong>.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>Distinguish between Artificial Intelligence and Machine Learning as described in the course&#x27;s “nested” pictorial definition.</summary>
+        <div class="answer">
+          
+        <p><strong>AI</strong> is the broad field of automating tasks and decision-making.</p>
+        <p><strong>ML</strong> is a specific sub-domain of AI used to implement learning from data.</p>
+        <p>All ML is AI, but AI can exist without ML through explicit programming.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>Define &quot;Supervised Learning&quot; and provide one example of a regression problem within this category.</summary>
+        <div class="answer">
+          
+        <p>Supervised Learning involves training an algorithm on a dataset where the correct answers are already known.</p>
+        <p>An example is predicting <strong>housing prices</strong>, where the model learns from historical sales data to predict a continuous value.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>What is the &quot;Cocktail Party Problem,&quot; and why is it considered an unsupervised learning task?</summary>
+        <div class="answer">
+          
+        <p>The Cocktail Party Problem consists of separating individual voices or signals from a chaotic mixed recording.</p>
+        <p>It is <strong>unsupervised</strong> because the algorithm is not given labels for the voices and must discover the underlying structure on its own.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>Describe the role of the &quot;Cost Function&quot; ($J$) in linear regression.</summary>
+        <div class="answer">
+          
+        <p>The cost function measures the difference between the model’s predictions and the actual data points.</p>
+        <p>By minimizing it, the algorithm finds the parameters that best fit the data:</p>
+        <p>$$J(\theta_0, \theta_1) = \frac{1}{2m} \sum_{i=1}^{m} (h_\theta(x^{(i)}) - y^{(i)})^2$$</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>Why is the &quot;Democratization of Cloud Computing&quot; cited as a reason for the recent rise in ML adoption?</summary>
+        <div class="answer">
+          
+        <p>It allows individuals and small teams to rent massive computing resources without owning expensive hardware.</p>
+        <p>This lowers the barrier to running large-scale ML experiments.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>In the context of ML modeling, what is the difference between a &quot;feature&quot; and a &quot;target&quot;?</summary>
+        <div class="answer">
+          
+        <ul>
+          <li><strong>Feature (x):</strong> the input variable used to make a prediction</li>
+          <li><strong>Target (y):</strong> the actual value the model is trying to predict</li>
+        </ul>
+        <p>Example: the size of a house is a feature; the selling price is the target.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>What characterizes a &quot;Classification&quot; problem in supervised learning?</summary>
+        <div class="answer">
+          
+        <p>A classification problem predicts a <strong>discrete category</strong> rather than a continuous value.</p>
+        <p>Examples include <em>spam vs. not spam</em> and <em>benign vs. malignant</em>.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>Explain why &quot;Domain Knowledge&quot; is a critical component of the Data Science Venn diagram.</summary>
+        <div class="answer">
+          
+        <p>Domain knowledge gives context to the data and helps interpret results correctly.</p>
+        <p>Without it, a model may find patterns that are mathematically valid but scientifically irrelevant or misleading.</p>
+        
+        </div>
+      </details>
+
+      <details>
+        <summary>How does &quot;Univariate Linear Regression&quot; differ from more complex ML models mentioned in the slides?</summary>
+        <div class="answer">
+          
+        <p>Univariate linear regression uses only <strong>one input variable</strong> to make predictions.</p>
+        <p>More complex models may use multiple features, non-linear relationships, higher-order terms, or neural networks.</p>
+        
+        </div>
+      </details>
+
+      <h2>7. Essay-Format Questions</h2>
+      <p><strong>The Evolution of AI to Applied ML:</strong> Discuss the historical shift from explicit programming to the “learning from experience” paradigm. Why is the latter more effective for tasks like spam filtering or image recognition?</p>
+      <p><strong>The “V” Factors of Big Data:</strong> Analyze how Volume, Variety, Velocity, and Veracity have necessitated the move toward automated machine learning systems. How does “Applied ML” address the problem of data that humans cannot process manually?</p>
+      <p><strong>Supervised vs. Unsupervised Methodologies:</strong> Compare and contrast these two approaches. In your essay, describe a scenario where a researcher might use unsupervised clustering before applying a supervised classification model.</p>
+      <p><strong>Mechanics of Linear Regression:</strong> Detail the mathematical relationship between the hypothesis $h$, the parameters $\theta$, and the cost function $J$. Explain the conceptual process of “minimization” and why squared errors are commonly used.</p>
+      <p><strong>The Ethics of AI vs. Human Intelligence (HI):</strong> Using the source material’s distinction between “Strong AI” and “Weak AI,” argue for the “Integration” of intelligences. Why does the instructor emphasize that ML is about “automation of tasks” rather than “replacing humans”?</p>
+
+      <h2>8. Glossary of Key Terms</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Term</th>
+            <th>Definition</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="Term">Big Data</td><td data-label="Definition">Large datasets characterized by extreme Volume, Variety, Velocity, and Veracity.</td></tr>
+          <tr><td data-label="Term">Classification</td><td data-label="Definition">A supervised learning task where the output is a discrete category (e.g., 0 or 1).</td></tr>
+          <tr><td data-label="Term">Clustering</td><td data-label="Definition">An unsupervised learning method that groups unlabeled data points based on similarities.</td></tr>
+          <tr><td data-label="Term">Cost Function ($J$)</td><td data-label="Definition">A mathematical formula (e.g., squared error) used to measure how well a model fits the training data.</td></tr>
+          <tr><td data-label="Term">Data Science</td><td data-label="Definition">A multidisciplinary field combining math/statistics, computer science, and domain expertise to extract insights.</td></tr>
+          <tr><td data-label="Term">Feature</td><td data-label="Definition">An input variable ($x$) used by a machine learning model to make predictions.</td></tr>
+          <tr><td data-label="Term">GPU</td><td data-label="Definition">Graphical Processing Unit; hardware used to accelerate ML tasks through parallel processing.</td></tr>
+          <tr><td data-label="Term">Hypothesis ($h$)</td><td data-label="Definition">The function or model produced by a learning algorithm to map inputs to outputs.</td></tr>
+          <tr><td data-label="Term">Parameters ($\theta$)</td><td data-label="Definition">The internal variables ($\theta_0$, $\theta_1$) that a model adjusts to minimize the cost function.</td></tr>
+          <tr><td data-label="Term">Regression</td><td data-label="Definition">A supervised learning task where the output is a continuous real-valued number.</td></tr>
+          <tr><td data-label="Term">Supervised Learning</td><td data-label="Definition">A type of ML where the model is trained on data with known labels or targets.</td></tr>
+          <tr><td data-label="Term">Training Set</td><td data-label="Definition">The historical dataset ($m$ examples) used to “teach” a machine learning algorithm.</td></tr>
+          <tr><td data-label="Term">Unsupervised Learning</td><td data-label="Definition">A type of ML where the algorithm finds hidden patterns or structures in unlabeled data.</td></tr>
+          <tr><td data-label="Term">Univariate</td><td data-label="Definition">A model that uses only one independent variable to make predictions.</td></tr>
+        </tbody>
+      </table>
+
+      <p class="footer">Converted from your Markdown file with the short-answer section preserved as expandable questions.</p>
+    </article>
+  </div>
+</body>
+</html>
