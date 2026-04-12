@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture 02 - Applied Machine Learning</title>
+  <title>Lecture 02A - Optimization & Linear Models</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -13,7 +13,7 @@
       <div class="topbar-desktop">
         <div class="nav-group">
           <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="Lecture02A.html">Lecture 02</a>
+          <a class="btn-link" href="Lecture02A.html">Lecture 02A</a>
         </div>
 
         <div class="nav-group">
@@ -41,17 +41,16 @@
           <div class="eyebrow">Applied Machine Learning · Basic</div>
           <h1>Lecture 02A — Gradient Descent & Linear Regression</h1>
           <p class="subtitle">
-            This lecture explains how gradient descent minimizes a cost function, why the learning rate matters,
-            how linear regression behaves under optimization, and how the univariate case extends to multiple features
-            through multivariate and vectorized notation.
+            This part focuses on optimization: how gradient descent minimizes a cost function, why the learning rate matters,
+            how linear regression behaves under optimization, and how the univariate case extends to multiple features.
           </p>
 
           <div class="hero-meta">
             <div class="pill">Gradient Descent</div>
             <div class="pill">Learning Rate</div>
             <div class="pill">Convexity</div>
-            <div class="pill">Batch GD</div>
             <div class="pill">Multivariate Regression</div>
+            <div class="pill">Normal Equation</div>
           </div>
 
           <div class="status" id="completionStatus">Not completed yet</div>
@@ -61,7 +60,7 @@
           <div class="hero-image-card">
             <img src="images/lecture02/hero-cover.jpg" alt="Gradient descent and optimization visual">
           </div>
-          <div class="hero-badge">Gradient descent and optimization visual</div>
+          <div class="hero-badge">Optimization and linear models</div>
         </div>
       </div>
     </section>
@@ -104,8 +103,8 @@
           </div>
 
           <p>
-            The lecture first explains gradient descent in a general way, then applies it to linear regression,
-            and finally extends the discussion from one feature to many features through multivariate notation.
+            We first understand gradient descent in a general way, then apply it to linear regression,
+            and finally extend the discussion from one feature to many features through multivariate notation.
           </p>
         </section>
 
@@ -117,7 +116,7 @@
           </p>
 
           <p>
-            The lecture presents it with a physical intuition: imagine the cost function as a landscape of hills and valleys.
+            Imagine the cost function as a landscape of hills and valleys.
             You pick a starting point, look around, and move in the direction that takes you downhill most quickly.
           </p>
 
@@ -169,23 +168,23 @@
               </thead>
               <tbody>
                 <tr>
-                  <td><formula>$$\theta_j$$</formula></td>
+                  <td>$$\theta_j$$</td>
                   <td>The parameter currently being updated</td>
                 </tr>
                 <tr>
-                  <td><formula>$$J(\theta_0, \theta_1, \ldots, \theta_n)$$</formula></td>
+                  <td>$$J(\theta_0, \theta_1, \ldots, \theta_n)$$</td>
                   <td>The cost function to minimize</td>
                 </tr>
                 <tr>
-                  <td><formula>$$\frac{\partial}{\partial \theta_j} J(\theta_0, \theta_1, \ldots, \theta_n)$$</formula></td>
+                  <td>$$\frac{\partial}{\partial \theta_j} J(\theta_0, \theta_1, \ldots, \theta_n)$$</td>
                   <td>The partial derivative showing the local slope</td>
                 </tr>
                 <tr>
-                  <td><formula>$$\alpha$$</formula></td>
+                  <td>$$\alpha$$</td>
                   <td>The learning rate, controlling step size</td>
                 </tr>
                 <tr>
-                  <td><formula>$$\text{Repeat until convergence}$$</formula></td>
+                  <td>$$\text{Repeat until convergence}$$</td>
                   <td>Apply the rule iteratively until updates become negligible</td>
                 </tr>
               </tbody>
@@ -329,7 +328,7 @@
           </div>
 
           <p>
-            A useful point from the lecture is that even with a fixed learning rate, gradient descent can still converge,
+            Even with a fixed learning rate, gradient descent can still converge,
             because the derivative naturally gets closer to zero near a minimum.
           </p>
 
@@ -339,7 +338,6 @@
 
           <div class="figure">
             <img src="images/lecture02/learning-rate.png" alt="Effect of learning rate on gradient descent">
-
             <div class="figure-body">
               <div class="figure-kicker">Learning rate comparison</div>
               <div class="figure-caption">
@@ -356,7 +354,6 @@
 
           <p>
             In general optimization, gradient descent can end at different local minima depending on where it starts.
-            That is a normal property of basic gradient descent.
           </p>
 
           <div class="comparison">
@@ -381,7 +378,6 @@
 
           <div class="figure" style="margin-top: 16px;">
             <img src="images/lecture02/local-vs-global.png" alt="Local vs global optima in optimization">
-
             <div class="figure-body">
               <div class="figure-kicker">Optimization landscape</div>
               <div class="figure-caption">
@@ -392,7 +388,7 @@
           </div>
 
           <p>
-            The caveat is that the learning rate still has to be chosen sensibly. Convexity helps, but an excessively large α can still break convergence.
+            Convexity helps, but an excessively large α can still break convergence.
           </p>
         </section>
 
@@ -413,7 +409,7 @@
           </div>
 
           <p>
-            The lecture emphasizes that what changes from one model to another is mainly the derivative term,
+            What changes from one model to another is mainly the derivative term,
             because that depends on the chosen hypothesis.
           </p>
 
@@ -602,8 +598,6 @@
 
           <p>
             Feature scaling transforms values so that different features have comparable ranges.
-            For example, one feature might range from 0 to 1, while another ranges from 0 to 1000.
-            This imbalance can distort the optimization process.
           </p>
 
           <div class="figure" style="margin-top: 16px;">
@@ -616,7 +610,6 @@
               </div>
             </div>
           </div>
-
 
           <h3>Mean Normalization</h3>
 
@@ -669,7 +662,6 @@
               </p>
             </div>
           </div>
-
 
           <div class="callout">
             Feature scaling and mean normalisation are simple tricks that help to make GD run much faster and converge in a lot fewer iterations. They are not strictly required for GD to work, but they are very helpful in practice.
@@ -729,23 +721,17 @@
           <div class="grid-3">
             <div class="card">
               <div class="card-title">Good α</div>
-              <p>
-                The cost decreases smoothly and converges to a minimum.
-              </p>
+              <p>The cost decreases smoothly and converges to a minimum.</p>
             </div>
 
             <div class="card">
               <div class="card-title">Too Small α</div>
-              <p>
-                The cost decreases very slowly, requiring many iterations.
-              </p>
+              <p>The cost decreases very slowly, requiring many iterations.</p>
             </div>
 
             <div class="card">
               <div class="card-title">Too Large α</div>
-              <p>
-                The cost may increase or oscillate, indicating divergence.
-              </p>
+              <p>The cost may increase or oscillate, indicating divergence.</p>
             </div>
           </div>
 
@@ -756,7 +742,6 @@
 
           <p>
             In practice, it is common to try several values of α and observe how the cost evolves.
-            This empirical approach helps identify a good learning rate quickly.
           </p>
         </section>
 
@@ -768,8 +753,7 @@
           </p>
 
           <p>
-            Some relationships are curved or more complex than a basic linear trend. In those cases,
-            a plain line may underfit the data and fail to capture the real pattern.
+            Some relationships are curved or more complex than a basic linear trend.
           </p>
 
           <div class="figure">
@@ -843,8 +827,7 @@
           </p>
 
           <p>
-            Instead of using only x, we can use x, x², x³, and so on. This allows the hypothesis to trace
-            more complex shapes while still using the same linear regression machinery.
+            Instead of using only x, we can use x, x², x³, and so on.
           </p>
 
           <div class="formula">
@@ -959,8 +942,8 @@
 
           <ul>
             <li>No need to choose a learning rate α</li>
-            <li>No iterative process (no need to monitor convergence)</li>
-            <li>Gives the exact optimal solution (for linear regression)</li>
+            <li>No iterative process</li>
+            <li>Gives the exact optimal solution for linear regression</li>
           </ul>
 
           <h3>Limitations</h3>
@@ -1018,10 +1001,6 @@
           </div>
         </section>
 
-        <div class="callout">
-          Next: we move from predicting numbers to predicting categories — introducing classification and logistic regression.
-        </div>
-        
         <section class="section" id="study-material">
           <h2 class="section-title">Study Material</h2>
 
@@ -1049,35 +1028,32 @@
             </div>
           </div>
 
-          <p>
-            The slides are especially useful here because this lecture relies heavily on visual intuition:
-            surfaces, contours, motion, and parameter updates. The transcript helps explain what those visuals mean.
-          </p>
+          <div class="callout">
+            Next: we move from predicting numbers to predicting categories — introducing classification and logistic regression.
+          </div>
         </section>
 
         <section class="section" id="quiz">
-          <h2 class="section-title">Comprehensive Review Quiz</h2>
-
-          <!-- BASICS -->
+          <h2 class="section-title">Review Quiz</h2>
 
           <details>
-            <summary>1. What is the goal of linear regression?</summary>
-            <div class="details-body">
-              <p>To predict continuous values by fitting a function to the data.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>2. What does gradient descent do?</summary>
+            <summary>1. What does gradient descent do?</summary>
             <div class="details-body">
               <p>It iteratively updates parameters to minimize a cost function.</p>
             </div>
           </details>
 
           <details>
-            <summary>3. What is the learning rate α?</summary>
+            <summary>2. What is the role of the learning rate α?</summary>
             <div class="details-body">
-              <p>A parameter that controls how big each update step is during gradient descent.</p>
+              <p>It controls the size of each parameter update.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. Why must updates be simultaneous?</summary>
+            <div class="details-body">
+              <p>Because all parameters should be updated from the same old state at each iteration.</p>
             </div>
           </details>
 
@@ -1091,203 +1067,79 @@
           <details>
             <summary>5. What happens if α is too large?</summary>
             <div class="details-body">
-              <p>The algorithm may diverge or oscillate.</p>
+              <p>The algorithm may oscillate or diverge.</p>
             </div>
           </details>
 
-          <!-- GD PRACTICAL -->
-
           <details>
-            <summary>6. What does a decreasing cost function over iterations indicate?</summary>
+            <summary>6. Why is the linear regression cost function considered convenient for gradient descent?</summary>
             <div class="details-body">
-              <p>That gradient descent is working correctly and converging.</p>
+              <p>Because it is convex, so it has a single global minimum.</p>
             </div>
           </details>
 
           <details>
-            <summary>7. What does it mean if the cost increases after an iteration?</summary>
+            <summary>7. What is batch gradient descent?</summary>
             <div class="details-body">
-              <p>The learning rate is likely too large.</p>
+              <p>An update rule that uses the entire training set at every iteration.</p>
             </div>
           </details>
 
           <details>
-            <summary>8. Why is it useful to plot cost vs iterations?</summary>
+            <summary>8. What changes when moving from univariate to multivariate regression?</summary>
             <div class="details-body">
-              <p>To monitor convergence and detect problems with training.</p>
+              <p>The model uses multiple input features instead of only one.</p>
             </div>
           </details>
 
-          <!-- SCALING -->
+          <details>
+            <summary>9. Why do we define x₀ = 1?</summary>
+            <div class="details-body">
+              <p>To absorb the intercept term into vectorized notation.</p>
+            </div>
+          </details>
 
           <details>
-            <summary>9. Why is feature scaling important?</summary>
+            <summary>10. Why is feature scaling useful?</summary>
             <div class="details-body">
               <p>It helps gradient descent converge faster and more efficiently.</p>
             </div>
           </details>
 
           <details>
-            <summary>10. What is mean normalization?</summary>
+            <summary>11. What is mean normalization?</summary>
             <div class="details-body">
-              <p>Centering features around zero by subtracting the mean.</p>
-            </div>
-          </details>
-
-          <!-- PROBLEM TYPES -->
-
-          <details>
-            <summary>11. What type of problem is regression, and why?</summary>
-            <div class="details-body">
-              <p>It is supervised learning because it predicts continuous outputs from labeled data.</p>
+              <p>Centering feature values around zero by subtracting the mean and scaling.</p>
             </div>
           </details>
 
           <details>
-            <summary>12. What type of problem is classification, and why?</summary>
-            <div class="details-body">
-              <p>It is supervised learning because it predicts discrete labels from labeled data.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>13. What is binary classification?</summary>
-            <div class="details-body">
-              <p>A classification problem with two possible outputs (e.g., 0 or 1).</p>
-            </div>
-          </details>
-
-          <!-- LOGISTIC -->
-
-          <details>
-            <summary>14. What does the sigmoid function do?</summary>
-            <div class="details-body">
-              <p>Maps any real number to a value between 0 and 1.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>15. What is the formula of the sigmoid function?</summary>
-            <div class="details-body">
-              <p>g(z) = 1 / (1 + e<sup>-z</sup>)</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>16. What does hθ(x) represent in logistic regression?</summary>
-            <div class="details-body">
-              <p>The probability that y = 1 given x.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>17. What is the decision rule in logistic regression?</summary>
-            <div class="details-body">
-              <p>If hθ(x) ≥ 0.5 → predict 1, otherwise predict 0.</p>
-            </div>
-          </details>
-
-          <!-- DECISION BOUNDARY -->
-
-          <details>
-            <summary>18. What is a decision boundary?</summary>
-            <div class="details-body">
-              <p>The boundary that separates different classes in the input space.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>19. What defines the decision boundary mathematically?</summary>
-            <div class="details-body">
-              <p>The set of points where θᵀx = 0.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>20. How can we create non-linear decision boundaries?</summary>
-            <div class="details-body">
-              <p>By adding polynomial or engineered features.</p>
-            </div>
-          </details>
-
-          <!-- COST FUNCTION -->
-
-          <details>
-            <summary>21. Why can’t we use squared error for logistic regression?</summary>
-            <div class="details-body">
-              <p>Because it can produce a non-convex cost function.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>22. What does the logistic cost function penalize most?</summary>
-            <div class="details-body">
-              <p>Confident but incorrect predictions.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>23. What happens to cost when prediction is correct and confident?</summary>
-            <div class="details-body">
-              <p>The cost is close to zero.</p>
-            </div>
-          </details>
-
-          <!-- NORMAL EQUATION -->
-
-          <details>
-            <summary>24. What does the normal equation do?</summary>
-            <div class="details-body">
-              <p>Computes the optimal parameters directly without iteration.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>25. When is the normal equation preferred?</summary>
-            <div class="details-body">
-              <p>When the number of features is small.</p>
-            </div>
-          </details>
-
-          <!-- FEATURE ENGINEERING -->
-
-          <details>
-            <summary>26. What is feature engineering?</summary>
+            <summary>12. What is feature engineering?</summary>
             <div class="details-body">
               <p>Creating new features from existing ones to improve the model.</p>
             </div>
           </details>
 
           <details>
-            <summary>27. Why are polynomial features useful?</summary>
+            <summary>13. Why are polynomial features useful?</summary>
             <div class="details-body">
               <p>They allow linear models to capture non-linear relationships.</p>
             </div>
           </details>
 
-          <!-- ADVANCED UNDERSTANDING -->
-
           <details>
-            <summary>28. What is the key difference between linear and logistic regression?</summary>
+            <summary>14. What does the normal equation do?</summary>
             <div class="details-body">
-              <p>Linear predicts continuous values, logistic predicts probabilities for classification.</p>
+              <p>It computes the optimal parameters directly without iterative updates.</p>
             </div>
           </details>
 
           <details>
-            <summary>29. What is the most important factor for model flexibility?</summary>
+            <summary>15. When is the normal equation usually preferred?</summary>
             <div class="details-body">
-              <p>The choice and design of features.</p>
+              <p>When the number of features is relatively small.</p>
             </div>
           </details>
-
-          <details>
-            <summary>30. What is the core pattern shared by most ML models?</summary>
-            <div class="details-body">
-              <p>Define a hypothesis, define a cost function, and optimize the parameters.</p>
-            </div>
-          </details>
-
         </section>
 
         <div class="bottom-nav">
@@ -1300,8 +1152,8 @@
         </div>
 
         <div class="footer-note">
-          Lecture 02 study page
-        
+          Lecture 02A study page
+
           <span class="persian-note" dir="rtl">
             برای تو، می‌دونم این بخش یکم سخت‌تره… ولی تو کاملاً از پسش برمیای 💙
           </span>
@@ -1311,11 +1163,11 @@
   </main>
 
   <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-
   <div class="toc-backdrop"></div>
+
   <script src="script.js"></script>
   <script>
-    initLecturePage("lecture2");
+    initLecturePage("lecture2a");
   </script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture 02 - Applied Machine Learning</title>
+  <title>Lecture 02B - Classification & Logistic Regression</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
@@ -13,7 +13,7 @@
       <div class="topbar-desktop">
         <div class="nav-group">
           <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="Lecture02B.html">Lecture 02</a>
+          <a class="btn-link" href="Lecture02B.html">Lecture 02B</a>
         </div>
 
         <div class="nav-group">
@@ -41,17 +41,16 @@
           <div class="eyebrow">Applied Machine Learning · Basic</div>
           <h1>Lecture 02B — Classification & Logistic Regression</h1>
           <p class="subtitle">
-            This lecture explains how gradient descent minimizes a cost function, why the learning rate matters,
-            how linear regression behaves under optimization, and how the univariate case extends to multiple features
-            through multivariate and vectorized notation.
+            This part shifts from predicting continuous values to predicting categories, introducing binary classification,
+            logistic regression, sigmoid outputs, decision boundaries, and the logistic cost function.
           </p>
 
           <div class="hero-meta">
+            <div class="pill">Classification</div>
+            <div class="pill">Sigmoid</div>
+            <div class="pill">Decision Boundary</div>
+            <div class="pill">Logistic Cost</div>
             <div class="pill">Gradient Descent</div>
-            <div class="pill">Learning Rate</div>
-            <div class="pill">Convexity</div>
-            <div class="pill">Batch GD</div>
-            <div class="pill">Multivariate Regression</div>
           </div>
 
           <div class="status" id="completionStatus">Not completed yet</div>
@@ -59,9 +58,9 @@
 
         <div class="hero-visual">
           <div class="hero-image-card">
-            <img src="images/lecture02/hero-cover.jpg" alt="Gradient descent and optimization visual">
+            <img src="images/lecture02/sigmoid-curve.png" alt="Classification and logistic regression visual">
           </div>
-          <div class="hero-badge">Gradient descent and optimization visual</div>
+          <div class="hero-badge">Classification and logistic regression</div>
         </div>
       </div>
     </section>
@@ -78,6 +77,7 @@
         <a href="#probability">Probability Interpretation</a>
         <a href="#decision-rule">Decision Rule</a>
         <a href="#decision-boundary-concept">Decision Boundary</a>
+        <a href="#linear-boundary">Linear Boundaries</a>
         <a href="#nonlinear-boundary">Non-linear Boundaries</a>
         <a href="#boundary-insight">Key Insight</a>
         <a href="#logistic-cost-problem">Cost Problem</a>
@@ -94,13 +94,11 @@
       </aside>
 
       <div class="content">
-
-
         <section class="section" id="classification">
           <h2 class="section-title">From Regression to Classification</h2>
 
           <p class="lead">
-            So far, we have focused on predicting continuous values.  
+            So far, we have focused on predicting continuous values.
             But many real-world problems require predicting categories instead.
           </p>
 
@@ -121,7 +119,7 @@
                 <tr>
                   <td>Regression</td>
                   <td>Predict house price</td>
-                  <td>Continuous value (e.g. $250,000)</td>
+                  <td>Continuous value</td>
                 </tr>
                 <tr>
                   <td>Classification</td>
@@ -135,7 +133,6 @@
           <div class="callout">
             Classification answers: “which category does this belong to?”
           </div>
-
         </section>
 
         <section class="section" id="binary-classification">
@@ -154,8 +151,8 @@
           </div>
 
           <ul>
-            <li>0 → negative class (e.g. not spam)</li>
-            <li>1 → positive class (e.g. spam)</li>
+            <li>0 → negative class</li>
+            <li>1 → positive class</li>
           </ul>
 
           <div class="figure">
@@ -233,8 +230,7 @@
           </div>
 
           <p>
-            In the next section, we will introduce the sigmoid function,
-            which transforms linear predictions into valid probabilities.
+            The sigmoid function transforms linear predictions into valid probabilities.
           </p>
         </section>
 
@@ -246,7 +242,7 @@
           </p>
 
           <p>
-            The sigmoid (or logistic) function transforms any real number into a value in the range [0, 1].
+            The sigmoid function transforms any real number into a value in the range [0, 1].
           </p>
 
           <div class="formula">
@@ -266,7 +262,7 @@
           <div class="grid-3">
             <div class="card">
               <div class="card-title">z → −∞</div>
-              <p>$$g(z) → 0$$</p>
+              <p>$$g(z) \to 0$$</p>
             </div>
 
             <div class="card">
@@ -276,7 +272,7 @@
 
             <div class="card">
               <div class="card-title">z → +∞</div>
-              <p>$$g(z) → 1$$</p>
+              <p>$$g(z) \to 1$$</p>
             </div>
           </div>
         </section>
@@ -293,12 +289,12 @@
           </div>
 
           <div class="formula">
-            $$ h_\theta(x) =  \frac{1}{1 + e^{-\theta^T x}} $$
+            $$ h_\theta(x) = \frac{1}{1 + e^{-\theta^T x}} $$
           </div>
 
           <p>
-            This means we first compute a linear combination of features,
-            and then pass it through the sigmoid function to obtain a probability.
+            We first compute a linear combination of features,
+            then pass it through the sigmoid function to obtain a probability.
           </p>
 
           <div class="callout">
@@ -316,10 +312,6 @@
           <div class="formula">
             $$ h_\theta(x) = P(y = 1 \mid x; \theta) $$
           </div>
-
-          <p>
-            This means:
-          </p>
 
           <ul>
             <li>If hθ(x) ≈ 1 → high probability of class 1</li>
@@ -365,11 +357,11 @@
           <h2 class="section-title">Decision Boundary</h2>
 
           <p class="lead">
-            The decision boundary is the line (or surface) that separates different classes.
+            The decision boundary is the line or surface that separates different classes.
           </p>
 
           <p>
-            It is defined by the set of points where the model is uncertain between the two classes:
+            It is defined by the set of points where the model is uncertain:
           </p>
 
           <div class="formula">
@@ -461,8 +453,7 @@
           </div>
 
           <p>
-            This connects directly with what we learned earlier:
-            feature engineering and polynomial expansion are powerful tools
+            Feature engineering and polynomial expansion are powerful tools
             for increasing model flexibility.
           </p>
         </section>
@@ -498,8 +489,7 @@
           <h2 class="section-title">Logistic Regression Cost Function</h2>
 
           <p class="lead">
-            Instead of squared error, logistic regression uses a different cost function
-            designed for classification.
+            Instead of squared error, logistic regression uses a different cost function designed for classification.
           </p>
 
           <p>For a single training example:</p>
@@ -524,7 +514,6 @@
 
           <div class="figure">
             <img src="images/lecture02/log-cost.png" alt="Logistic cost function for y=1 and y=0">
-
             <div class="figure-body">
               <div class="figure-kicker">Logistic cost behavior</div>
               <div class="figure-caption">
@@ -576,11 +565,10 @@
             This compact formula works for both y = 0 and y = 1.
           </p>
 
-
-          <p>
+          <div class="callout">
             This is one of the reasons linear models remain important: with the right features,
             simple algorithms can become surprisingly powerful.
-          </p>
+          </div>
         </section>
 
         <section class="section" id="cost-full">
@@ -616,16 +604,14 @@
             Logistic regression is trained using gradient descent, just like linear regression.
           </p>
 
-          <p>
-            The update rule looks the same:
-          </p>
+          <p>The update rule looks the same:</p>
 
           <div class="formula">
             $$ \theta_j := \theta_j - \alpha \frac{\partial}{\partial \theta_j} J(\theta) $$
           </div>
 
           <p>
-            The key difference is the cost function.  
+            The key difference is the cost function.
             Instead of squared error, we now use the logistic cost function.
           </p>
 
@@ -745,63 +731,27 @@
             There is no single “best” method — the right choice depends on the problem,
             the data, and computational constraints.
           </div>
-
-          <p>
-            In practice, machine learning often involves trying different approaches,
-            observing their behavior, and refining both the model and the features.
-          </p>
         </section>
 
         <section class="section" id="final-wrap">
           <h2 class="section-title">Lecture Wrap-up</h2>
 
           <p class="lead">
-            This lecture introduced two fundamental types of machine learning models:
-            regression and classification.
+            This part introduced the foundations of classification through logistic regression.
           </p>
 
           <ul>
-            <li>Linear regression predicts continuous values</li>
-            <li>Gradient descent is used to optimize model parameters</li>
-            <li>Feature scaling improves optimization performance</li>
-            <li>Logistic regression models probabilities using the sigmoid function</li>
-            <li>Decision boundaries define how classes are separated</li>
-            <li>The logistic cost function enables stable optimization</li>
+            <li>Classification predicts categories rather than continuous values</li>
+            <li>The sigmoid function maps outputs into probabilities</li>
+            <li>Decision boundaries separate classes in feature space</li>
+            <li>Feature transformations allow non-linear boundaries</li>
+            <li>The logistic cost function replaces squared error</li>
+            <li>Gradient descent still works, but with a different cost</li>
           </ul>
 
-          <p>
-            These ideas form the foundation for many more advanced machine learning models.
-          </p>
-
           <div class="callout">
-            Most machine learning models follow the same pattern:
-            define a hypothesis, define a cost, and optimize the parameters.
-          </div>
-        </section>
-
-        <section class="section" id="key-visuals">
-          <h2 class="section-title">Key Visuals</h2>
-
-          <div class="figure-grid">
-            <div class="figure">
-              <img src="images/lecture02/key-slide.png" alt="Key slide from Lecture 2">
-              <div class="figure-body">
-                <div class="figure-kicker">Lecture anchor</div>
-                <div class="figure-caption">
-                  A key visual from the lecture showing the optimization-centered view of model training.
-                </div>
-              </div>
-            </div>
-
-            <div class="figure">
-              <img src="images/lecture02/contour-descent.png" alt="Contour view of gradient descent">
-              <div class="figure-body">
-                <div class="figure-kicker">Equivalent view</div>
-                <div class="figure-caption">
-                  The same optimization can be viewed either as a line fitting problem or as motion across contours in parameter space.
-                </div>
-              </div>
-            </div>
+            Most machine learning models still follow the same pattern:
+            define a hypothesis, define a cost function, and optimize the parameters.
           </div>
         </section>
 
@@ -813,7 +763,7 @@
               <div class="card-title">Slides</div>
               <strong>Lecture 2 Slides</strong>
               <p>
-                Use the slide deck for the full gradient descent walkthrough, optimization visuals, and multivariate notation.
+                Use the slide deck for the transition from regression to classification, sigmoid intuition, and logistic cost derivation.
               </p>
               <a class="btn-link" href="slides/lecture02.pdf" target="_blank" rel="noopener noreferrer">
                 View PDF →
@@ -824,253 +774,122 @@
               <div class="card-title">Transcript</div>
               <strong>Lecture 2 Transcript</strong>
               <p>
-                Use the transcript for the lecturer’s intuition, implementation warnings, and practical explanation of learning rate behavior.
+                Use the transcript for the lecturer’s explanation of probability interpretation, decision boundaries, and why squared error fails.
               </p>
               <a class="btn-link" href="transcriptions/lecture02.pdf" target="_blank" rel="noopener noreferrer">
                 View PDF →
               </a>
             </div>
           </div>
-
-          <p>
-            The slides are especially useful here because this lecture relies heavily on visual intuition:
-            surfaces, contours, motion, and parameter updates. The transcript helps explain what those visuals mean.
-          </p>
         </section>
 
         <section class="section" id="quiz">
-          <h2 class="section-title">Comprehensive Review Quiz</h2>
-
-          <!-- BASICS -->
+          <h2 class="section-title">Review Quiz</h2>
 
           <details>
-            <summary>1. What is the goal of linear regression?</summary>
+            <summary>1. What is the main difference between regression and classification?</summary>
             <div class="details-body">
-              <p>To predict continuous values by fitting a function to the data.</p>
+              <p>Regression predicts continuous values, while classification predicts categories or labels.</p>
             </div>
           </details>
 
           <details>
-            <summary>2. What does gradient descent do?</summary>
+            <summary>2. What is binary classification?</summary>
             <div class="details-body">
-              <p>It iteratively updates parameters to minimize a cost function.</p>
+              <p>A classification problem with two possible outputs, usually 0 and 1.</p>
             </div>
           </details>
 
           <details>
-            <summary>3. What is the learning rate α?</summary>
+            <summary>3. Why is linear regression a poor choice for classification?</summary>
             <div class="details-body">
-              <p>A parameter that controls how big each update step is during gradient descent.</p>
+              <p>Because its outputs are not naturally restricted to the range [0,1] and the resulting decision boundary can be unstable.</p>
             </div>
           </details>
 
           <details>
-            <summary>4. What happens if α is too small?</summary>
+            <summary>4. What does the sigmoid function do?</summary>
             <div class="details-body">
-              <p>Convergence becomes very slow.</p>
+              <p>It maps any real-valued input to a number between 0 and 1.</p>
             </div>
           </details>
 
           <details>
-            <summary>5. What happens if α is too large?</summary>
+            <summary>5. What is the formula of the sigmoid function?</summary>
             <div class="details-body">
-              <p>The algorithm may diverge or oscillate.</p>
-            </div>
-          </details>
-
-          <!-- GD PRACTICAL -->
-
-          <details>
-            <summary>6. What does a decreasing cost function over iterations indicate?</summary>
-            <div class="details-body">
-              <p>That gradient descent is working correctly and converging.</p>
+              <p>$$g(z) = \frac{1}{1 + e^{-z}}$$</p>
             </div>
           </details>
 
           <details>
-            <summary>7. What does it mean if the cost increases after an iteration?</summary>
-            <div class="details-body">
-              <p>The learning rate is likely too large.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>8. Why is it useful to plot cost vs iterations?</summary>
-            <div class="details-body">
-              <p>To monitor convergence and detect problems with training.</p>
-            </div>
-          </details>
-
-          <!-- SCALING -->
-
-          <details>
-            <summary>9. Why is feature scaling important?</summary>
-            <div class="details-body">
-              <p>It helps gradient descent converge faster and more efficiently.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>10. What is mean normalization?</summary>
-            <div class="details-body">
-              <p>Centering features around zero by subtracting the mean.</p>
-            </div>
-          </details>
-
-          <!-- PROBLEM TYPES -->
-
-          <details>
-            <summary>11. What type of problem is regression, and why?</summary>
-            <div class="details-body">
-              <p>It is supervised learning because it predicts continuous outputs from labeled data.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>12. What type of problem is classification, and why?</summary>
-            <div class="details-body">
-              <p>It is supervised learning because it predicts discrete labels from labeled data.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>13. What is binary classification?</summary>
-            <div class="details-body">
-              <p>A classification problem with two possible outputs (e.g., 0 or 1).</p>
-            </div>
-          </details>
-
-          <!-- LOGISTIC -->
-
-          <details>
-            <summary>14. What does the sigmoid function do?</summary>
-            <div class="details-body">
-              <p>Maps any real number to a value between 0 and 1.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>15. What is the formula of the sigmoid function?</summary>
-            <div class="details-body">
-              <p>g(z) = 1 / (1 + e<sup>-z</sup>)</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>16. What does hθ(x) represent in logistic regression?</summary>
+            <summary>6. What does hθ(x) represent in logistic regression?</summary>
             <div class="details-body">
               <p>The probability that y = 1 given x.</p>
             </div>
           </details>
 
           <details>
-            <summary>17. What is the decision rule in logistic regression?</summary>
+            <summary>7. What is the standard decision rule in logistic regression?</summary>
             <div class="details-body">
-              <p>If hθ(x) ≥ 0.5 → predict 1, otherwise predict 0.</p>
-            </div>
-          </details>
-
-          <!-- DECISION BOUNDARY -->
-
-          <details>
-            <summary>18. What is a decision boundary?</summary>
-            <div class="details-body">
-              <p>The boundary that separates different classes in the input space.</p>
+              <p>If hθ(x) ≥ 0.5 predict 1, otherwise predict 0.</p>
             </div>
           </details>
 
           <details>
-            <summary>19. What defines the decision boundary mathematically?</summary>
+            <summary>8. What is a decision boundary?</summary>
             <div class="details-body">
-              <p>The set of points where θᵀx = 0.</p>
+              <p>The boundary in feature space that separates the predicted classes.</p>
             </div>
           </details>
 
           <details>
-            <summary>20. How can we create non-linear decision boundaries?</summary>
+            <summary>9. How can a model produce non-linear decision boundaries?</summary>
             <div class="details-body">
-              <p>By adding polynomial or engineered features.</p>
-            </div>
-          </details>
-
-          <!-- COST FUNCTION -->
-
-          <details>
-            <summary>21. Why can’t we use squared error for logistic regression?</summary>
-            <div class="details-body">
-              <p>Because it can produce a non-convex cost function.</p>
+              <p>By adding transformed or polynomial features.</p>
             </div>
           </details>
 
           <details>
-            <summary>22. What does the logistic cost function penalize most?</summary>
+            <summary>10. Why not use squared error for logistic regression?</summary>
             <div class="details-body">
-              <p>Confident but incorrect predictions.</p>
+              <p>Because it can produce a non-convex cost function that is harder to optimize reliably.</p>
             </div>
           </details>
 
           <details>
-            <summary>23. What happens to cost when prediction is correct and confident?</summary>
+            <summary>11. What does the logistic cost function penalize the most?</summary>
             <div class="details-body">
-              <p>The cost is close to zero.</p>
-            </div>
-          </details>
-
-          <!-- NORMAL EQUATION -->
-
-          <details>
-            <summary>24. What does the normal equation do?</summary>
-            <div class="details-body">
-              <p>Computes the optimal parameters directly without iteration.</p>
+              <p>Confident but wrong predictions.</p>
             </div>
           </details>
 
           <details>
-            <summary>25. When is the normal equation preferred?</summary>
+            <summary>12. What happens to the cost when a prediction is correct and confident?</summary>
             <div class="details-body">
-              <p>When the number of features is small.</p>
-            </div>
-          </details>
-
-          <!-- FEATURE ENGINEERING -->
-
-          <details>
-            <summary>26. What is feature engineering?</summary>
-            <div class="details-body">
-              <p>Creating new features from existing ones to improve the model.</p>
+              <p>The cost becomes very small, close to zero.</p>
             </div>
           </details>
 
           <details>
-            <summary>27. Why are polynomial features useful?</summary>
+            <summary>13. What is the unified logistic cost for one example?</summary>
             <div class="details-body">
-              <p>They allow linear models to capture non-linear relationships.</p>
-            </div>
-          </details>
-
-          <!-- ADVANCED UNDERSTANDING -->
-
-          <details>
-            <summary>28. What is the key difference between linear and logistic regression?</summary>
-            <div class="details-body">
-              <p>Linear predicts continuous values, logistic predicts probabilities for classification.</p>
+              <p>$$-y \log(h_\theta(x)) - (1 - y)\log(1 - h_\theta(x))$$</p>
             </div>
           </details>
 
           <details>
-            <summary>29. What is the most important factor for model flexibility?</summary>
+            <summary>14. Does gradient descent still apply to logistic regression?</summary>
             <div class="details-body">
-              <p>The choice and design of features.</p>
+              <p>Yes. The update structure is the same, but the cost function is different.</p>
             </div>
           </details>
 
           <details>
-            <summary>30. What is the core pattern shared by most ML models?</summary>
+            <summary>15. What is the key difference between linear and logistic regression?</summary>
             <div class="details-body">
-              <p>Define a hypothesis, define a cost function, and optimize the parameters.</p>
+              <p>Linear regression predicts continuous values, while logistic regression predicts probabilities for classification.</p>
             </div>
           </details>
-
         </section>
 
         <div class="bottom-nav">
@@ -1083,10 +902,10 @@
         </div>
 
         <div class="footer-note">
-          Lecture 02 study page
-        
+          Lecture 02B study page
+
           <span class="persian-note" dir="rtl">
-            برای تو، می‌دونم این بخش یکم سخت‌تره… ولی تو کاملاً از پسش برمیای 💙
+          برای تو، آروم‌آروم همه‌چیز روشن‌تر می‌شه ✨
           </span>
         </div>
       </div>
@@ -1094,11 +913,11 @@
   </main>
 
   <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-
   <div class="toc-backdrop"></div>
+
   <script src="script.js"></script>
   <script>
-    initLecturePage("lecture2");
+    initLecturePage("lecture2b");
   </script>
 </body>
 </html>
