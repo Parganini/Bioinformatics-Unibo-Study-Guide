@@ -235,7 +235,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const tocBackdrop = document.querySelector(".toc-backdrop");
     const tocLinks = document.querySelectorAll(".toc a");
 
-    if (!toc || !tocToggle || !tocBackdrop) return;
+    if (!toc) {
+        console.log("No .toc found");
+        return;
+    }
+
+    if (!tocToggle) {
+        console.log("No .toc-toggle found");
+        return;
+    }
+
+    if (!tocBackdrop) {
+        console.log("No .toc-backdrop found");
+        return;
+    }
 
     const openToc = () => {
         toc.classList.add("is-open");
@@ -247,7 +260,15 @@ document.addEventListener("DOMContentLoaded", () => {
         tocBackdrop.classList.remove("is-open");
     };
 
-    tocToggle.addEventListener("click", openToc);
+    tocToggle.addEventListener("click", () => {
+        const isOpen = toc.classList.contains("is-open");
+        if (isOpen) {
+            closeToc();
+        } else {
+            openToc();
+        }
+    });
+
     tocBackdrop.addEventListener("click", closeToc);
 
     tocLinks.forEach(link => {

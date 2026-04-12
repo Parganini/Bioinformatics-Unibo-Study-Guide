@@ -1069,6 +1069,11 @@ html {
     }
 }
 
+.toc-toggle,
+.toc-backdrop {
+    display: none;
+}
+
 @media (max-width: 768px) {
     .toc-toggle {
         display: inline-flex;
@@ -1092,7 +1097,7 @@ html {
         max-height: 100vh;
         z-index: 1200;
 
-        padding: 24px 16px;
+        padding: 24px 16px 24px 16px;
         padding-top: 88px;
         box-sizing: border-box;
 
@@ -1112,6 +1117,7 @@ html {
     }
 
     .toc-backdrop {
+        display: block;
         position: fixed;
         inset: 0;
         z-index: 1100;
@@ -1126,21 +1132,7 @@ html {
         pointer-events: auto;
     }
 
-    /* optional: hide desktop-style sidebar spacing effects */
     .layout {
-        display: block;
-    }
-}
-
-.toc-toggle,
-.toc-backdrop {
-    display: none;
-}
-
-@media (max-width: 768px) {
-
-    .toc-toggle,
-    .toc-backdrop {
         display: block;
     }
 }
