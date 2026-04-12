@@ -229,49 +229,25 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("scroll", setActiveLink, { passive: true });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("click", (event) => {
     const toc = document.querySelector(".toc");
-    const tocToggle = document.querySelector(".toc-toggle");
-    const tocBackdrop = document.querySelector(".toc-backdrop");
-    const tocLinks = document.querySelectorAll(".toc a");
+    const backdrop = document.querySelector(".toc-backdrop");
 
-    if (!toc) {
-        console.log("No .toc found");
-        return;
-    }
+    if (!toc || !backdrop) return;
 
-    if (!tocToggle) {
-        console.log("No .toc-toggle found");
-        return;
-    }
+    const toggleBtn = event.target.closest(".toc-toggle");
+    const tocLink = event.target.closest(".toc a");
+    const clickedBackdrop = event.target.classList.contains("toc-backdrop");
 
-    if (!tocBackdrop) {
-        console.log("No .toc-backdrop found");
-        return;
-    }
-
-    const openToc = () => {
-        toc.classList.add("is-open");
-        tocBackdrop.classList.add("is-open");
-    };
-
-    const closeToc = () => {
-        toc.classList.remove("is-open");
-        tocBackdrop.classList.remove("is-open");
-    };
-
-    tocToggle.addEventListener("click", () => {
+    if (toggleBtn) {
         const isOpen = toc.classList.contains("is-open");
-        if (isOpen) {
-            closeToc();
-        } else {
-            openToc();
-        }
-    });
+        toc.classList.toggle("is-open", !isOpen);
+        backdrop.classList.toggle("is-open", !isOpen);
+        return;
+    }
 
-    tocBackdrop.addEventListener("click", closeToc);
-
-    tocLinks.forEach(link => {
-        link.addEventListener("click", closeToc);
-    });
+    if (tocLink || clickedBackdrop) {
+        toc.classList.remove("is-open");
+        backdrop.classList.remove("is-open");
+    }
 });
