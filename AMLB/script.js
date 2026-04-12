@@ -228,3 +228,29 @@ document.addEventListener("DOMContentLoaded", () => {
     setActiveLink();
     window.addEventListener("scroll", setActiveLink, { passive: true });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const toc = document.querySelector(".toc");
+    const tocToggle = document.querySelector(".toc-toggle");
+    const tocBackdrop = document.querySelector(".toc-backdrop");
+    const tocLinks = document.querySelectorAll(".toc a");
+
+    if (!toc || !tocToggle || !tocBackdrop) return;
+
+    const openToc = () => {
+        toc.classList.add("is-open");
+        tocBackdrop.classList.add("is-open");
+    };
+
+    const closeToc = () => {
+        toc.classList.remove("is-open");
+        tocBackdrop.classList.remove("is-open");
+    };
+
+    tocToggle.addEventListener("click", openToc);
+    tocBackdrop.addEventListener("click", closeToc);
+
+    tocLinks.forEach(link => {
+        link.addEventListener("click", closeToc);
+    });
+});

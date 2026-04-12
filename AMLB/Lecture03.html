@@ -25,9 +25,11 @@
       <div class="topbar-mobile">
         <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
         <a class="icon-btn" href="Lecture02.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="toc-toggle" type="button" aria-label="Open table of contents">☰</button>
         <span class="topbar-title">L03</span>
         <a class="icon-btn" href="Lecture04.html" aria-label="Next lecture" title="Next">→</a>
         <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+        
       </div>
     </div>
   </header>
@@ -68,10 +70,10 @@
         <h2>On this page</h2>
         <a href="#big-picture">Big Picture</a>
         <a href="#python-environments">How to Use Python</a>
+        <a href="#jupyter-colab">Jupyter and Colab</a>
         <a href="#python-basics">Python Basics</a>
         <a href="#functions-modules">Functions and Modules</a>
         <a href="#data-structures">Data Structures</a>
-        <a href="#jupyter-colab">Jupyter and Colab</a>
         <a href="#pandas">Pandas Essentials</a>
         <a href="#matplotlib">Matplotlib Essentials</a>
         <a href="#try-it-yourself">Try It Yourself</a>
@@ -884,7 +886,8 @@ print(df["city"])</code></pre>
   </main>
 
   <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-
+  
+  <div class="toc-backdrop"></div>
   <script src="script.js"></script>
   <script>
     initLecturePage("lecture3");
