@@ -17,15 +17,15 @@ function toggleComplete(id) {
     const progress = getProgress();
 
     if (progress[id]) {
-        delete progress[id]; // ❌ desmarcar
+        delete progress[id];
     } else {
-        progress[id] = true; // ✅ marcar
+        progress[id] = true;
     }
 
     saveProgress(progress);
     updateCompletionStatus(id);
     updateButtonsState(id);
-    showCompletionFeedback(progress[id]);
+    showCompletionFeedback(!!progress[id]);
 }
 
 function updateCompletionStatus(id) {
@@ -48,25 +48,29 @@ function updateButtonsState(id) {
     buttons.forEach((btn) => {
         const isIcon = btn.classList.contains("icon-btn");
 
-        // Reset classes
-        btn.classList.remove("btn-primary", "btn-completed", "icon-btn-primary", "icon-btn-completed");
+        btn.classList.remove(
+            "btn-primary",
+            "btn-completed",
+            "icon-btn-primary",
+            "icon-btn-completed"
+        );
 
         if (completed) {
-            // COMPLETED STATE (GREEN)
             if (isIcon) {
                 btn.classList.add("icon-btn-completed");
                 btn.textContent = "✕";
                 btn.title = "Mark as not completed";
+                btn.setAttribute("aria-label", "Mark as not completed");
             } else {
                 btn.classList.add("btn-completed");
                 btn.textContent = "Mark as Not Completed";
             }
         } else {
-            // DEFAULT STATE (PURPLE)
             if (isIcon) {
                 btn.classList.add("icon-btn-primary");
                 btn.textContent = "✓";
                 btn.title = "Mark as completed";
+                btn.setAttribute("aria-label", "Mark as completed");
             } else {
                 btn.classList.add("btn-primary");
                 btn.textContent = "Mark as Completed";
@@ -93,6 +97,7 @@ function showCompletionFeedback(isNowCompleted) {
 
 function bindCompleteButtons(lectureId) {
     const buttons = document.querySelectorAll("[data-complete-lecture]");
+
     buttons.forEach((btn) => {
         btn.addEventListener("click", () => {
             toggleComplete(lectureId);
@@ -106,10 +111,15 @@ function initLecturePage(lectureId) {
     bindCompleteButtons(lectureId);
 }
 
-// Copy code functionality
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("pre").forEach(pre => {
-        if (pre.parentElement.classList.contains("code-container")) return;
+/* =========================
+   Copy code blocks
+========================= */
+
+function initCopyButtons() {
+    document.querySelectorAll("pre").forEach((pre) => {
+        if (pre.parentElement && pre.parentElement.classList.contains("code-container")) {
+            return;
+        }
 
         const container = document.createElement("div");
         container.className = "code-container";
@@ -143,61 +153,94 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const oldText = button.textContent;
                 button.textContent = "Copied!";
+
                 setTimeout(() => {
                     button.textContent = oldText;
                 }, 1500);
             } catch (error) {
                 console.error("Copy failed:", error);
                 button.textContent = "Failed";
+
                 setTimeout(() => {
                     button.textContent = "Copy";
                 }, 1500);
             }
         });
     });
-});
+}
+
+/* =========================
+   Basic Python highlighting
+========================= */
 
 function highlightPython(code) {
     return code
-        // comments
         .replace(/(#.*)/g, '<span class="code-comment">$1</span>')
-
-        // strings
         .replace(/(["'`].*?["'`])/g, '<span class="code-string">$1</span>')
-
-        // keywords
-        .replace(/\b(def|return|if|else|elif|for|while|import|from|as|True|False|None)\b/g,
-            '<span class="code-keyword">$1</span>')
-
-        // numbers
+        .replace(
+            /\b(def|return|if|else|elif|for|while|import|from|as|True|False|None|class|try|except|with|in|and|or|not)\b/g,
+            '<span class="code-keyword">$1</span>'
+        )
         .replace(/\b(\d+)\b/g, '<span class="code-number">$1</span>')
-
-        // functions (simple detection)
-        .replace(/\b(print|len|type|range)\b/g,
-            '<span class="code-func">$1</span>');
+        .replace(/\b(print|len|type|range|sum|min|max|input)\b/g, '<span class="code-func">$1</span>');
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll("pre code").forEach(block => {
+function initCodeHighlighting() {
+    document.querySelectorAll("pre code").forEach((block) => {
         block.innerHTML = highlightPython(block.innerHTML);
     });
-});
+}
 
-document.addEventListener("DOMContentLoaded", () => {
+/* =========================
+   TOC behavior
+   Desktop: always visible
+   Mobile: drawer
+========================= */
+
+function initToc() {
     const toc = document.querySelector(".toc");
+    const backdrop = document.querySelector(".toc-backdrop");
     const tocLinks = document.querySelectorAll(".toc a[href^='#']");
-    const sections = Array.from(tocLinks)
-        .map(link => document.querySelector(link.getAttribute("href")))
-        .filter(Boolean);
+    const toggleButtons = document.querySelectorAll(".toc-toggle");
+    const mobileMedia = window.matchMedia("(max-width: 768px)");
 
-    if (!toc || !tocLinks.length || !sections.length) return;
+    if (!toc || !tocLinks.length) return;
+
+    const sections = Array.from(tocLinks)
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
 
     let lastActive = null;
 
+    const isMobile = () => mobileMedia.matches;
+
+    const openToc = () => {
+        if (!isMobile()) return;
+        toc.classList.add("is-open");
+        if (backdrop) backdrop.classList.add("is-open");
+    };
+
+    const closeToc = () => {
+        if (!isMobile()) return;
+        toc.classList.remove("is-open");
+        if (backdrop) backdrop.classList.remove("is-open");
+    };
+
+    const toggleToc = () => {
+        if (!isMobile()) return;
+
+        if (toc.classList.contains("is-open")) {
+            closeToc();
+        } else {
+            openToc();
+        }
+    };
+
     const setActiveLink = () => {
+        if (!sections.length) return;
+
         const scrollY = window.scrollY;
         const offset = 140;
-
         let currentSection = sections[0];
 
         for (const section of sections) {
@@ -206,7 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        tocLinks.forEach(link => {
+        tocLinks.forEach((link) => {
             const isActive = link.getAttribute("href") === `#${currentSection.id}`;
             link.classList.toggle("active", isActive);
 
@@ -225,29 +268,39 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    setActiveLink();
+    toggleButtons.forEach((button) => {
+        button.addEventListener("click", toggleToc);
+    });
+
+    tocLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+            closeToc();
+        });
+    });
+
+    if (backdrop) {
+        backdrop.addEventListener("click", closeToc);
+    }
+
     window.addEventListener("scroll", setActiveLink, { passive: true });
-});
 
-document.addEventListener("click", (event) => {
-    const toc = document.querySelector(".toc");
-    const backdrop = document.querySelector(".toc-backdrop");
+    window.addEventListener("resize", () => {
+        if (!isMobile()) {
+            toc.classList.remove("is-open");
+            if (backdrop) backdrop.classList.remove("is-open");
+        }
+        setActiveLink();
+    });
 
-    if (!toc || !backdrop) return;
+    setActiveLink();
+}
 
-    const toggleBtn = event.target.closest(".toc-toggle");
-    const tocLink = event.target.closest(".toc a");
-    const clickedBackdrop = event.target.classList.contains("toc-backdrop");
+/* =========================
+   Init everything once
+========================= */
 
-    if (toggleBtn) {
-        const isOpen = toc.classList.contains("is-open");
-        toc.classList.toggle("is-open", !isOpen);
-        backdrop.classList.toggle("is-open", !isOpen);
-        return;
-    }
-
-    if (tocLink || clickedBackdrop) {
-        toc.classList.remove("is-open");
-        backdrop.classList.remove("is-open");
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    initCopyButtons();
+    initCodeHighlighting();
+    initToc();
 });
