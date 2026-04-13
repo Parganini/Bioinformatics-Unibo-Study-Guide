@@ -396,6 +396,17 @@
             When predictions are poor, the cause is very often either a <strong>high-bias</strong> problem or a <strong>high-variance</strong> problem.
           </p>
 
+          <div class="figure">
+            <img src="images/lecture04b/bias-variance-overview.png" alt="High bias vs good fit vs high variance comparison">
+            <div class="figure-body">
+                <div class="figure-kicker">Bias–variance intuition</div>
+                <div class="figure-caption">
+                High bias models are too simple and underfit the data. A well-balanced model captures the main pattern.
+                High variance models are too complex and overfit, capturing noise instead of general structure.
+                </div>
+            </div>
+            </div>
+
           <div class="comparison">
             <div class="column">
               <h3>High bias</h3>
@@ -435,7 +446,23 @@
             </div>
           </div>
 
-          <div class="grid-2">
+                    <p class="note">
+            The error curves explain *what happens* — the shapes below help visualize *why it happens*.
+            </p>
+
+
+            <div class="figure">
+            <img src="images/lecture04b/high-bias-vs-high-variance.png" alt="High bias vs high variance model examples">
+            <div class="figure-body">
+                <div class="figure-kicker">Model behavior</div>
+                <div class="figure-caption">
+                High-bias models are too simple and miss the structure of the data. High-variance models are too complex and fit noise.
+                The goal is to find a balance where the model captures the true pattern without overfitting.
+                </div>
+            </div>
+            </div>
+
+        <div class="grid-2">
             <div class="card">
               <div class="card-title">High bias pattern</div>
               <p>
@@ -573,42 +600,69 @@
             Diagnostics become useful only when they guide action.
           </p>
 
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Possible Action</th>
-                  <th>Usually Helps With</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Get more training examples</td>
-                  <td>High variance</td>
-                </tr>
-                <tr>
-                  <td>Use a smaller set of features</td>
-                  <td>High variance</td>
-                </tr>
-                <tr>
-                  <td>Get additional features</td>
-                  <td>High bias</td>
-                </tr>
-                <tr>
-                  <td>Add polynomial features</td>
-                  <td>High bias</td>
-                </tr>
-                <tr>
-                  <td>Increase λ</td>
-                  <td>High variance</td>
-                </tr>
-                <tr>
-                  <td>Decrease λ</td>
-                  <td>High bias</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+<div class="table-wrapper">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Possible Action</th>
+        <th>Usually Helps With</th>
+        <th>Why It Helps</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Get more training examples</td>
+        <td>High variance</td>
+        <td>Reduces overfitting by giving the model more data to generalize from</td>
+      </tr>
+      <tr>
+        <td>Use a smaller set of features</td>
+        <td>High variance</td>
+        <td>Reduces model complexity and prevents fitting noise</td>
+      </tr>
+      <tr>
+        <td>Increase λ (stronger regularization)</td>
+        <td>High variance</td>
+        <td>Shrinks parameters and simplifies the hypothesis</td>
+      </tr>
+      <tr>
+        <td>Get additional features</td>
+        <td>High bias</td>
+        <td>Adds useful information that a simple model was missing</td>
+      </tr>
+      <tr>
+        <td>Add polynomial / interaction features</td>
+        <td>High bias</td>
+        <td>Increases model flexibility to capture more complex patterns</td>
+      </tr>
+      <tr>
+        <td>Decrease λ (weaker regularization)</td>
+        <td>High bias</td>
+        <td>Allows parameters to grow and the model to fit the data better</td>
+      </tr>
+      <tr>
+        <td>Try a more complex model</td>
+        <td>High bias</td>
+        <td>Gives the model more capacity to represent the underlying function</td>
+      </tr>
+      <tr>
+        <td>Try a simpler model</td>
+        <td>High variance</td>
+        <td>Reduces sensitivity to noise in the training data</td>
+      </tr>
+      <tr>
+        <td>Check data quality / noise</td>
+        <td>Both</td>
+        <td>Noisy or inconsistent data can harm both bias and variance behavior</td>
+      </tr>
+      <tr>
+        <td>Use cross-validation properly</td>
+        <td>Both</td>
+        <td>Ensures model selection and tuning are done without leaking test information</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
           <div class="callout">
             The whole point of bias–variance diagnosis is to stop trying random fixes and start choosing the next step based on evidence.
@@ -626,7 +680,7 @@
           <div class="grid-2">
             <div class="card">
               <div class="card-title">Slides</div>
-              <strong>Lecture 4B Slides</strong>
+              <strong>Lecture 4 Slides</strong>
               <p>
                 Use the slide deck for the TVT splitting procedure, validation-based model selection, bias–variance diagrams, and the full set of learning-curve visuals.
               </p>
