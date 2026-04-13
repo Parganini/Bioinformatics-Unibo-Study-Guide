@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 05B - Hands-on with Google Colab, GPU and TPU</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="Lecture05B.html">Lecture 05B</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture05A.html">← Previous</a>
+          <a class="btn-link" href="Lecture06.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture05A.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">L05B</span>
+        <a class="icon-btn" href="Lecture06.html" aria-label="Next lecture" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Lecture 05B — Hands-on with Google Colab, GPU and TPU</h1>
+          <p class="subtitle">
+            This lecture shifts from evaluation theory to the practical environment used in the course.
+            It introduces Google Colab as cloud-based Jupyter, explains how runtimes work, shows how to switch
+            between CPU, GPU, and TPU, and gives a first practical overview of specialized hardware for deep learning.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">Google Colab</div>
+            <div class="pill">Cloud Notebook</div>
+            <div class="pill">CPU / GPU / TPU</div>
+            <div class="pill">Runtime Limits</div>
+            <div class="pill">Hands-on Setup</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/lecture05b/hero-cover.jpg" alt="Google Colab and hardware accelerators visual">
+          </div>
+          <div class="hero-badge">From notebooks to accelerators</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#what-is-colab">What Is Google Colab?</a>
+        <a href="#getting-started">Getting Started on Colab</a>
+        <a href="#why-colab">Why Colab Feels Familiar</a>
+        <a href="#runtime">The Colab Runtime</a>
+        <a href="#change-runtime">Changing Runtime Type</a>
+        <a href="#runtime-types">CPU, GPU and TPU</a>
+        <a href="#gpu-example">GPU Example</a>
+        <a href="#runtime-lifetime">Runtime Lifetime</a>
+        <a href="#tpu-intro">Why TPU Exists</a>
+        <a href="#tpu-evolution">TPU Evolution</a>
+        <a href="#tpu-pods">TPU Pods</a>
+        <a href="#gpu-vs-tpu">GPU vs TPU Caution</a>
+        <a href="#study-material">Study Material</a>
+        <a href="#quiz">Quick Review Quiz</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture</h2>
+          <p class="lead">
+            Up to now, the course has mostly focused on concepts, models, and evaluation.
+            This lecture turns to the environment where that work is often done in practice.
+          </p>
+
+          <div class="callout">
+            The main goal here is not deep hardware theory. It is to become comfortable with the practical tools that let you write, run, save, and scale machine learning experiments.
+          </div>
+
+          <p>
+            The lecture begins with Google Colab as a cloud notebook environment, then introduces the idea of a runtime, and finally gives an overview of specialized hardware such as GPUs and TPUs.
+          </p>
+        </section>
+
+        <section class="section" id="what-is-colab">
+          <h2 class="section-title">What Is Google Colab?</h2>
+
+          <p class="lead">
+            In one sentence: <strong>Google Colab is like Jupyter notebooks on the cloud.</strong>
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05b/colab-intro.png" alt="Google Colab interface overview">
+            <div class="figure-body">
+              <div class="figure-kicker">Cloud notebooks</div>
+              <div class="figure-caption">
+                Colab provides a notebook interface very similar to Jupyter, but hosted remotely and integrated with Google services.
+              </div>
+            </div>
+          </div>
+
+          <p>
+            That means you still write code in cells, execute them interactively, and inspect outputs step by step.
+            The difference is that the notebook does not have to run on your own laptop.
+          </p>
+
+          <div class="callout">
+            Conceptually, Colab gives you the notebook experience of Jupyter plus the convenience of cloud access and Google Drive integration.
+          </div>
+        </section>
+
+        <section class="section" id="getting-started">
+          <h2 class="section-title">How to Get Started on Colab</h2>
+
+          <p class="lead">
+            The lecture presents two ways to begin: the fastest one, and the proper one.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Quickest path</div>
+              <ul>
+                <li>create a new Python notebook</li>
+                <li>start coding immediately</li>
+                <li>most common data-science libraries are already installed</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Proper workflow</div>
+              <ul>
+                <li>open or create the notebook in the cloud</li>
+                <li>save a copy in your own Google Drive</li>
+                <li>work from that saved copy so changes persist</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture05b/colab-get-started.png" alt="How to get started on Google Colab">
+            <div class="figure-body">
+              <div class="figure-kicker">Quick start vs good habit</div>
+              <div class="figure-caption">
+                Colab is easy to start using immediately, but it is important to remember that you are working in the cloud and should save your own copy.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="why-colab">
+          <h2 class="section-title">Why Colab Feels Familiar</h2>
+
+          <p>
+            Colab’s interface is intentionally close to Jupyter, but it also inherits sharing and collaboration features from Google Drive.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Like Jupyter</h3>
+              <p>
+                Code cells, outputs, notebooks, interactive experimentation, and a workflow that feels natural for data science.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>Like Google Drive</h3>
+              <p>
+                Sharing, collaborative editing, cloud storage, and a smoother path for accessing notebooks from different places.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            This is why Colab is often described as “the best of Jupyter plus Google Drive.”
+          </div>
+        </section>
+
+        <section class="section" id="runtime">
+          <h2 class="section-title">The Colab Runtime</h2>
+
+          <p class="lead">
+            When you open a Colab notebook, you are not only opening a file — you are also connecting to a <strong>runtime</strong>.
+          </p>
+
+          <p>
+            The runtime is the remote machine that actually executes your code. In the lecture, it is described as a Google virtual machine temporarily dedicated to you.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05b/runtime-selection.png" alt="Colab runtime and hardware accelerator selection">
+            <div class="figure-body">
+              <div class="figure-kicker">Notebook + compute</div>
+              <div class="figure-caption">
+                A Colab notebook is connected to a runtime, and that runtime can be configured with different hardware accelerators.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The notebook is the interface; the runtime is the machine behind it.
+          </div>
+        </section>
+
+        <section class="section" id="change-runtime">
+          <h2 class="section-title">Changing Runtime Type</h2>
+
+          <p>
+            By default, Colab starts with a CPU runtime. But you can switch to a GPU or TPU runtime through the notebook settings.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05b/change-runtime-old.png" alt="Selecting GPU runtime in Colab">
+              <div class="figure-body">
+                <div class="figure-kicker">Interface walkthrough</div>
+                <div class="figure-caption">
+                  The lecture shows the path for changing the runtime and monitoring the VM state.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05b/change-runtime-current.png" alt="Current change runtime type interface in Colab">
+              <div class="figure-body">
+                <div class="figure-kicker">Current interface</div>
+                <div class="figure-caption">
+                  Colab lets you choose the hardware accelerator directly from the runtime settings panel.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            This is an important practical step because many deep-learning or heavy numerical workloads benefit significantly from the right accelerator.
+          </p>
+        </section>
+
+        <section class="section" id="runtime-types">
+          <h2 class="section-title">CPU, GPU and TPU</h2>
+
+          <p class="lead">
+            Colab can provide different kinds of runtimes, and each one corresponds to a different hardware setup.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05b/runtime-types.png" alt="Colab notebooks with CPU GPU and TPU runtimes">
+            <div class="figure-body">
+              <div class="figure-kicker">Three main choices</div>
+              <div class="figure-caption">
+                A notebook can be connected to a CPU runtime, a GPU runtime, or a TPU runtime depending on the task and available resources.
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Runtime</th>
+                  <th>Typical Use</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>CPU</td>
+                  <td>General notebook work, lighter computation, standard Python workflows</td>
+                </tr>
+                <tr>
+                  <td>GPU</td>
+                  <td>Parallel numerical workloads, deep learning, matrix-heavy operations</td>
+                </tr>
+                <tr>
+                  <td>TPU</td>
+                  <td>Specialized tensor operations and large neural-network workloads</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="gpu-example">
+          <h2 class="section-title">A First GPU Example</h2>
+
+          <p>
+            One practical trick shown in the slides is to check the assigned GPU from inside the notebook.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05b/which-gpu.png" alt="Example GPU type in Colab such as Tesla T4">
+              <div class="figure-body">
+                <div class="figure-kicker">What GPU did I get?</div>
+                <div class="figure-caption">
+                  The lecture notes that Colab may assign different GPUs, and that specific hardware availability can change over time.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05b/gpu-runtime-example.png" alt="nvidia-smi example in Colab GPU runtime">
+              <div class="figure-body">
+                <div class="figure-kicker">Using <code>nvidia-smi</code></div>
+                <div class="figure-caption">
+                  A quick runtime check confirms whether the notebook is actually connected to a GPU and shows hardware information.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            Practical takeaway: changing the runtime is not enough — it is good practice to verify that the notebook is really using the expected hardware.
+          </div>
+        </section>
+
+        <section class="section" id="runtime-lifetime">
+          <h2 class="section-title">Runtime Lifetime and Limits</h2>
+
+          <p class="lead">
+            Colab is convenient, but it is not meant for unlimited unattended computation.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Idle limit</div>
+              <p>
+                The web interface may disconnect after about <b>30 minutes</b> of unattended use.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Maximum session length</div>
+              <p>
+                Even with active use, a runtime may shut down after about <b>12 hours</b>.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            This is why the lecture stresses good habits: save what matters, store notebooks in Drive, and do not treat the runtime like a permanent machine.
+          </p>
+
+          <div class="callout">
+            Colab runtimes are temporary: idle sessions disconnect, and even active sessions eventually reset.
+          </div>
+        </section>
+
+        <section class="section" id="tpu-intro">
+          <h2 class="section-title">Why TPU Exists</h2>
+
+          <p class="lead">
+            The TPU appears here as additional material, but it is an important example of specialized hardware created specifically for machine learning.
+          </p>
+
+          <p>
+            Google’s growing demand for deep-learning inference pushed them beyond generic compute solutions.
+            The idea was to improve cost-performance dramatically compared with relying only on GPUs.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05b/tpu-origin.png" alt="History and motivation behind Google TPU">
+            <div class="figure-body">
+              <div class="figure-kicker">A hardware response to ML demand</div>
+              <div class="figure-caption">
+                TPU development was driven by the need to scale machine-learning workloads efficiently in Google data centers.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The main point is not memorizing every hardware detail, but understanding why specialized accelerators became necessary for modern ML.
+          </div>
+        </section>
+
+        <section class="section" id="tpu-evolution">
+          <h2 class="section-title">TPU Evolution</h2>
+
+          <p>
+            The lecture uses a sequence of slides to show how TPU generations evolved from inference-oriented hardware toward more capable systems for both training and inference.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05b/tpu-v1-v2.png" alt="Google TPU v1 versus v2">
+              <div class="figure-body">
+                <div class="figure-kicker">v1 to v2</div>
+                <div class="figure-caption">
+                  TPU v1 focused on inference, while v2 expanded toward both inference and training.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05b/tpu-v3.png" alt="Google Cloud TPU v3">
+              <div class="figure-body">
+                <div class="figure-kicker">Cloud TPU v3</div>
+                <div class="figure-caption">
+                  Later versions increased computational power and memory bandwidth substantially.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture05b/tpu-v2-v3-comparison.png" alt="Comparison of Cloud TPU v2 and v3 performance">
+            <div class="figure-body">
+              <div class="figure-kicker">Performance scaling</div>
+              <div class="figure-caption">
+                The evolution from v2 to v3 highlights the rapid increase in teraFLOPS and memory capacity.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="tpu-pods">
+          <h2 class="section-title">TPU Pods and Scaling Out</h2>
+
+          <p>
+            A single accelerator is not the end of the story. The lecture also shows how TPUs can be interconnected into pods for much larger-scale computation.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05b/tpu-pods.png" alt="Interconnected TPU pods">
+              <div class="figure-body">
+                <div class="figure-kicker">Pod architecture</div>
+                <div class="figure-caption">
+                  TPU pods connect many accelerators together to reach much higher total compute and memory scale.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05b/current-cloud-tpus.png" alt="Current cloud TPU versions">
+              <div class="figure-body">
+                <div class="figure-kicker">Current cloud offerings</div>
+                <div class="figure-caption">
+                  The ecosystem continues to evolve, and available versions change over time.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            For the course, this is more contextual than operational. The key lesson is that ML infrastructure is designed not only around algorithms, but also around scaling those algorithms efficiently.
+          </p>
+        </section>
+
+        <section class="section" id="gpu-vs-tpu">
+          <h2 class="section-title">A Practical Caution: GPU vs TPU</h2>
+
+          <p class="lead">
+            Seeing one runtime look slower than another in a quick test does not automatically mean the hardware is worse.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05b/tpu-choice.png" alt="Colab runtime interface showing TPU choice">
+              <div class="figure-body">
+                <div class="figure-kicker">You can choose TPU too</div>
+                <div class="figure-caption">
+                  Colab allows TPU selection, but using it well depends on the workload and framework setup.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05b/tpu-benchmark-caution.png" alt="Why TPU may look slower than GPU in naive testing">
+              <div class="figure-body">
+                <div class="figure-kicker">Testing is not benchmarking</div>
+                <div class="figure-caption">
+                  Quick experiments can be misleading. Profiling and well-chosen numerical workloads are needed before drawing conclusions about hardware speed.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            Practical lesson: do not confuse a casual test with a meaningful benchmark. Runtime performance depends on the actual workload, setup overhead, and how well the code matches the accelerator.
+          </div>
+        </section>
+
+        <section class="section" id="study-material">
+          <h2 class="section-title">Study Material</h2>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Slides</div>
+              <strong>Lecture 5 Slides</strong>
+              <p>
+                Use the slide deck for the Colab interface walkthrough, runtime selection screenshots, GPU example, and TPU overview.
+              </p>
+              <a class="btn-link" href="slides/lecture05.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Transcript</div>
+              <strong>Lecture 5 Transcript</strong>
+              <p>
+                Use the transcript for the practical comments on cloud notebooks, runtime behavior, and the mindset needed when working with remote compute resources.
+              </p>
+              <a class="btn-link" href="transcriptions/lecture05.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+          </div>
+
+          <div class="callout">
+            Next: after learning how to evaluate models and where to run them, the course is ready to push further into practical ML workflows.
+          </div>
+        </section>
+
+        <section class="section" id="quiz">
+          <h2 class="section-title">Quick Review Quiz</h2>
+
+          <details>
+            <summary>1. What is Google Colab in one sentence?</summary>
+            <div class="details-body">
+              <p>It is essentially a cloud-based version of Jupyter notebooks, integrated with Google services.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>2. Why is it a good habit to save a copy of a notebook in your own Google Drive?</summary>
+            <div class="details-body">
+              <p>Because Colab is cloud-based and temporary, so saving your own copy helps preserve your work and future changes.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. What is a Colab runtime?</summary>
+            <div class="details-body">
+              <p>It is the remote virtual machine that actually executes the code in your notebook.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>4. What is the default Colab runtime type?</summary>
+            <div class="details-body">
+              <p>By default, Colab starts with a CPU-only runtime.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>5. What command is commonly used to check GPU information inside a Colab notebook?</summary>
+            <div class="details-body">
+              <p>The command <code>nvidia-smi</code> is commonly used to inspect GPU details.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>6. What happens after a long unattended Colab session?</summary>
+            <div class="details-body">
+              <p>The runtime may disconnect after about 30 minutes of unattended use.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>7. Even with active use, about how long can a Colab runtime last before shutting down?</summary>
+            <div class="details-body">
+              <p>It may shut down after roughly 12 hours even if you stay connected and keep working.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>8. Why was Google motivated to develop TPUs?</summary>
+            <div class="details-body">
+              <p>Because machine-learning workloads were growing so much that Google needed a more efficient specialized hardware solution for deep learning.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>9. What is the difference between a casual test and a benchmark?</summary>
+            <div class="details-body">
+              <p>A casual test may give misleading impressions, while benchmarking or profiling is designed to measure hardware performance in a more meaningful and controlled way.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>10. Why is Colab especially useful for students and experimentation?</summary>
+            <div class="details-body">
+              <p>Because it offers easy cloud-based notebooks and access to accelerators like GPUs and TPUs without requiring local setup or specialized hardware.</p>
+            </div>
+          </details>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture05A.html">← Previous</a>
+            <a class="btn-link" href="Lecture06.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Lecture 05B study page
+
+          <span class="persian-note" dir="rtl">
+        برای تو… که با تو، انگار دنیام یه دفعه شتاب می‌گیره 🚀
+        </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("lecture5b");
+  </script>
+</body>
+</html>

@@ -297,7 +297,7 @@
       <div class="progress-header">
         <div>
           <div class="progress-title">Your progress</div>
-          <div class="progress-text" id="progressText">0 / 6 completed</div>
+          <div class="progress-text" id="progressText">0 / 8 completed</div>
         </div>
       </div>
 
@@ -317,171 +317,191 @@
     <div class="footer-note">Applied Machine Learning · University of Bologna</div>
   </main>
 
-  <script>
-    const lectureGroups = [
-      {
-        groupTitle: "Lecture 01",
-        groupSubtitle: "Course introduction and conceptual foundations",
-        lectures: [
-          {
-            id: "lecture1",
-            title: "Lecture 01",
-            date: "05 Mar 2026",
-            subtitle: "Introduction to ML, AI vs ML vs DL, T/E/P framework, supervised and unsupervised learning",
-            file: "Lecture01.html"
-          }
-        ]
-      },
-      {
-        groupTitle: "Lecture 02",
-        groupSubtitle: "Core supervised learning foundations, split into regression/optimization and classification",
-        lectures: [
-          {
-            id: "lecture2a",
-            title: "Lecture 02A",
-            date: "06 Mar 2026",
-            subtitle: "Gradient descent, learning rate, convexity, multivariate linear regression, feature scaling",
-            file: "Lecture02A.html"
-          },
-          {
-            id: "lecture2b",
-            title: "Lecture 02B",
-            date: "06 Mar 2026",
-            subtitle: "Classification, logistic regression, sigmoid function, decision boundaries, logistic cost",
-            file: "Lecture02B.html"
-          }
-        ]
-      },
-      {
-        groupTitle: "Lecture 03",
-        groupSubtitle: "Hands-on Python and data tools",
-        lectures: [
-          {
-            id: "lecture3",
-            title: "Lecture 03",
-            date: "12 Mar 2026",
-            subtitle: "Python basics, data structures, Jupyter / Colab workflow, Pandas essentials, first hands-on tools",
-            file: "Lecture03.html"
-          }
-        ]
-      },
-      {
-        groupTitle: "Lecture 04",
-        groupSubtitle: "Regularization, diagnostics, evaluation, bias–variance, and learning curves",
-        lectures: [
-          {
-            id: "lecture4a",
-            title: "Lecture 04A",
-            date: "13 Mar 2026",
-            subtitle: "Multiclass classification, one-vs-all, optimization alternatives, overfitting, regularization",
-            file: "Lecture04A.html"
-          },
-          {
-            id: "lecture4b",
-            title: "Lecture 04B",
-            date: "13 Mar 2026",
-            subtitle: "Model evaluation, train/CV/test sets, bias vs variance, learning curves, debugging next steps",
-            file: "Lecture04B.html"
-          }
-        ]
-      }
-    ];
-
-    const lectures = lectureGroups.flatMap(group => group.lectures);
-
-    function getProgress() {
-      return JSON.parse(localStorage.getItem("aml_progress")) || {};
-    }
-
-    function getCompletedCount(progress) {
-      return lectures.filter(lecture => progress[lecture.id]).length;
-    }
-
-    function getNextLecture(progress) {
-      return lectures.find(lecture => !progress[lecture.id]) || lectures[lectures.length - 1];
-    }
-
-    function updateProgressUI() {
-      const progress = getProgress();
-      const completed = getCompletedCount(progress);
-      const total = lectures.length;
-      const percent = total === 0 ? 0 : (completed / total) * 100;
-
-      document.getElementById("progressText").textContent = `${completed} / ${total} completed`;
-      document.getElementById("progressFill").style.width = `${percent}%`;
-
-      const nextLecture = getNextLecture(progress);
-      const continueBtn = document.getElementById("continueBtn");
-      continueBtn.href = nextLecture.file;
-      continueBtn.textContent = completed === total
-        ? `Review: ${nextLecture.title}`
-        : `Continue: ${nextLecture.title}`;
-    }
-
-    function buildArchive() {
-      const archive = document.getElementById("archive");
-      const progress = getProgress();
-      archive.innerHTML = "";
-
-      lectureGroups.forEach(group => {
-        const section = document.createElement("section");
-        section.className = "group";
-
-        if (group.lectures.length === 1) {
-          section.classList.add("single");
+<script>
+  const lectureGroups = [
+    {
+      groupTitle: "Lecture 01",
+      groupSubtitle: "Course introduction and conceptual foundations",
+      lectures: [
+        {
+          id: "lecture1",
+          title: "Lecture 01",
+          date: "05 Mar 2026",
+          subtitle: "Introduction to ML, AI vs ML vs DL, T/E/P framework, supervised and unsupervised learning",
+          file: "Lecture01.html"
         }
+      ]
+    },
+    {
+      groupTitle: "Lecture 02",
+      groupSubtitle: "Core supervised learning foundations, split into regression/optimization and classification",
+      lectures: [
+        {
+          id: "lecture2a",
+          title: "Lecture 02A",
+          date: "06 Mar 2026",
+          subtitle: "Gradient descent, learning rate, convexity, multivariate linear regression, feature scaling",
+          file: "Lecture02A.html"
+        },
+        {
+          id: "lecture2b",
+          title: "Lecture 02B",
+          date: "06 Mar 2026",
+          subtitle: "Classification, logistic regression, sigmoid function, decision boundaries, logistic cost",
+          file: "Lecture02B.html"
+        }
+      ]
+    },
+    {
+      groupTitle: "Lecture 03",
+      groupSubtitle: "Hands-on Python and data tools",
+      lectures: [
+        {
+          id: "lecture3",
+          title: "Lecture 03",
+          date: "12 Mar 2026",
+          subtitle: "Python basics, data structures, Jupyter / Colab workflow, Pandas essentials, first hands-on tools",
+          file: "Lecture03.html"
+        }
+      ]
+    },
+    {
+      groupTitle: "Lecture 04",
+      groupSubtitle: "Regularization, diagnostics, evaluation, bias–variance, and learning curves",
+      lectures: [
+        {
+          id: "lecture4a",
+          title: "Lecture 04A",
+          date: "13 Mar 2026",
+          subtitle: "Multiclass classification, one-vs-all, optimization alternatives, overfitting, regularization",
+          file: "Lecture04A.html"
+        },
+        {
+          id: "lecture4b",
+          title: "Lecture 04B",
+          date: "13 Mar 2026",
+          subtitle: "Model evaluation, train/CV/test sets, bias vs variance, learning curves, debugging next steps",
+          file: "Lecture04B.html"
+        }
+      ]
+    },
+    {
+      groupTitle: "Lecture 05",
+      groupSubtitle: "Evaluation metrics for skewed classes, plus the practical Colab / GPU / TPU environment",
+      lectures: [
+        {
+          id: "lecture5a",
+          title: "Lecture 05A",
+          date: "27 Mar 2026",
+          subtitle: "Skewed classes, confusion matrix, precision, recall, threshold trade-offs, F1 score, ROC and AUC",
+          file: "Lecture05A.html"
+        },
+        {
+          id: "lecture5b",
+          title: "Lecture 05B",
+          date: "27 Mar 2026",
+          subtitle: "Google Colab, runtimes, CPU vs GPU vs TPU, runtime limits, and hardware overview",
+          file: "Lecture05B.html"
+        }
+      ]
+    }
+  ];
 
-        const groupDone = group.lectures.every(lecture => progress[lecture.id]);
+  const lectures = lectureGroups.flatMap(group => group.lectures);
 
-        section.innerHTML = `
-          <div class="group-header">
-            <div class="group-title">
-              ${group.groupTitle}${groupDone ? " ✔" : ""}
-            </div>
-            <div class="group-subtitle">${group.groupSubtitle}</div>
+  function getProgress() {
+    return JSON.parse(localStorage.getItem("aml_progress")) || {};
+  }
+
+  function getCompletedCount(progress) {
+    return lectures.filter(lecture => progress[lecture.id]).length;
+  }
+
+  function getNextLecture(progress) {
+    return lectures.find(lecture => !progress[lecture.id]) || lectures[lectures.length - 1];
+  }
+
+  function updateProgressUI() {
+    const progress = getProgress();
+    const completed = getCompletedCount(progress);
+    const total = lectures.length;
+    const percent = total === 0 ? 0 : (completed / total) * 100;
+
+    document.getElementById("progressText").textContent = `${completed} / ${total} completed`;
+    document.getElementById("progressFill").style.width = `${percent}%`;
+
+    const nextLecture = getNextLecture(progress);
+    const continueBtn = document.getElementById("continueBtn");
+    continueBtn.href = nextLecture.file;
+    continueBtn.textContent = completed === total
+      ? `Review: ${nextLecture.title}`
+      : `Continue: ${nextLecture.title}`;
+  }
+
+  function buildArchive() {
+    const archive = document.getElementById("archive");
+    const progress = getProgress();
+    archive.innerHTML = "";
+
+    lectureGroups.forEach(group => {
+      const section = document.createElement("section");
+      section.className = "group";
+
+      if (group.lectures.length === 1) {
+        section.classList.add("single");
+      }
+
+      const groupDone = group.lectures.every(lecture => progress[lecture.id]);
+
+      section.innerHTML = `
+        <div class="group-header">
+          <div class="group-title">
+            ${group.groupTitle}${groupDone ? " ✔" : ""}
           </div>
-          <div class="group-grid"></div>
+          <div class="group-subtitle">${group.groupSubtitle}</div>
+        </div>
+        <div class="group-grid"></div>
+      `;
+
+      const grid = section.querySelector(".group-grid");
+
+      group.lectures.forEach(lecture => {
+        const card = document.createElement("a");
+        card.href = lecture.file;
+        card.className = "lecture-card";
+        if (progress[lecture.id]) card.classList.add("done");
+
+        card.innerHTML = `
+          <div class="lecture-top">
+            <div>
+              <div class="lecture-date">${lecture.date}</div>
+              <div class="lecture-title">${lecture.title}</div>
+            </div>
+            <div class="check">✔</div>
+          </div>
+          <div class="lecture-subtitle">${lecture.subtitle}</div>
         `;
 
-        const grid = section.querySelector(".group-grid");
-
-        group.lectures.forEach(lecture => {
-          const card = document.createElement("a");
-          card.href = lecture.file;
-          card.className = "lecture-card";
-          if (progress[lecture.id]) card.classList.add("done");
-
-          card.innerHTML = `
-            <div class="lecture-top">
-              <div>
-                <div class="lecture-date">${lecture.date}</div>
-                <div class="lecture-title">${lecture.title}</div>
-              </div>
-              <div class="check">✔</div>
-            </div>
-            <div class="lecture-subtitle">${lecture.subtitle}</div>
-          `;
-
-          grid.appendChild(card);
-        });
-
-        archive.appendChild(section);
+        grid.appendChild(card);
       });
-    }
 
-    function resetProgress() {
-      localStorage.removeItem("aml_progress");
-      buildArchive();
-      updateProgressUI();
-    }
+      archive.appendChild(section);
+    });
+  }
 
+  function resetProgress() {
+    localStorage.removeItem("aml_progress");
     buildArchive();
     updateProgressUI();
+  }
 
-    window.addEventListener("storage", () => {
-      buildArchive();
-      updateProgressUI();
-    });
-  </script>
+  buildArchive();
+  updateProgressUI();
+
+  window.addEventListener("storage", () => {
+    buildArchive();
+    updateProgressUI();
+  });
+</script>
 </body>
 </html>
