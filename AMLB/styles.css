@@ -428,7 +428,7 @@ h1 {
 @media (min-width: 769px) {
     .layout {
         display: grid;
-        grid-template-columns: 290px minmax(0, 1fr);
+        grid-template-columns: clamp(220px, 22vw, 260px) minmax(0, 1fr);
         gap: 20px;
         align-items: start;
     }
@@ -439,7 +439,8 @@ h1 {
         left: auto;
         width: 100%;
         max-width: none;
-        height: calc(100vh - 108px);
+
+        height: fit-content;
         max-height: calc(100vh - 108px);
 
         padding: 18px 14px;
@@ -453,6 +454,7 @@ h1 {
 
         transform: none !important;
         z-index: 20;
+        align-self: start;
     }
 
     .toc.is-open {

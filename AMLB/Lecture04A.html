@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 04A - Multiclass Classification, Overfitting & Regularization</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="Lecture04A.html">Lecture 04A</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture03.html">← Previous</a>
+          <a class="btn-link" href="Lecture04B.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture03.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">L04A</span>
+        <a class="icon-btn" href="Lecture04B.html" aria-label="Next lecture" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Lecture 04A — Multiclass Classification, Overfitting & Regularization</h1>
+          <p class="subtitle">
+            This lecture extends logistic regression to multiclass problems, introduces alternatives to basic gradient descent,
+            and then tackles one of the most important issues in machine learning: overfitting. The second half develops the intuition
+            behind regularization and shows how it modifies both linear and logistic regression.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">One-vs-All</div>
+            <div class="pill">Optimization</div>
+            <div class="pill">Overfitting</div>
+            <div class="pill">Generalization</div>
+            <div class="pill">Regularization</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/lecture04a/hero-cover.jpg" alt="Multiclass classification and regularization visual">
+          </div>
+          <div class="hero-badge">From multiclass models to regularized learning</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#multiclass">Multiclass Classification</a>
+        <a href="#one-vs-all">One-vs-All Strategy</a>
+        <a href="#prediction-rule">Prediction Rule</a>
+        <a href="#alt-gd">Alternatives to Gradient Descent</a>
+        <a href="#gd-vs-not-gd">GD vs Non-GD</a>
+        <a href="#overfitting">What Is Overfitting?</a>
+        <a href="#underfit-overfit">Underfitting vs Overfitting</a>
+        <a href="#generalization">Generalization</a>
+        <a href="#curse">Why Overfitting Is Hard</a>
+        <a href="#two-options">Two Ways to Fight It</a>
+        <a href="#regularization-intuition">Regularization Intuition</a>
+        <a href="#regularized-cost">Regularized Cost Function</a>
+        <a href="#lambda">The Role of λ</a>
+        <a href="#regularized-linear">Regularized Linear Regression</a>
+        <a href="#regularized-logistic">Regularized Logistic Regression</a>
+        <a href="#implementation">Implementation Notes</a>
+        <a href="#study-material">Study Material</a>
+        <a href="#quiz">Review Quiz</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture</h2>
+          <p class="lead">
+            Lecture 02B introduced binary logistic regression. This lecture begins by extending that idea to <strong>multiclass classification</strong>,
+            then shifts to a deeper question: how do we prevent a model from learning the training set too well and failing on new data?
+          </p>
+
+          <div class="callout">
+            This page combines two core messages: first, binary classifiers can be adapted to multiclass problems; second, a good machine learning model is not only optimized, but also able to generalize.
+          </div>
+
+          <p>
+            The lecture therefore moves from <strong>prediction mechanics</strong> to <strong>model quality</strong>.
+            That transition is important: building a model is only the first step. The harder question is whether the model learned something reusable.
+          </p>
+        </section>
+
+        <section class="section" id="multiclass">
+          <h2 class="section-title">From Binary to Multiclass Classification</h2>
+
+          <p class="lead">
+            Binary classification predicts one of two classes. Many real tasks, however, require choosing among several possible categories.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Task</th>
+                  <th>Example Classes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Email tagging</td>
+                  <td>Home, Work, Family, Hobby</td>
+                </tr>
+                <tr>
+                  <td>Medical diagnosis</td>
+                  <td>Not ill, Cold, Flu, Pneumonia</td>
+                </tr>
+                <tr>
+                  <td>Weather labeling</td>
+                  <td>Sunny, Rainy, Snowy, Windy</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            In this setting, the target is no longer just <code>0</code> or <code>1</code>.
+            Instead, the label can take one value among several categories such as <code>1, 2, 3, ...</code>.
+          </p>
+
+          <div class="callout">
+            Multiclass classification asks: <strong>which one among many possible classes best matches this example?</strong>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture04a/multiclass-overview.png" alt="Binary versus multiclass classification sketch">
+            <div class="figure-body">
+              <div class="figure-kicker">From two classes to many</div>
+              <div class="figure-caption">
+                The lecture contrasts the familiar binary setting with a multiclass setting where several clusters must be distinguished at once.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="one-vs-all">
+        <h2 class="section-title">One-vs-All Strategy</h2>
+
+        <p class="lead">
+            The lecture solves multiclass classification with a simple but powerful trick: turn one multiclass problem into several binary ones.
+        </p>
+
+        <div class="formula">
+            For each class $$i$$, train a classifier that predicts whether $$y=i$$ or $$y \neq i$$.
+        </div>
+
+        <p>
+            Instead of trying to directly distinguish between all classes at once, we decompose the problem into multiple simpler ones.
+            Each classifier focuses on recognizing a single class versus all others.
+        </p>
+
+        <ul>
+            <li>classifier 1 learns <strong>1 vs not-1</strong></li>
+            <li>classifier 2 learns <strong>2 vs not-2</strong></li>
+            <li>classifier 3 learns <strong>3 vs not-3</strong></li>
+        </ul>
+
+        <div class="figure">
+            <img src="images/lecture04a/one-vs-all-overview.png" alt="One-vs-all classification overview showing multiple decision boundaries">
+            <div class="figure-body">
+            <div class="figure-kicker">One-vs-all in one view</div>
+            <div class="figure-caption">
+                Each classifier learns to separate one class from the rest. At prediction time, all classifiers are evaluated and the class with the highest score is selected.
+            </div>
+            </div>
+        </div>
+
+        <div class="callout">
+            Nothing new is required at the algorithmic level: we simply reuse binary logistic regression multiple times.
+        </div>
+
+        <div class="comparison">
+            <div class="column">
+            <h3>Before</h3>
+            <p>
+                One model must distinguish all classes at once, which can be complex.
+            </p>
+            </div>
+
+            <div class="column">
+            <h3>After (One-vs-All)</h3>
+            <p>
+                The problem is split into simpler binary tasks, each focusing on a single class.
+            </p>
+            </div>
+        </div>
+        </section>
+
+        <section class="section" id="prediction-rule">
+          <h2 class="section-title">How the Final Prediction Is Made</h2>
+
+          <p>
+            After training one classifier for each class, every classifier returns a score that can be interpreted as a probability estimate.
+          </p>
+
+          <div class="formula">
+            $$ h_{\theta}^{(i)}(x) = P(y=i \mid x; \theta) $$
+          </div>
+
+          <p>
+            On a new example, we run all classifiers and pick the class with the highest predicted probability.
+          </p>
+
+          <div class="formula">
+            $$ \hat{y} = \arg\max_i h_{\theta}^{(i)}(x) $$
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Step 1</div>
+              <p>Run classifier 1 on the input.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Step 2</div>
+              <p>Run classifier 2, classifier 3, and all remaining classifiers.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Step 3</div>
+              <p>Select the class whose score is largest.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            The one-vs-all method is simple because training stays binary, while prediction becomes a “pick the maximum” step.
+          </div>
+        </section>
+
+        <section class="section" id="alt-gd">
+          <h2 class="section-title">Alternatives to Gradient Descent</h2>
+
+          <p class="lead">
+            Gradient descent is not the only way to minimize a cost function. The lecture briefly introduces a few alternatives that you may encounter in practice.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Main Idea</th>
+                  <th>Why It Is Mentioned</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Gradient Descent</td>
+                  <td>Follow the gradient direction iteratively</td>
+                  <td>Baseline optimization method used throughout the course</td>
+                </tr>
+                <tr>
+                  <td>Conjugate Gradient</td>
+                  <td>Uses smarter search directions than basic GD</td>
+                  <td>Can converge faster in some settings</td>
+                </tr>
+                <tr>
+                  <td>BFGS</td>
+                  <td>Quasi-Newton optimization for non-linear problems</td>
+                  <td>Common in numerical optimization libraries</td>
+                </tr>
+                <tr>
+                  <td>L-BFGS</td>
+                  <td>Limited-memory version of BFGS</td>
+                  <td>Useful for large problems with many variables</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The lecture does not ask students to master the internal mechanics of these algorithms.
+            The point is to know that <strong>optimization can be done in different ways</strong> even when the learning objective stays the same.
+          </p>
+
+          <div class="callout">
+            In applied machine learning, using a library implementation of a strong optimizer is normal. Understanding the role of the optimizer matters more here than re-implementing every method from scratch.
+          </div>
+        </section>
+
+        <section class="section" id="gd-vs-not-gd">
+          <h2 class="section-title">GD vs Non-GD Methods</h2>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Advantages of non-GD methods</h3>
+              <ul>
+                <li>often no manual choice of learning rate</li>
+                <li>can be faster than basic gradient descent</li>
+                <li>can scale better to large feature spaces</li>
+              </ul>
+            </div>
+
+            <div class="column">
+              <h3>Trade-offs</h3>
+              <ul>
+                <li>more mathematically and computationally complex</li>
+                <li>harder to debug</li>
+                <li>should usually be used through reliable libraries</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>
+            A recurring lecture message is practical: <strong>use tools wisely</strong>.
+            Most applied ML work can go very far with gradient descent and its common variants, especially in a Python ecosystem.
+          </p>
+        </section>
+
+        <section class="section" id="overfitting">
+          <h2 class="section-title">What Is Overfitting?</h2>
+
+          <p class="lead">
+            A model overfits when it matches the training data too closely and loses the ability to make good predictions on new examples.
+          </p>
+
+          <div class="callout">
+            Overfitting is not a sign that training failed. Quite the opposite: the model may have optimized the training objective extremely well, but for the wrong reason.
+          </div>
+
+          <p>
+            This makes overfitting especially important: a very low training error can still correspond to a bad machine learning model.
+          </p>
+
+          <p>
+            The lecture emphasizes a key distinction:
+            machine learning is not only about minimizing a cost function;
+            it is also about building a hypothesis that generalizes beyond the examples already seen.
+          </p>
+        </section>
+
+        <section class="section" id="underfit-overfit">
+          <h2 class="section-title">Underfitting, Just Right, and Overfitting</h2>
+
+          <p>
+            The lecture uses intuitive visual examples to compare three typical situations.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04a/underfit-good-overfit.png" alt="Underfitting vs good fit vs overfitting curves">
+            <div class="figure-body">
+                <div class="figure-kicker">Model complexity vs fit</div>
+                <div class="figure-caption">
+                Underfitting uses a model that is too simple to capture the data pattern. A well-fitted model captures the underlying trend.
+                Overfitting creates a highly complex curve that follows noise in the training data and fails to generalize.
+                </div>
+            </div>
+            </div>
+
+            <p class="note">
+                Think of it as: too simple → just right → too complex.
+            </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Underfitting</div>
+              <strong>High bias</strong>
+              <p>
+                The hypothesis is too simple, so it cannot capture the structure of the data.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Good fit</div>
+              <strong>Balanced model</strong>
+              <p>
+                The hypothesis captures the main pattern without memorizing accidental details.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Overfitting</div>
+              <strong>High variance</strong>
+              <p>
+                The hypothesis is too complex and bends itself to the training set, including noise.
+              </p>
+            </div>
+          </div>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Underfitting</h3>
+              <p>
+                You are imposing too much structure on the data. The model has a strong preconception about what the relationship should look like.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>Overfitting</h3>
+              <p>
+                You are allowing the model too much freedom, so it starts to memorize details that do not represent the true underlying pattern.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            A useful metaphor from the lecture is the difference between <strong>learning</strong> and <strong>memorizing</strong>. Overfitting is closer to memorization than to understanding.
+          </div>
+        </section>
+
+        <section class="section" id="generalization">
+          <h2 class="section-title">Optimization vs Generalization</h2>
+
+          <p class="lead">
+            The real goal of machine learning is not just to fit the training set, but to perform well on examples that were not part of training.
+          </p>
+
+          <div class="formula">
+            Very small training cost $$\neq$$ necessarily good future predictions.
+          </div>
+
+          <p>
+            A highly flexible model may drive the cost function near zero on the training set,
+            but still fail badly on unseen data.
+          </p>
+
+          <div class="callout">
+            <strong>Generalization</strong> means that the learned hypothesis applies well to new examples, not just to the data points used to estimate its parameters.
+          </div>
+
+          <p>
+            This is why optimization and generalization must be thought of together.
+            Pure optimization can produce a model that looks mathematically impressive and is practically useless.
+          </p>
+        </section>
+
+        <section class="section" id="curse">
+          <h2 class="section-title">Why Overfitting Is Hard to Detect</h2>
+
+          <p>
+            In low-dimensional toy examples, we can visualize the curve or decision boundary.
+            In real machine learning problems, this is often impossible.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Easy case</h3>
+              <p>
+                One feature or two features. You can draw the data and inspect the hypothesis visually.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>Realistic case</h3>
+              <p>
+                Many features, possibly thousands. Visual intuition no longer helps directly.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            The problem becomes even worse when the dataset is small relative to the number of features.
+            Then the model may learn accidental patterns very easily.
+          </p>
+
+          <div class="callout">
+            Overfitting becomes especially dangerous when we have <strong>many features</strong> and <strong>relatively little training data</strong>.
+          </div>
+        </section>
+
+        <section class="section" id="two-options">
+          <h2 class="section-title">Two Ways to Fight Overfitting</h2>
+
+          <p>
+            The lecture presents two broad strategies.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Option 1</div>
+              <strong>Reduce the number of features</strong>
+              <p>
+                Drop some attributes and keep only a subset of the available inputs.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Option 2</div>
+              <strong>Tune the importance of features</strong>
+              <p>
+                Keep all features, but reduce the influence of less useful ones.
+              </p>
+            </div>
+          </div>
+
+          <h3>Why removing features is risky</h3>
+          <p>
+            Throwing features away can also throw away useful information.
+            When there are many dimensions, it is often not obvious which features are actually irrelevant.
+          </p>
+
+          <h3>Why tuning importance is appealing</h3>
+          <p>
+            Instead of deciding manually which features survive, we let training reduce the weight of those that are not useful enough.
+            This idea leads directly to <strong>regularization</strong>.
+          </p>
+        </section>
+
+        <section class="section" id="regularization-intuition">
+          <h2 class="section-title">Regularization Intuition</h2>
+
+          <p class="lead">
+            Regularization keeps all features, but discourages parameters from becoming too large.
+          </p>
+
+          <p>
+            The intuition is simple: when parameters become very large, the hypothesis can become too flexible and too eager to match every detail of the training data.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04a/regularization-intuition.png" alt="Effect of regularization on model complexity">
+            <div class="figure-body">
+                <div class="figure-kicker">Effect of regularization</div>
+                <div class="figure-caption">
+                Without regularization, the model may fit the training data too closely with a complex curve.
+                With regularization, parameters are constrained, resulting in a smoother and more generalizable hypothesis.
+                </div>
+            </div>
+            </div>
+
+          <div class="callout">
+            Small parameter values usually correspond to smoother, simpler hypotheses that are less likely to overfit.
+          </div>
+
+          <p>
+            In that sense, regularization does not ask the model to stop learning.
+            It asks the model to avoid exaggeration.
+          </p>
+        </section>
+
+        <section class="section" id="regularized-cost">
+          <h2 class="section-title">Regularized Cost Function</h2>
+
+          <p>
+            The central idea is to change the optimization problem itself.
+            We no longer minimize only the original training error; we add a penalty for large parameter values.
+          </p>
+
+          <div class="formula">
+            $$ J(\theta) = \frac{1}{2m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})^2 + \frac{\lambda}{2m}\sum_{j=1}^{n}\theta_j^2 $$
+          </div>
+
+          <p>
+            The first term still rewards fitting the data.
+            The second term penalizes large parameters.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Part</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Training error term</td>
+                  <td>Fits the examples already in the dataset</td>
+                </tr>
+                <tr>
+                  <td>Regularization term</td>
+                  <td>Penalizes overly large parameter values</td>
+                </tr>
+                <tr>
+                  <td>$$\lambda$$</td>
+                  <td>Controls how strong the penalty is</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            By minimizing both terms together, the model is pushed toward a compromise:
+            fit the data, but do not become unnecessarily complex.
+          </p>
+        </section>
+
+        <section class="section" id="lambda">
+          <h2 class="section-title">The Role of λ</h2>
+
+          <p>
+            The parameter $$\lambda$$ is a new <strong>hyperparameter</strong>.
+            Like the learning rate, it is chosen by us before training.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">λ too small</div>
+              <strong>Weak penalty</strong>
+              <p>
+                Parameters are barely constrained, so the model may still overfit.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">λ well chosen</div>
+              <strong>Balanced control</strong>
+              <p>
+                The model keeps useful flexibility while suppressing unnecessary complexity.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">λ too large</div>
+              <strong>Too much shrinkage</strong>
+              <p>
+                Parameters are forced too close to zero and the model underfits.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            Regularization solves one problem only when it is tuned well. Too little regularization leaves overfitting alive; too much creates a high-bias model.
+          </div>
+        </section>
+
+        <section class="section" id="regularized-linear">
+          <h2 class="section-title">Regularized Linear Regression</h2>
+
+          <p class="lead">
+            Once regularization is introduced in the cost function, the learning algorithms for linear regression must be adapted accordingly.
+          </p>
+
+          <p>
+            Two approaches already seen for linear regression:
+          </p>
+
+          <ul>
+            <li>gradient descent</li>
+            <li>the normal equation</li>
+          </ul>
+
+          <h3>Gradient descent view</h3>
+          
+          <p>
+            The update rule changes because the derivative now includes the regularization term.
+            The effect is that parameters are repeatedly updated while also being gently pushed toward smaller values.
+          </p>
+
+          <div class="formula">
+            For $$j \geq 1$$, regularization modifies the update by adding a shrinkage effect on $$\theta_j$$.
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture04a/regularized-linear-gd.png" alt="Regularized linear regression with gradient descent update">
+            <div class="figure-body">
+                <div class="figure-kicker">Regularized Gradient Descent</div>
+                <div class="figure-caption">
+                The gradient descent update is modified by adding a regularization term, which shrinks the parameters at every step and prevents them from growing too large.
+                </div>
+            </div>
+            </div>
+
+          <h3>Normal equation view</h3>
+          <p>
+            The closed-form solution can be adjusted to include regularization.
+            In practice, this means the matrix expression is modified so that large parameters are penalized in the final solution as well.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04a/regularized-linear-normal.png" alt="Regularized linear regression normal equation formulation">
+            <div class="figure-body">
+                <div class="figure-kicker">Regularized Normal Equation</div>
+                <div class="figure-caption">
+                Regularization is also incorporated in the closed-form solution by modifying the matrix expression, ensuring large parameter values are penalized in the final result.
+                </div>
+            </div>
+            </div>
+
+          <div class="callout">
+            The main conceptual point is not the algebraic detail, but the consistency: whichever fitting method you use, regularization must be built into the optimization procedure itself.
+          </div>
+        </section>
+
+        <section class="section" id="regularized-logistic">
+          <h2 class="section-title">Regularized Logistic Regression</h2>
+
+          <p class="lead">
+            The same regularization idea extends naturally from linear regression to logistic regression.
+          </p>
+
+          <p>
+            Logistic regression already has a different cost function from linear regression,
+            but the same principle applies: add a penalty term that discourages large parameter values.
+          </p>
+
+          <div class="formula">
+            $$ J(\theta) = \frac{1}{m}\sum_{i=1}^{m} \Big[-y^{(i)}\log h_{\theta}(x^{(i)}) - (1-y^{(i)})\log(1-h_{\theta}(x^{(i)}))\Big] + \frac{\lambda}{2m}\sum_{j=1}^{n}\theta_j^2 $$
+          </div>
+
+          <p>
+            This is especially useful in classification when feature mappings create many polynomial or interaction terms.
+            Without regularization, those extra terms can easily produce overly complicated decision boundaries.
+          </p>
+
+            <div class="comparison">
+            <div class="column">
+                <h3>Without regularization</h3>
+
+                <div class="figure">
+                <img src="images/lecture04a/reg-logistic-no.png" alt="Overfitted decision boundary without regularization">
+                <div class="figure-body">
+                    <div class="figure-caption">
+                    A highly complex decision boundary that closely follows the training data, including noise.
+                    </div>
+                </div>
+                </div>
+
+                <p>
+                The classifier may create a boundary that twists too much around the training points,
+                capturing noise instead of the true pattern.
+                </p>
+            </div>
+
+            <div class="column">
+                <h3>With regularization</h3>
+
+                <div class="figure">
+                <img src="images/lecture04a/reg-logistic-yes.png" alt="Smooth decision boundary with regularization">
+                <div class="figure-body">
+                    <div class="figure-caption">
+                    A smoother decision boundary that captures the general trend and improves generalization.
+                    </div>
+                </div>
+                </div>
+
+                <p>
+                The classifier is encouraged to keep a simpler and smoother decision boundary,
+                making it more robust to new unseen data.
+                </p>
+            </div>
+            </div>
+        </section>
+
+        <section class="section" id="implementation">
+          <h2 class="section-title">Implementation Notes</h2>
+
+          <p>
+            Keep implementation at a practical level.
+            The goal is not to hand-code every optimizer and every regularized learner from first principles.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">What matters conceptually</div>
+              <ul>
+                <li>why one-vs-all works</li>
+                <li>why overfitting happens</li>
+                <li>why regularization helps</li>
+                <li>what λ controls</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">What matters practically</div>
+              <ul>
+                <li>use reliable ML libraries</li>
+                <li>recognize optimizer names</li>
+                <li>know that regularization changes the cost function</li>
+                <li>tune hyperparameters with care</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            At this stage, the important skill is <strong>informed use</strong>: understand what the tool is doing well enough to choose and interpret it sensibly.
+          </div>
+        </section>
+
+        <section class="section" id="study-material">
+        <h2 class="section-title">Study Material</h2>
+
+        <div class="grid-2">
+            <div class="card">
+            <div class="card-title">Slides</div>
+            <strong>Lecture 4A Slides</strong>
+            <p>
+                Use the slide deck for the visual explanation of one-vs-all classification, the comparison between optimization algorithms,
+                and the graphical intuition behind overfitting and regularization.
+            </p>
+            <a class="btn-link" href="slides/lecture04A.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+            </a>
+            </div>
+
+            <div class="card">
+            <div class="card-title">Transcript</div>
+            <strong>Lecture 4 Transcript</strong>
+            <p>
+                Use the transcript for the lecturer’s intuition on generalization vs optimization, practical insights on when models fail,
+                and the reasoning behind regularization and feature importance.
+            </p>
+            <a class="btn-link" href="transcriptions/lecture04.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+            </a>
+            </div>
+        </div>
+
+        <div class="callout">
+            Next: we move from building models to evaluating and improving them — introducing validation sets, bias vs variance, and learning curves.
+        </div>
+        </section>
+
+        
+        <section class="section" id="quiz">
+        <h2 class="section-title">Quick Review Quiz</h2>
+
+        <details>
+            <summary>1. What problem does one-vs-all solve?</summary>
+            <div class="details-body">
+            <p>It allows a binary classifier like logistic regression to be used for multiclass classification by training one classifier per class against the rest.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>2. How many classifiers are trained in one-vs-all with k classes?</summary>
+            <div class="details-body">
+            <p>We train k binary classifiers, one for each class.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>3. How is the final prediction made in one-vs-all classification?</summary>
+            <div class="details-body">
+            <p>We run all classifiers and choose the class whose classifier outputs the highest probability or score.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>4. Why might someone use BFGS or L-BFGS instead of gradient descent?</summary>
+            <div class="details-body">
+            <p>Because they can converge faster, handle large problems better, and often do not require manually choosing a learning rate.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>5. What is overfitting?</summary>
+            <div class="details-body">
+            <p>Overfitting occurs when a model fits the training data too closely, including noise, and performs poorly on new unseen data.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>6. What is the difference between underfitting and overfitting?</summary>
+            <div class="details-body">
+            <p>Underfitting happens when the model is too simple to capture the data structure, while overfitting happens when the model is too complex and captures noise.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>7. What does generalization mean in machine learning?</summary>
+            <div class="details-body">
+            <p>Generalization is the ability of a model to perform well on new data that was not part of the training set.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>8. Why does having many features increase the risk of overfitting?</summary>
+            <div class="details-body">
+            <p>Because the model becomes more flexible and can more easily fit noise or accidental patterns, especially when the dataset is small.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>9. What are the two main strategies to fight overfitting?</summary>
+            <div class="details-body">
+            <p>Reduce the number of features, or keep all features and reduce their influence using regularization.</p>
+            </div>
+        </details>
+
+        <details>
+            <summary>10. What happens if the regularization parameter λ is too large?</summary>
+            <div class="details-body">
+            <p>If λ is too large, parameters are forced too close to zero, leading to an overly simple model and underfitting.</p>
+            </div>
+        </details>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture03.html">← Previous</a>
+            <a class="btn-link" href="Lecture04B.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Lecture 04A study page
+
+            <span class="persian-note" dir="rtl">
+            برای تو… کاش توی قلبت نه overfit باشم نه underfit… فقط همون‌قدر که باید، درست و واقعی 💙
+            </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("lecture4a");
+  </script>
+</body>
+</html>
