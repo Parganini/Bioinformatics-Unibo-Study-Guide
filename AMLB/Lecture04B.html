@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 04B - Model Evaluation, Bias-Variance & Learning Curves</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="Lecture04B.html">Lecture 04B</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture04A.html">← Previous</a>
+          <a class="btn-link" href="Lecture05.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture04A.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">L04B</span>
+        <a class="icon-btn" href="Lecture05.html" aria-label="Next lecture" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Lecture 04B — Model Evaluation, Bias–Variance & Learning Curves</h1>
+          <p class="subtitle">
+            Building a model is not enough. This lecture explains how to evaluate a learned hypothesis, why train/test splitting is only the beginning,
+            how model selection uses validation data, how to diagnose high bias versus high variance, and how learning curves guide the next practical steps.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">Diagnostics</div>
+            <div class="pill">Train / CV / Test</div>
+            <div class="pill">Bias–Variance</div>
+            <div class="pill">Learning Curves</div>
+            <div class="pill">Debugging ML</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/lecture04b/hero-cover.jpg" alt="Machine learning diagnostics and evaluation visual">
+          </div>
+          <div class="hero-badge">From model building to model diagnosis</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#why-diagnostics">Why Diagnostics Matter</a>
+        <a href="#evaluate-hypothesis">Evaluating a Hypothesis</a>
+        <a href="#train-test">Train/Test Split</a>
+        <a href="#test-error">Test Error</a>
+        <a href="#misclassification">0/1 Misclassification Error</a>
+        <a href="#model-selection">Model Selection</a>
+        <a href="#tvt">Training / Validation / Test Sets</a>
+        <a href="#hidden-test">Hide the Test Set</a>
+        <a href="#bias-variance">Bias vs Variance</a>
+        <a href="#diagnosing-d">Using Complexity to Diagnose</a>
+        <a href="#lambda-selection">Choosing λ with Validation</a>
+        <a href="#learning-curves">Learning Curves</a>
+        <a href="#high-bias-curves">High-Bias Curves</a>
+        <a href="#high-variance-curves">High-Variance Curves</a>
+        <a href="#what-next">What To Try Next</a>
+        <a href="#study-material">Study Material</a>
+        <a href="#quiz">Quick Review Quiz</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture</h2>
+          <p class="lead">
+            After building and regularizing a model, a practical question remains: <strong>how do we know what to improve next?</strong>
+            This lecture answers that question by turning model evaluation into a systematic diagnostic process.
+          </p>
+
+          <div class="callout">
+            The key shift here is from “how do I train a model?” to “how do I decide what is wrong with the model I trained?”
+          </div>
+
+          <p>
+            The lecture shows that machine learning practice is not driven by guesswork alone. Instead, we can use structured evaluation,
+            dataset splitting, validation, and learning curves to identify whether the real problem is <strong>high bias</strong>, <strong>high variance</strong>,
+            or a poor modeling decision.
+          </p>
+        </section>
+
+        <section class="section" id="why-diagnostics">
+          <h2 class="section-title">Why Diagnostics Matter</h2>
+
+          <p class="lead">
+            In real projects, there is rarely a “gold recipe” that tells you exactly what to do next.
+          </p>
+
+          <p>
+            Suppose a model performs badly on new data. Many actions are possible:
+            gather more data, reduce features, add features, try polynomial terms, or tune regularization.
+            The problem is that these actions can be expensive, time-consuming, or completely unhelpful if chosen blindly.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Typical reactions</div>
+              <ul>
+                <li>get more training examples</li>
+                <li>use fewer features</li>
+                <li>add new features</li>
+                <li>add polynomial features</li>
+                <li>change λ</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">The real issue</div>
+              <p>
+                Without diagnostics, choosing one of these is often just guesswork based on gut feeling.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            Diagnostics are useful because they help rule out bad next steps and point toward the promising ones before you waste time.
+          </div>
+        </section>
+
+        <section class="section" id="evaluate-hypothesis">
+          <h2 class="section-title">Evaluating a Learned Hypothesis</h2>
+
+          <p>
+            Once a hypothesis has been learned, we need a way to measure how good it really is.
+            A low training error might look impressive, but by itself it says very little about performance on unseen data.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/check-overfitting.png" alt="Overfitted curve with low training error but poor generalization">
+            <div class="figure-body">
+              <div class="figure-kicker">Low training error is not enough</div>
+              <div class="figure-caption">
+                A model can fit the training data very closely and still fail to generalize. This is exactly why evaluation must go beyond the training set.
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The lecture’s message is simple: <strong>training performance is not the same as real-world performance</strong>.
+          </p>
+        </section>
+
+        <section class="section" id="train-test">
+          <h2 class="section-title">The Simplest Diagnostic: Train/Test Split</h2>
+
+          <p class="lead">
+            The first practical improvement is to stop evaluating the hypothesis only on the data used to train it.
+          </p>
+
+          <p>
+            The basic idea is to divide the dataset into two parts:
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Training Set</div>
+              <p>
+                Used to learn the parameters and minimize the training cost.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Test Set</div>
+              <p>
+                Used only after training to estimate how well the learned hypothesis generalizes.
+              </p>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture04b/train-test-split.png" alt="Dataset split into training and test set">
+            <div class="figure-body">
+              <div class="figure-kicker">Typical first split</div>
+              <div class="figure-caption">
+                A simple starting point is a 70/30 split: roughly 70% for training and 30% for testing, after shuffling when needed.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The training set teaches the model. The test set checks whether what was learned is actually useful beyond the training examples.
+          </div>
+        </section>
+
+        <section class="section" id="test-error">
+          <h2 class="section-title">Test Error</h2>
+
+          <p>
+            After learning parameters on the training set, we compute an error on the test set.
+            That error gives a more honest picture of generalization than the training error does.
+          </p>
+
+          <h3>Linear regression</h3>
+          <div class="formula">
+            $$ J_{test}(\theta) = \frac{1}{2m_{test}}\sum_{i=1}^{m_{test}}\big(h_{\theta}(x_{test}^{(i)}) - y_{test}^{(i)}\big)^2 $$
+          </div>
+
+          <h3>Logistic regression</h3>
+          <p>
+            The procedure is analogous: train on the training set, then compute a test-set metric on examples never used for fitting.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture04b/test-error-linear.png" alt="Training and testing procedure for linear regression">
+              <div class="figure-body">
+                <div class="figure-kicker">Linear regression</div>
+                <div class="figure-caption">
+                  Parameters are learned on the training set, and error is measured separately on the test set.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture04b/test-error-logistic.png" alt="Training and testing procedure for logistic regression">
+              <div class="figure-body">
+                <div class="figure-kicker">Logistic regression</div>
+                <div class="figure-caption">
+                  The same logic applies to classification: separate fitting from final evaluation.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="misclassification">
+          <h2 class="section-title">0/1 Misclassification Error</h2>
+
+          <p class="lead">
+            In classification, a metric that is often easier to interpret than the full cost function is the fraction of examples that the model labels incorrectly.
+          </p>
+
+          <div class="formula">
+            $$ \text{Test error} = \frac{1}{m_{test}}\sum_{i=1}^{m_{test}} err\big(h_{\theta}(x_{test}^{(i)}), y_{test}^{(i)}\big) $$
+          </div>
+
+          <p>
+            Here, each example contributes either:
+          </p>
+
+          <ul>
+            <li><code>1</code> if the prediction is wrong</li>
+            <li><code>0</code> if the prediction is correct</li>
+          </ul>
+
+          <div class="figure">
+            <img src="images/lecture04b/misclassification-error.png" alt="0/1 misclassification error formula">
+            <div class="figure-body">
+              <div class="figure-kicker">Classification metric</div>
+              <div class="figure-caption">
+                The 0/1 misclassification error is simply the fraction of test examples that the hypothesis labels incorrectly.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="model-selection">
+          <h2 class="section-title">Why Train/Test Is Not Enough</h2>
+
+          <p class="lead">
+            Once we start comparing multiple candidate models, the test set alone is no longer sufficient.
+          </p>
+
+          <p>
+            Imagine fitting many polynomial models with degrees \(d=1,2,3,\ldots\). If we use the test set to choose the “best” degree,
+            we are no longer using the test set only for final evaluation. We are tuning decisions against it.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/model-selection-degree.png" alt="Model selection across polynomial degrees">
+            <div class="figure-body">
+              <div class="figure-kicker">Choosing among models</div>
+              <div class="figure-caption">
+                Different model complexities produce different parameter vectors. The question is not only how to fit each model, but how to select the best one without contaminating the final test estimate.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The moment you compare models or tune hyperparameters, you need another dataset split between training and final testing.
+          </div>
+        </section>
+
+        <section class="section" id="tvt">
+          <h2 class="section-title">Training / Validation / Test Sets</h2>
+
+          <p>
+            The solution is to split the dataset into three parts:
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Subset</th>
+                  <th>Main Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Training set</td>
+                  <td>Learn parameters \(\theta\)</td>
+                </tr>
+                <tr>
+                  <td>Cross-validation set</td>
+                  <td>Select models and tune hyperparameters</td>
+                </tr>
+                <tr>
+                  <td>Test set</td>
+                  <td>Estimate final generalization error</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            A common split is something like 60% training, 20% validation, and 20% test.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture04b/tvt-procedure.png" alt="Training validation test procedure">
+              <div class="figure-body">
+                <div class="figure-kicker">TVT workflow</div>
+                <div class="figure-caption">
+                  Train on the training set, choose the best configuration on the validation set, and only then estimate final performance on the test set.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture04b/tvt-errors.png" alt="Separate training validation and test errors">
+              <div class="figure-body">
+                <div class="figure-kicker">Separate error measures</div>
+                <div class="figure-caption">
+                  Training, validation, and test errors are computed on disjoint subsets. Their meanings are different and should not be mixed.
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="hidden-test">
+          <h2 class="section-title">Hide the Test Set</h2>
+
+          <p class="lead">
+            One of the strongest practical lessons of the lecture is methodological: the test set must stay untouched while you are still designing the model.
+          </p>
+
+          <div class="callout">
+            Put the test set “in the closet, hide the key,” and only bring it back when model creation, training, and tuning are finished.
+          </div>
+
+          <p>
+            This prevents <strong>data leakage</strong> and stops the test set from becoming part of the design process.
+            If that happens, the test error becomes optimistic and stops being a fair estimate of real generalization.
+          </p>
+
+          <p>
+            Libraries make this workflow easy, but the conceptual discipline matters even more than the code.
+          </p>
+        </section>
+
+        <section class="section" id="bias-variance">
+          <h2 class="section-title">Bias vs Variance Diagnosis</h2>
+
+          <p class="lead">
+            When predictions are poor, the cause is very often either a <strong>high-bias</strong> problem or a <strong>high-variance</strong> problem.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>High bias</h3>
+              <p>
+                The model is too simple and underfits the data.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>High variance</h3>
+              <p>
+                The model is too flexible and overfits the data.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            Diagnosis matters because the remedies are different. What helps high variance may do nothing for high bias, and vice versa.
+          </div>
+        </section>
+
+        <section class="section" id="diagnosing-d">
+          <h2 class="section-title">Using Model Complexity to Diagnose</h2>
+
+          <p>
+            In the lecture’s running example, model complexity is represented by the polynomial degree \(d\).
+            As \(d\) increases, training error tends to decrease. But cross-validation error usually decreases only up to a point and then rises again.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/bias-variance-degree.png" alt="Training and validation error versus polynomial degree">
+            <div class="figure-body">
+              <div class="figure-kicker">The sweet spot</div>
+              <div class="figure-caption">
+                Training error keeps decreasing with more complex models, but validation error has a minimum. That minimum marks a better balance between underfitting and overfitting.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">High bias pattern</div>
+              <p>
+                Both training and validation errors are high, and they are often close to each other.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">High variance pattern</div>
+              <p>
+                Training error is low, but validation error is much higher.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="lambda-selection">
+          <h2 class="section-title">Choosing λ with Validation</h2>
+
+          <p class="lead">
+            The same model-selection logic used for polynomial degree can also be applied to the regularization parameter \(\lambda\).
+          </p>
+
+          <p>
+            The basic workflow is:
+          </p>
+
+          <ol>
+            <li>create a list of candidate values for \(\lambda\)</li>
+            <li>train the model for each candidate</li>
+            <li>compute the validation error for each trained model</li>
+            <li>choose the value that gives the lowest validation error</li>
+            <li>evaluate the final chosen model once on the test set</li>
+          </ol>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture04b/lambda-selection.png" alt="Validation used to choose regularization parameter">
+              <div class="figure-body">
+                <div class="figure-kicker">Selecting λ</div>
+                <div class="figure-caption">
+                  Cross-validation helps locate a regularization strength that is neither too weak nor too strong.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture04b/lambda-curves.png" alt="Training and validation error as lambda changes">
+              <div class="figure-body">
+                <div class="figure-kicker">Bias–variance effect of λ</div>
+                <div class="figure-caption">
+                  As λ increases, the fit becomes more rigid. Too little regularization tends to overfit; too much tends to underfit.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            Hyperparameter search tools automate this idea, but conceptually they are still doing model selection through validation.
+          </div>
+        </section>
+
+        <section class="section" id="learning-curves">
+          <h2 class="section-title">Learning Curves</h2>
+
+          <p class="lead">
+            Learning curves plot error against the number of training examples and are one of the most useful diagnostic tools in applied machine learning.
+          </p>
+
+          <p>
+            They are valuable both as a sanity check and as a guide for improvement.
+            By looking at how training and validation errors evolve as the dataset size increases, we can tell whether more data is likely to help.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/learning-curves-overview.png" alt="Learning curve overview">
+            <div class="figure-body">
+              <div class="figure-kicker">Diagnostic tool</div>
+              <div class="figure-caption">
+                Learning curves show how training and validation errors change as the amount of training data grows.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="high-bias-curves">
+          <h2 class="section-title">How Learning Curves Look with High Bias</h2>
+
+          <p>
+            In a high-bias setting, the model is too simple. As the training set gets larger, both training and validation errors remain relatively high and end up close to each other.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/learning-curves-high-bias.png" alt="Learning curves for high bias">
+            <div class="figure-body">
+              <div class="figure-kicker">High bias signature</div>
+              <div class="figure-caption">
+                Training and validation errors are both high and converge toward similar values. Adding more data alone usually does not solve the problem.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            If the model has high bias, collecting more examples is often not the right first move. The model itself needs more expressive power.
+          </div>
+        </section>
+
+        <section class="section" id="high-variance-curves">
+          <h2 class="section-title">How Learning Curves Look with High Variance</h2>
+
+          <p>
+            In a high-variance setting, the model fits the current training examples too specifically. Training error stays low, but validation error is much higher.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture04b/learning-curves-high-variance.png" alt="Learning curves for high variance">
+            <div class="figure-body">
+              <div class="figure-kicker">High variance signature</div>
+              <div class="figure-caption">
+                There is a significant gap between low training error and higher validation error. More data can help narrow that gap.
+              </div>
+            </div>
+          </div>
+
+          <p>
+            As the training set grows, training error may rise a bit while validation error drops.
+            That is often a good sign: the model is becoming less dependent on quirks of a small sample.
+          </p>
+        </section>
+
+        <section class="section" id="what-next">
+          <h2 class="section-title">What To Try Next</h2>
+
+          <p class="lead">
+            Diagnostics become useful only when they guide action.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Possible Action</th>
+                  <th>Usually Helps With</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Get more training examples</td>
+                  <td>High variance</td>
+                </tr>
+                <tr>
+                  <td>Use a smaller set of features</td>
+                  <td>High variance</td>
+                </tr>
+                <tr>
+                  <td>Get additional features</td>
+                  <td>High bias</td>
+                </tr>
+                <tr>
+                  <td>Add polynomial features</td>
+                  <td>High bias</td>
+                </tr>
+                <tr>
+                  <td>Increase λ</td>
+                  <td>High variance</td>
+                </tr>
+                <tr>
+                  <td>Decrease λ</td>
+                  <td>High bias</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            The whole point of bias–variance diagnosis is to stop trying random fixes and start choosing the next step based on evidence.
+          </div>
+
+          <p>
+            This is one of the most practical lessons of the lecture:
+            once you know whether the problem is bias or variance, many candidate fixes become either sensible or pointless almost immediately.
+          </p>
+        </section>
+
+        <section class="section" id="study-material">
+          <h2 class="section-title">Study Material</h2>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Slides</div>
+              <strong>Lecture 4B Slides</strong>
+              <p>
+                Use the slide deck for the TVT splitting procedure, validation-based model selection, bias–variance diagrams, and the full set of learning-curve visuals.
+              </p>
+              <a class="btn-link" href="slides/lecture04B.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Transcript</div>
+              <strong>Lecture 4 Transcript</strong>
+              <p>
+                Use the transcript for the lecturer’s practical reasoning on debugging models, choosing the next action intelligently, and understanding why evaluation discipline matters in real ML work.
+              </p>
+              <a class="btn-link" href="transcriptions/lecture04.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+          </div>
+
+          <div class="callout">
+            Next: the course can now move forward with stronger practical awareness — not only how to train models, but how to evaluate and improve them with discipline.
+          </div>
+        </section>
+
+        <section class="section" id="quiz">
+          <h2 class="section-title">Quick Review Quiz</h2>
+
+          <details>
+            <summary>1. Why is a low training error not enough to judge a model?</summary>
+            <div class="details-body">
+              <p>Because a model can fit the training set very well and still generalize poorly to new unseen examples.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>2. What is the purpose of the test set?</summary>
+            <div class="details-body">
+              <p>It is used at the end to estimate how well the final model generalizes to data that was not used during training.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. Why is a train/test split alone not enough for model selection?</summary>
+            <div class="details-body">
+              <p>Because if we use the test set to compare models or tune hyperparameters, the test set stops being an unbiased final evaluation set.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>4. What is the role of the cross-validation set?</summary>
+            <div class="details-body">
+              <p>It is used to compare candidate models and tune hyperparameters such as polynomial degree or regularization strength.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>5. Why should the test set be “hidden in the closet”?</summary>
+            <div class="details-body">
+              <p>Because looking at it too early leaks information into the modeling process and makes the final test estimate overly optimistic.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>6. What does high bias mean?</summary>
+            <div class="details-body">
+              <p>High bias means the model is too simple and underfits the data.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>7. What does high variance mean?</summary>
+            <div class="details-body">
+              <p>High variance means the model is too flexible, overfits the training set, and performs much worse on validation data.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>8. What do learning curves show?</summary>
+            <div class="details-body">
+              <p>They show how training and validation errors change as the number of training examples increases.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>9. When is getting more training data likely to help?</summary>
+            <div class="details-body">
+              <p>It is most likely to help when the model suffers from high variance.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>10. What kind of problem is increasing λ usually meant to address?</summary>
+            <div class="details-body">
+              <p>Increasing λ is usually meant to reduce high variance by strengthening regularization.</p>
+            </div>
+          </details>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture04A.html">← Previous</a>
+            <a class="btn-link" href="Lecture05.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Lecture 04B study page
+
+          <span class="persian-note" dir="rtl">
+          برای تو… که با تو، منحنیِ یادگیریِ من هر روز بالاتر می‌ره 🌹
+        </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("lecture4b");
+  </script>
+</body>
+</html>
