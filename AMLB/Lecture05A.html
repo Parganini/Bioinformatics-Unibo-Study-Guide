@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 05A - Error Metrics for Skewed Classes</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="Lecture05A.html">Lecture 05A</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture04B.html">← Previous</a>
+          <a class="btn-link" href="Lecture05B.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture04B.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">L05A</span>
+        <a class="icon-btn" href="Lecture05B.html" aria-label="Next lecture" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Lecture 05A — Error Metrics for Skewed Classes</h1>
+          <p class="subtitle">
+            This lecture explains why accuracy can fail on imbalanced datasets, introduces the confusion matrix,
+            defines precision and recall, explores their trade-off through threshold tuning, and then moves to F1 score,
+            ROC curves, and AUC as stronger ways to evaluate classifiers.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">Skewed Classes</div>
+            <div class="pill">Confusion Matrix</div>
+            <div class="pill">Precision / Recall</div>
+            <div class="pill">F1 Score</div>
+            <div class="pill">ROC / AUC</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/lecture05a/hero-cover.jpg" alt="Evaluation metrics for skewed classes visual">
+          </div>
+          <div class="hero-badge">When accuracy is not enough</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#skewed-classes">Skewed Classes</a>
+        <a href="#accuracy-fails">Why Accuracy Fails</a>
+        <a href="#confusion-matrix">Confusion Matrix</a>
+        <a href="#precision">Precision</a>
+        <a href="#recall">Recall</a>
+        <a href="#precision-recall-summary">Precision vs Recall Intuition</a>
+        <a href="#tradeoff">Precision–Recall Trade-off</a>
+        <a href="#threshold">Threshold Tuning</a>
+        <a href="#f1">F1 Score</a>
+        <a href="#roc">ROC Curves</a>
+        <a href="#auc">AUC</a>
+        <a href="#study-material">Study Material</a>
+        <a href="#quiz">Quick Review Quiz</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture</h2>
+          <p class="lead">
+            Most of the time, using a single number such as accuracy feels natural. But some classification problems are fundamentally uneven:
+            the class we care about is rare, and the majority class dominates the dataset.
+          </p>
+
+          <div class="callout">
+            This lecture is about learning when <strong>accuracy stops being trustworthy</strong> and how to replace it with metrics that better reflect what we actually care about.
+          </div>
+
+          <p>
+            The key example throughout the lecture is medical diagnosis. In that kind of setting, missing a rare but important positive case can matter much more
+            than achieving a superficially high average accuracy.
+          </p>
+        </section>
+
+        <section class="section" id="skewed-classes">
+          <h2 class="section-title">Skewed Classes</h2>
+
+          <p class="lead">
+            A dataset has <strong>skewed classes</strong> when one class is much more common than the other.
+          </p>
+
+          <p>
+            This happens often in real scientific and practical problems: rare diseases, severe earthquakes, fraudulent transactions,
+            or any setting where the event of interest is not the majority of what appears in the data.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05a/skewed-classes-example.png" alt="Cancer classification example with rare positive class">
+            <div class="figure-body">
+              <div class="figure-kicker">Rare events matter most</div>
+              <div class="figure-caption">
+                In many real applications, the positive class is the one we care about most, but it is also the one that appears least often.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            The methodological problem is not only that the data are imbalanced — it is that imbalance can make bad models look deceptively good.
+          </div>
+        </section>
+
+        <section class="section" id="accuracy-fails">
+          <h2 class="section-title">Why Accuracy Fails in Imbalanced Data</h2>
+
+          <p class="lead">
+            Accuracy is often fine, but it becomes misleading when the class of interest is very rare.
+          </p>
+
+          <p>
+            Suppose only 0.5% of patients in a dataset actually have cancer. A trivial “classifier” that predicts <code>y = 0</code> for everyone would still be correct 99.5% of the time.
+            That looks excellent by accuracy alone, but it is useless for finding actual cancer cases.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>What accuracy says</h3>
+              <p>
+                “99.5% correct” sounds impressive.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>What reality says</h3>
+              <p>
+                The model failed to identify every single rare positive case.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            A non-learning algorithm can appear strong under accuracy when classes are skewed. That is the warning sign that a different metric is needed.
+          </div>
+        </section>
+
+        <section class="section" id="confusion-matrix">
+          <h2 class="section-title">The Confusion Matrix</h2>
+
+          <p class="lead">
+            To evaluate a classifier properly, we count predictions by type instead of reducing everything to a single accuracy number too early.
+          </p>
+
+            <div class="figure">
+            <img src="images/lecture05a/confusion-matrix.png" alt="Confusion matrix with true positives, false positives, false negatives and true negatives">
+            <div class="figure-body">
+                <div class="figure-kicker">Confusion matrix</div>
+                <div class="figure-caption">
+                Every prediction falls into one of four categories: true positive (TP), false positive (FP), false negative (FN), or true negative (TN).
+                These counts are the foundation for all evaluation metrics.
+                </div>
+            </div>
+            </div>
+
+            <p class="note">
+                Think of it as: what the model predicted vs what actually happened.
+                </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Term</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>TP</td>
+                  <td>Actual positive and predicted positive</td>
+                </tr>
+                <tr>
+                  <td>FP</td>
+                  <td>Actual negative but predicted positive</td>
+                </tr>
+                <tr>
+                  <td>FN</td>
+                  <td>Actual positive but predicted negative</td>
+                </tr>
+                <tr>
+                  <td>TN</td>
+                  <td>Actual negative and predicted negative</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Once this matrix is available, performance metrics become counts and ratios rather than vague impressions.
+          </p>
+        </section>
+
+        <section class="section" id="precision">
+          <h2 class="section-title">Precision</h2>
+
+          <p class="lead">
+            Precision asks: among all examples predicted as positive, how many are actually positive?
+          </p>
+
+          <div class="formula">
+            $$ \text{Precision} = \frac{TP}{TP + FP} $$
+          </div>
+
+          <p>
+            Precision becomes important when false positives are costly.
+            In medical or operational settings, a high precision means that when the model raises a positive alert, it is usually right.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture05a/precision-slide.png" alt="Precision formula and intuition">
+            <div class="figure-body">
+              <div class="figure-kicker">How precise are positive predictions?</div>
+              <div class="figure-caption">
+                Precision measures the purity of the predicted-positive group.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="recall">
+          <h2 class="section-title">Recall</h2>
+
+          <p class="lead">
+            Recall asks: among all actual positive examples, how many did the classifier successfully find?
+          </p>
+
+          <div class="formula">
+            $$ \text{Recall} = \frac{TP}{TP + FN} $$
+          </div>
+
+          <p>
+            Recall becomes important when false negatives are costly.
+            If missing an actual positive case is dangerous, then a high recall is often more valuable than a high precision.
+          </p>
+
+            <div class="figure">
+            <img src="images/lecture05a/recall-slide.png" alt="Recall formula and intuition">
+            <div class="figure-body">
+                <div class="figure-kicker">How many positives were found?</div>
+                <div class="figure-caption">
+                Recall measures how much of the real positive class the model manages to recover.
+                </div>
+            </div>
+            </div>
+        </section>
+
+        <section class="section" id="precision-recall-summary">
+          <h2 class="section-title">Precision vs Recall Intuition</h2>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>High precision</h3>
+              <p>
+                Positive predictions are trustworthy. The model is careful before saying “yes”.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>High recall</h3>
+              <p>
+                Few real positives are missed. The model is aggressive in trying to catch all important cases.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            A trivial classifier that always predicts the majority class will score very poorly on both precision and recall for the rare class. That is why these metrics are much harder to “cheat” than accuracy.
+          </div>
+
+          <p>
+            By convention, when classes are skewed, we usually define <code>y = 1</code> as the rare or important class — the one we most want to detect.
+          </p>
+        </section>
+
+        <section class="section" id="tradeoff">
+          <h2 class="section-title">The Precision–Recall Trade-off</h2>
+
+          <p class="lead">
+            Precision and recall are both useful, but pushing one upward often pulls the other downward.
+          </p>
+
+          <p>
+            Most classifiers output a score or probability. The final label depends on a threshold, often 0.5 by default.
+            If we change that threshold, we also change the balance between false positives and false negatives.
+          </p>
+
+          <div class="callout">
+            There is no universally best threshold. The right choice depends on the real goal of the application.
+          </div>
+
+          <p>
+            That is why the lecture stresses use-case awareness: the same model can be tuned differently depending on whether we value caution or coverage.
+          </p>
+        </section>
+
+        <section class="section" id="threshold">
+          <h2 class="section-title">Threshold Tuning</h2>
+
+          <p class="lead">
+            Increasing the classification threshold makes the classifier more conservative; lowering it makes the classifier more inclusive.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Higher threshold</div>
+              <ul>
+                <li>fewer predicted positives</li>
+                <li>higher precision</li>
+                <li>lower recall</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lower threshold</div>
+              <ul>
+                <li>more predicted positives</li>
+                <li>lower precision</li>
+                <li>higher recall</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture05a/threshold-high-precision.png" alt="Higher threshold leads to higher precision and lower recall">
+              <div class="figure-body">
+                <div class="figure-kicker">Conservative threshold</div>
+                <div class="figure-caption">
+                  Use a higher threshold when false positives are especially costly, such as selecting patients for invasive surgery.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture05a/threshold-high-recall.png" alt="Lower threshold leads to higher recall and lower precision">
+              <div class="figure-body">
+                <div class="figure-kicker">Inclusive threshold</div>
+                <div class="figure-caption">
+                  Use a lower threshold when missing a true positive is more dangerous, such as screening for further medical examination.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The practical lesson is not “always maximize one metric.” It is to match the metric and threshold to the cost of mistakes in the real task.
+          </p>
+        </section>
+
+        <section class="section" id="f1">
+          <h2 class="section-title">F1 Score</h2>
+
+          <p class="lead">
+            Precision and recall give two different numbers. Sometimes it is helpful to combine them into a single score.
+          </p>
+
+          <div class="formula">
+            $$ F_1 = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}} $$
+          </div>
+
+          <p>
+            The F1 score is the <strong>harmonic mean</strong> of precision and recall.
+            It rewards models that balance both, and it punishes extreme imbalance between them.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Why not a simple average?</h3>
+              <p>
+                A simple average can hide the fact that one metric is very weak.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>Why harmonic mean?</h3>
+              <p>
+                The harmonic mean stays low when either precision or recall is low, so balance matters.
+              </p>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture05a/f1-score.png" alt="F1 score combining precision and recall">
+            <div class="figure-body">
+              <div class="figure-kicker">One number, two goals</div>
+              <div class="figure-caption">
+                F1 is useful when we want a single metric that reflects both precision and recall at once.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="roc">
+          <h2 class="section-title">ROC (Receiver Operating Characteristic) Curves</h2>
+
+          <p class="lead">
+            Threshold tuning reveals a broader idea: instead of checking only one threshold, we can inspect how a classifier behaves across all thresholds.
+          </p>
+
+          <p>
+            The ROC curve plots:
+          </p>
+
+          <ul>
+            <li><strong>True Positive Rate (TPR)</strong> on the vertical axis</li>
+            <li><strong>False Positive Rate (FPR)</strong> on the horizontal axis</li>
+          </ul>
+
+          <div class="formula">
+            $$ TPR = \frac{TP}{TP + FN} = \text{Recall} $$
+          </div>
+
+          <div class="formula">
+            $$ FPR = \frac{FP}{FP + TN} $$
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture05a/roc-curve.png" alt="ROC curve showing TPR versus FPR">
+            <div class="figure-body">
+              <div class="figure-kicker">Across all thresholds</div>
+              <div class="figure-caption">
+                ROC curves summarize how the classifier trades off sensitivity and false alarms as the threshold changes.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="auc">
+          <h2 class="section-title">AUC</h2>
+
+          <p class="lead">
+            Once we have an ROC curve, we can summarize it with a single value: the Area Under the Curve.
+          </p>
+
+          <div class="formula">
+            $$ \text{AUC} = \text{Area under the ROC curve} $$
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture05a/auc-curve.png" alt="ROC curve with shaded area representing AUC">
+            <div class="figure-body">
+                <div class="figure-kicker">Area Under the Curve</div>
+                <div class="figure-caption">
+                The AUC measures the total area under the ROC curve. A larger area indicates better overall ability to distinguish between positive and negative classes.
+                </div>
+            </div>
+            </div>
+
+          <p>
+            AUC measures how well the classifier separates positive and negative examples overall, without committing to one single threshold.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">AUC near 1</div>
+              <p>Excellent separation between classes.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">AUC near 0.5</div>
+              <p>Performance close to random guessing.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Why it matters</div>
+              <p>Useful for comparing models independently of a fixed threshold.</p>
+            </div>
+          </div>
+
+            <div class="figure">
+            <img src="images/lecture05a/auc-ranking.png" alt="AUC interpretation showing ranking of positive and negative examples">
+            <div class="figure-body">
+                <div class="figure-kicker">Ranking interpretation of AUC</div>
+                <div class="figure-caption">
+                Imagine ordering examples by the model’s predicted score. AUC represents the probability that a randomly chosen positive example (green)
+                is ranked higher than a randomly chosen negative example (red).
+                </div>
+            </div>
+            </div>
+
+            <p class="note">
+                If most positive examples appear to the right of negative ones (higher predicted scores), the model separates the classes well → high AUC.</p>
+                 <p class="note"></p>If positives and negatives are mixed randomly, the ranking is unreliable → AUC near 0.5.
+                </p>
+
+          <div class="callout">
+            Precision/recall is often best for rare-class decision-making. ROC/AUC is often best for comparing overall ranking quality across thresholds.
+          </div>
+        </section>
+
+        <section class="section" id="auc-why">
+        <h2 class="section-title">Why AUC Is Popular (and Its Limits)</h2>
+
+        <p class="lead">
+            AUC is widely used because it captures model performance across all thresholds and focuses on ranking quality rather than fixed decisions.
+        </p>
+
+        <div class="grid-2">
+            <div class="card">
+            <div class="card-title">Why AUC is useful</div>
+            <ul>
+                <li><strong>Threshold-invariant:</strong> evaluates the model across all possible classification thresholds</li>
+                <li><strong>Scale-invariant:</strong> measures how well predictions are ranked, not their absolute values</li>
+            </ul>
+            </div>
+
+            <div class="card">
+            <div class="card-title">What this means</div>
+            <p>
+                AUC tells us how good the model is at ordering examples from most likely positive to least likely,
+                without committing to a specific decision boundary.
+            </p>
+            </div>
+        </div>
+
+        <div class="callout">
+            A high AUC means the model consistently ranks positive examples above negative ones — even before choosing a threshold.
+        </div>
+
+        <h3>Important caveats</h3>
+
+        <div class="grid-2">
+            <div class="card">
+            <div class="card-title">Threshold invariance can be misleading</div>
+            <p>
+                In many real applications, the cost of mistakes is not balanced.
+                For example, in spam detection, false positives (important emails marked as spam) are often worse than false negatives.
+            </p>
+            <p>
+                In these cases, choosing the right threshold matters more than evaluating all thresholds equally — so AUC may not reflect what we truly care about.
+            </p>
+            </div>
+
+            <div class="card">
+            <div class="card-title">Scale invariance ignores calibration</div>
+            <p>
+                AUC evaluates ranking, not probability accuracy.
+            </p>
+            <p>
+                A model might rank examples correctly but still produce poorly calibrated probabilities,
+                which can be problematic when decisions depend on actual probability values.
+            </p>
+            </div>
+        </div>
+
+        <div class="callout">
+            AUC is powerful for comparing models globally — but for real decisions, precision, recall, or calibrated probabilities may matter more.
+        </div>
+        </section>
+
+        <section class="section" id="study-material">
+          <h2 class="section-title">Study Material</h2>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Slides</div>
+              <strong>Lecture 5 Slides</strong>
+              <p>
+                Use the slide deck for the cancer example, confusion matrix construction, precision/recall trade-off visuals, threshold illustrations, and the ROC/AUC overview.
+              </p>
+              <a class="btn-link" href="slides/lecture05.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Transcript</div>
+              <strong>Lecture 5 Transcript</strong>
+              <p>
+                Use the transcript for the lecturer’s intuition on why skewed classes break accuracy, how threshold choice depends on the application, and why different metrics matter in real decisions.
+              </p>
+              <a class="btn-link" href="transcriptions/lecture05.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+              </a>
+            </div>
+          </div>
+
+          <div class="callout">
+            Next: we move from evaluation metrics to the practical environment used in the course — Google Colab, runtimes, GPUs, and TPUs.
+          </div>
+        </section>
+
+        <section class="section" id="quiz">
+          <h2 class="section-title">Quick Review Quiz</h2>
+
+          <details>
+            <summary>1. Why can accuracy be misleading in skewed datasets?</summary>
+            <div class="details-body">
+              <p>Because a model can achieve very high accuracy by always predicting the majority class, while completely missing the rare class we actually care about.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>2. What does TP stand for in a confusion matrix?</summary>
+            <div class="details-body">
+              <p>True Positive: an example that is actually positive and is predicted as positive by the model.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. What does precision measure?</summary>
+            <div class="details-body">
+              <p>Precision measures how many predicted positive examples are actually positive.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>4. What does recall measure?</summary>
+            <div class="details-body">
+              <p>Recall measures how many actual positive examples are successfully found by the model.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>5. What usually happens when the classification threshold is increased?</summary>
+            <div class="details-body">
+              <p>Precision usually increases and recall usually decreases, because the classifier becomes more conservative about predicting positives.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>6. In what kind of application is high precision especially important?</summary>
+            <div class="details-body">
+              <p>High precision is especially important when false positives are costly, such as selecting patients for invasive surgery.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>7. In what kind of application is high recall especially important?</summary>
+            <div class="details-body">
+              <p>High recall is especially important when missing a true positive is costly, such as medical screening or early detection tasks.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>8. Why is the F1 score useful?</summary>
+            <div class="details-body">
+              <p>Because it combines precision and recall into one number while penalizing models that are strong on one metric but weak on the other.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>9. What does an ROC curve plot?</summary>
+            <div class="details-body">
+              <p>It plots the True Positive Rate against the False Positive Rate across different classification thresholds.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>10. What does AUC represent?</summary>
+            <div class="details-body">
+              <p>AUC represents the area under the ROC curve and summarizes how well a classifier separates positive and negative classes across thresholds.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>11. A classifier produced the following results: TP = 40, FP = 10, FN = 20. What is the precision?</summary>
+            <div class="details-body">
+                <p>
+                Precision = TP / (TP + FP) = 40 / (40 + 10) = 40 / 50 = <strong>0.8</strong>
+                </p>
+            </div>
+            </details>
+
+            <details>
+            <summary>12. Using the same classifier: TP = 40, FP = 10, FN = 20. What is the recall?</summary>
+            <div class="details-body">
+                <p>
+                Recall = TP / (TP + FN) = 40 / (40 + 20) = 40 / 60 ≈ <strong>0.67</strong>
+                </p>
+            </div>
+            </details>
+
+            <details>
+            <summary>13. If false positives decrease while everything else stays the same, which metric improves: precision, recall, or both?</summary>
+            <div class="details-body">
+                <p>
+                <strong>Precision improves.</strong>
+                </p>
+                <p>
+                Precision = TP / (TP + FP). If FP decreases, the denominator becomes smaller, so precision increases.
+                Recall does not change because it depends on FN, not FP.
+                </p>
+            </div>
+            </details>
+
+            <details>
+                <summary>14. Consider the following confusion matrix:
+                <pre>
+                        Predicted
+                        1     0
+            Actual 1     30    10
+            Actual 0     20    40
+                </pre>
+
+                <p><strong>What are the precision and recall?</strong></p>
+                </summary>
+                <div class="details-body">
+
+                    <p>
+                    TP = 30, FP = 20, FN = 10
+                    </p>
+
+                    <p>
+                    Precision = 30 / (30 + 20) = 30 / 50 = <strong>0.6</strong>
+                    </p>
+
+                    <p>
+                    Recall = 30 / (30 + 10) = 30 / 40 = <strong>0.75</strong>
+                    </p>
+                </div>
+                </details>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture04B.html">← Previous</a>
+            <a class="btn-link" href="Lecture05B.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Lecture 05A study page
+
+          <span class="persian-note" dir="rtl">
+            برای تو… که توی confusion matrix قلبم، فقط یه برچسب داری: مثبتِ واقعی 💘
+          </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("lecture5a");
+  </script>
+</body>
+</html>
