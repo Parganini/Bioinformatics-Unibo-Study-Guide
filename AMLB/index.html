@@ -233,6 +233,16 @@
       font-size: 1.08rem;
       font-weight: 700;
       line-height: 1.25;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+
+    .recording-icon {
+      width: 15px;
+      height: 15px;
+      opacity: 0.85;
     }
 
     .lecture-subtitle {
@@ -287,6 +297,67 @@
       padding: 22px;
       border-radius: 20px;
     }
+
+    .recordings-section {
+      margin-top: 2rem;
+    }
+
+    .video-embed.large {
+      position: relative;
+      width: 100%;
+      padding-top: 56.25%;
+      border-radius: 1rem;
+      overflow: hidden;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .video-embed.large iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* YouTube button */
+    .btn-youtube {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      background: #ffffff;
+      color: #000;
+
+      border-radius: 8px;
+      padding: 0.6rem 1rem;
+
+      font-weight: 500;
+      text-decoration: none;
+
+      transition: all 0.2s ease;
+    }
+
+    .btn-youtube:hover {
+      background: #cc0000;
+      transform: translateY(-1px);
+    }
+
+    .youtube-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .badge-recording {
+      margin-left: 0.4rem;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .recording-icon {
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+    }
   </style>
 </head>
 <body>
@@ -316,6 +387,33 @@
         <button class="action-btn" onclick="resetProgress()">Reset progress</button>
       </div>
     </section>
+
+    <div class="panel">
+      <section class="section recordings-section">
+        <h2 class="section-title">🎥 Lecture Recordings</h2>
+
+        <div class="card">
+          <p>
+            Full recordings for Lectures 4–8. Use them alongside the study pages for deeper understanding.
+          </p>
+
+          <div class="video-embed large">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/videoseries?list=PLZSGWjLWZL3J_ULRY2gnCTpzq1FZWX28X"
+              title="Lecture recordings playlist"
+              loading="lazy"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+
+          <a class="btn btn-youtube" href="https://www.youtube.com/playlist?list=PLZSGWjLWZL3J_ULRY2gnCTpzq1FZWX28X" target="_blank" rel="noopener noreferrer">
+            <img src="images/icons/youtube.svg" alt="YouTube" class="youtube-icon">
+            Open Playlist on YouTube →
+          </a>
+        </div>
+      </section>
+    </div>
 
     <section class="archive" id="archive"></section>
 
@@ -379,14 +477,16 @@
           title: "Lecture 04A",
           date: "13 Mar 2026",
           subtitle: "Multiclass classification, one-vs-all, optimization alternatives, overfitting, regularization",
-          file: "Lecture04A.html"
+          file: "Lecture04A.html",
+          hasRecording: true
         },
         {
           id: "lecture4b",
           title: "Lecture 04B",
           date: "13 Mar 2026",
           subtitle: "Model evaluation, train/CV/test sets, bias vs variance, learning curves, debugging next steps",
-          file: "Lecture04B.html"
+          file: "Lecture04B.html",
+          hasRecording: true
         }
       ]
     },
@@ -399,14 +499,16 @@
           title: "Lecture 05A",
           date: "27 Mar 2026",
           subtitle: "Skewed classes, confusion matrix, precision, recall, threshold trade-offs, F1 score, ROC and AUC",
-          file: "Lecture05A.html"
+          file: "Lecture05A.html",
+          hasRecording: true
         },
         {
           id: "lecture5b",
           title: "Lecture 05B",
           date: "27 Mar 2026",
           subtitle: "Google Colab, runtimes, CPU vs GPU vs TPU, runtime limits, and hardware overview",
-          file: "Lecture05B.html"
+          file: "Lecture05B.html",
+          hasRecording: true
         }
       ]
     },
@@ -419,7 +521,8 @@
           title: "Lecture 07",
           date: "31 Mar 2026",
           subtitle: "NumPy arrays, slicing, broadcasting, and the full ML pipeline: load, explore, visualize, prepare, and select features",
-          file: "Lecture07.html"
+          file: "Lecture07.html",
+          hasRecording: true
         }
       ]
     },
@@ -432,7 +535,8 @@
           title: "Lecture 06",
           date: "01 APR 2026",
           subtitle: "Exploratory data analysis, real-world data cleaning, feature scaling, and linear regression workflow",
-          file: "Lecture06.html"
+          file: "Lecture06.html",
+          hasRecording: true
         }
       ]
     }
@@ -506,7 +610,14 @@
           <div class="lecture-top">
             <div>
               <div class="lecture-date">${lecture.date}</div>
-              <div class="lecture-title">${lecture.title}</div>
+              <div class="lecture-title">
+                <span>${lecture.title}</span>
+                ${lecture.hasRecording ? `
+                  <span class="badge-recording">
+                    <img src="images/icons/youtube.svg" alt="Recording" class="recording-icon">
+                  </span>
+                ` : ''}
+              </div>
             </div>
             <div class="check">✔</div>
           </div>
