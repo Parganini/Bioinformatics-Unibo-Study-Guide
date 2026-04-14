@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lecture 07 - NumPy and the Data Preparation Pipeline</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="Lecture07.html">Lecture 07</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture05B.html">← Previous</a>
+          <a class="btn-link" href="Lecture06.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture05B.html" aria-label="Previous lecture" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">L07</span>
+        <a class="icon-btn" href="Lecture06.html" aria-label="Next lecture" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Lecture 07 — NumPy and the Data Preparation Pipeline</h1>
+          <p class="subtitle">
+            This lecture starts the practical machine learning workflow. It introduces NumPy as the core array tool for scientific Python,
+            then walks through the first five hands-on notebooks of a real data pipeline: loading a dataset, exploring it,
+            visualizing it, preparing it, and selecting useful features.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">NumPy</div>
+            <div class="pill">EDA</div>
+            <div class="pill">Data Prep</div>
+            <div class="pill">Feature Selection</div>
+            <div class="pill">Hands-on Workflow</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/lecture07/hero-cover.jpg" alt="NumPy arrays and machine learning workflow visual">
+          </div>
+          <div class="hero-badge">Load → Explore → Visualize → Prepare → Select</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#numpy-intro">Introduction to NumPy</a>
+        <a href="#numpy-arrays">Arrays and Properties</a>
+        <a href="#indexing-slicing">Indexing and Slicing</a>
+        <a href="#creating-arrays">Creating Arrays</a>
+        <a href="#array-operations">Array Operations</a>
+        <a href="#broadcasting">Broadcasting</a>
+        <a href="#notebook-1">Notebook 1: Load Dataset</a>
+        <a href="#notebook-2">Notebook 2: Explore Dataset</a>
+        <a href="#notebook-3">Notebook 3: Data Visualization</a>
+        <a href="#notebook-4">Notebook 4: Data Preparation</a>
+        <a href="#notebook-5">Notebook 5: Feature Selection</a>
+        <a href="#study-material">Study Material</a>
+        <a href="#quiz">Quick Review Quiz</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture: The ML Data Pipeline</h2>
+          <p class="lead">
+            This lecture is the beginning of the practical workflow behind a real machine learning project.
+            The idea is not only to run code, but to build a reusable pipeline you can adapt again and again in future projects.
+          </p>
+
+          <div class="callout">
+            The key message of the lecture is simple: <strong>data comes first</strong>. Before training a model, you need to know how to load data, inspect it, understand it, transform it, and select the right attributes.
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture07/pipeline-overview.png" alt="Machine learning data pipeline overview">
+            <div class="figure-body">
+              <div class="figure-kicker">A reusable workflow</div>
+              <div class="figure-caption">
+                The practical path introduced in this lecture is: load the dataset, explore it numerically, visualize it, prepare it for modeling, and then select the most useful features.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-5 compact-grid">
+            <div class="card center-card">
+              <div class="card-title">1</div>
+              <p>Load</p>
+            </div>
+            <div class="card center-card">
+              <div class="card-title">2</div>
+              <p>Explore</p>
+            </div>
+            <div class="card center-card">
+              <div class="card-title">3</div>
+              <p>Visualize</p>
+            </div>
+            <div class="card center-card">
+              <div class="card-title">4</div>
+              <p>Prepare</p>
+            </div>
+            <div class="card center-card">
+              <div class="card-title">5</div>
+              <p>Select</p>
+            </div>
+          </div>
+
+          <p>
+            The lecture also stresses a useful professional habit: build templates and notebooks you understand well enough to reuse.
+            Tools can help you code faster, but only if you understand what every important line is doing.
+          </p>
+        </section>
+
+        <section class="section" id="numpy-intro">
+          <h2 class="section-title">Introduction to NumPy</h2>
+
+          <p class="lead">
+            NumPy is a third-party Python library built for scientific computing. In machine learning, it matters because we constantly work with vectors, matrices, and large collections of numbers.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Plain Python lists</h3>
+              <p>
+                Flexible, but not ideal for fast numerical computing or matrix-style operations.
+              </p>
+            </div>
+
+            <div class="column">
+              <h3>NumPy arrays</h3>
+              <p>
+                Designed for compact syntax, efficient numerical operations, and linear algebra workflows.
+              </p>
+            </div>
+          </div>
+
+          <div class="figure">
+            <img src="images/lecture07/numpy-intro.png" alt="NumPy as a scientific computing library for Python">
+            <div class="figure-body">
+              <div class="figure-kicker">The numerical backbone</div>
+              <div class="figure-caption">
+                NumPy is the basic tool that lets Python behave like a serious numerical computing environment for arrays, matrices, and many machine learning operations.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            In practical terms, NumPy gives you array programming: write operations directly on vectors and matrices instead of manually looping through values one by one.
+          </div>
+        </section>
+
+        <section class="section" id="numpy-arrays">
+          <h2 class="section-title">NumPy Arrays and Their Properties</h2>
+
+          <p class="lead">
+            A NumPy array can be one-dimensional, two-dimensional, or higher-dimensional. In ML practice, this means vectors, matrices, and more general tensor-like objects.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture07/numpy-1d.png" alt="Example of a NumPy 1D array">
+              <div class="figure-body">
+                <div class="figure-kicker">1D array</div>
+                <div class="figure-caption">
+                  A one-dimensional NumPy array behaves like a vector and is the simplest numerical structure to manipulate.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture07/numpy-2d.png" alt="Example of a NumPy 2D array">
+              <div class="figure-body">
+                <div class="figure-kicker">2D array</div>
+                <div class="figure-caption">
+                  A two-dimensional array is naturally interpreted like a matrix, with rows and columns.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Property</th>
+                  <th>Meaning</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>shape</code></td>
+                  <td>How many elements exist in each dimension</td>
+                </tr>
+                <tr>
+                  <td><code>size</code></td>
+                  <td>Total number of elements in the array</td>
+                </tr>
+                <tr>
+                  <td><code>dtype</code></td>
+                  <td>Data type of all elements</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            One important difference from Python lists is that NumPy arrays are homogeneous: all elements must share the same data type.
+            That restriction is exactly what helps NumPy become fast and consistent for scientific work.
+          </p>
+        </section>
+
+        <section class="section" id="indexing-slicing">
+          <h2 class="section-title">Indexing and Slicing</h2>
+
+          <p class="lead">
+            NumPy arrays support direct access to rows, columns, and sub-regions using indexing and slicing syntax.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture07/numpy-slicing.png" alt="NumPy indexing and slicing example">
+              <div class="figure-body">
+                <div class="figure-kicker">Selecting parts of an array</div>
+                <div class="figure-caption">
+                  Indexing lets you access specific values, while slicing lets you select ranges of rows, columns, or both.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture07/numpy-colon.png" alt="Colon operator selecting all elements in a dimension">
+              <div class="figure-body">
+                <div class="figure-kicker">The colon operator</div>
+                <div class="figure-caption">
+                  The <code>:</code> symbol is used to select all elements along a chosen dimension.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="formula">
+            For a 2D array, you often think in terms of <code>[row, column]</code>.
+          </div>
+
+          <p>
+            This is one of the reasons NumPy becomes so useful in data science: working with subsets of large numerical structures is concise and readable.
+          </p>
+        </section>
+
+        <section class="section" id="creating-arrays">
+          <h2 class="section-title">Creating Arrays</h2>
+
+          <p class="lead">
+            NumPy provides many convenient ways to build arrays directly in code.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture07/numpy-creating-arrays.png" alt="Different ways to create NumPy arrays">
+            <div class="figure-body">
+              <div class="figure-kicker">Building arrays programmatically</div>
+              <div class="figure-caption">
+                Arrays can be created from existing lists or generated with helper functions such as zeros, ranges, and reshaping operations.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Zeros / Ones</div>
+              <p>Create arrays already filled with default values.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Ranges</div>
+              <p>Generate regular sequences of numbers automatically.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Reshape</div>
+              <p>Turn a flat sequence into a matrix-like object with the desired dimensions.</p>
+            </div>
+          </div>
+
+          <p>
+            These tools are especially practical when you want to prepare numerical inputs quickly without hardcoding every value by hand.
+          </p>
+        </section>
+
+        <section class="section" id="array-operations">
+          <h2 class="section-title">Array Operations</h2>
+
+          <p class="lead">
+            NumPy supports elementwise arithmetic, which makes mathematical expressions look close to the way we naturally write them.
+          </p>
+
+          <div class="figure-grid">
+            <div class="figure">
+              <img src="images/lecture07/numpy-elementwise.png" alt="Elementwise operations in NumPy">
+              <div class="figure-body">
+                <div class="figure-kicker">Elementwise computation</div>
+                <div class="figure-caption">
+                  Operations such as addition or multiplication are applied to corresponding elements of arrays with compatible shapes.
+                </div>
+              </div>
+            </div>
+
+            <div class="figure">
+              <img src="images/lecture07/numpy-scalars.png" alt="Combining NumPy arrays and scalars">
+              <div class="figure-body">
+                <div class="figure-kicker">Arrays and scalars</div>
+                <div class="figure-caption">
+                  Adding or multiplying by a scalar automatically applies the operation to each element of the array.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            This is the practical meaning of vectorized code: one expression acts on the whole structure instead of manually iterating through elements.
+          </div>
+        </section>
+
+        <section class="section" id="broadcasting">
+          <h2 class="section-title">Broadcasting</h2>
+
+          <p class="lead">
+            Broadcasting is one of NumPy’s most useful ideas: it allows arrays with different shapes to still interact in arithmetic operations when they are compatible in a smart way.
+          </p>
+
+          <div class="figure">
+            <img src="images/lecture07/numpy-broadcasting.png" alt="Broadcasting a vector across a matrix in NumPy">
+            <div class="figure-body">
+              <div class="figure-kicker">Same operation, expanded shape</div>
+              <div class="figure-caption">
+                A smaller array, such as a vector, can be conceptually stretched across a larger array, such as a matrix, so the operation can be performed elementwise.
+              </div>
+            </div>
+          </div>
+
+          <p>
+            A common example is adding a 1D vector to a 2D matrix. NumPy behaves as if the vector were copied across rows or columns so that shapes align.
+            This makes many matrix-style operations compact and expressive.
+          </p>
+
+          <div class="callout">
+            Broadcasting is useful because it lets you write high-level mathematical code without manually creating repeated copies of the same data.
+          </div>
+        </section>
+
+        <section class="section" id="notebook-1">
+          <h2 class="section-title">Notebook 1 — Load Dataset</h2>
+
+          <p class="lead">
+            The first notebook is about getting data into the environment correctly.
+          </p>
+
+          <p>
+            Real data rarely arrives in a perfectly convenient form. Files may contain headers, metadata, comments, different delimiters, or inconsistent formatting.
+            So the first practical skill is simply learning how to load tabular data safely and inspect what actually got imported.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Python CSV</div>
+              <p>Load raw tabular data into Python lists.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">NumPy</div>
+              <p>Import numerical data directly into arrays using tools such as <code>loadtxt</code>.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Pandas</div>
+              <p>Read the dataset as a DataFrame, which is usually best for exploration.</p>
+            </div>
+          </div>
+
+          <div class="callout">
+            Practical takeaway: in many cases, Pandas is the most convenient choice for exploration, while NumPy is the natural choice for raw numerical work.
+          </div>
+
+          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1ZsiVVv8TEW0KYK5qwuCKcnqWLJNfOSIC" target="_blank" rel="noopener noreferrer">
+            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
+            Open Notebook 1 (Load Dataset) in Colab →
+          </a>
+        </section>
+
+        <section class="section" id="notebook-2">
+          <h2 class="section-title">Notebook 2 — Explore Dataset</h2>
+
+          <p class="lead">
+            The second notebook is about numerical exploratory data analysis: understanding the dataset before doing any machine learning.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>Questions to ask</h3>
+              <ul>
+                <li>How many rows and columns are there?</li>
+                <li>What are the data types?</li>
+                <li>Are there missing values?</li>
+                <li>Are features on very different scales?</li>
+                <li>Is the class distribution balanced?</li>
+              </ul>
+            </div>
+
+            <div class="column">
+              <h3>Typical tools</h3>
+              <ul>
+                <li><code>.shape</code></li>
+                <li><code>.dtypes</code></li>
+                <li><code>.describe()</code></li>
+                <li><code>groupby(...).size()</code></li>
+                <li>correlation and skewness checks</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            The lecture’s key warning is that skipping EDA is risky. Understanding the data first is not wasted time — it is what prevents project failure later.
+          </div>
+
+          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1Q9jP9GTRIrKSRqynM0QmYxTcBdwM0EZQ" target="_blank" rel="noopener noreferrer">
+            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
+            Open Notebook 2 (Explore Dataset) in Colab →
+          </a>
+        </section>
+
+        <section class="section" id="notebook-3">
+          <h2 class="section-title">Notebook 3 — Data Visualization</h2>
+
+          <p class="lead">
+            The third notebook continues EDA, but visually instead of only numerically.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Histograms</div>
+              <p>Good for seeing the exact bin-based distribution of a single variable.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Density plots</div>
+              <p>Good for understanding the smoothed overall trend of the distribution.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Box plots</div>
+              <p>Good for spotting quartiles, skewness, and possible outliers quickly.</p>
+            </div>
+          </div>
+
+          <p>
+            This notebook reinforces a strong practical idea: numbers and plots complement each other.
+            Some patterns are easier to notice numerically, while others become obvious only once they are visualized.
+          </p>
+
+          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1cCE-E_mZ0cEJ78eN4I65E8YoURaAlQM0" target="_blank" rel="noopener noreferrer">
+            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
+            Open Notebook 3 (Data Visualization) in Colab →
+          </a>
+        </section>
+
+        <section class="section" id="notebook-4">
+          <h2 class="section-title">Notebook 4 — Data Preparation</h2>
+
+          <p class="lead">
+            The fourth notebook begins the transformation stage: making the data more suitable for machine learning algorithms.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Technique</th>
+                  <th>Main Goal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Rescaling</td>
+                  <td>Compress values into a specific range, often between 0 and 1</td>
+                </tr>
+                <tr>
+                  <td>Standardization</td>
+                  <td>Center data around mean 0 with standard deviation 1</td>
+                </tr>
+                <tr>
+                  <td>Normalization</td>
+                  <td>Scale observations according to a norm, such as L1 or L2</td>
+                </tr>
+                <tr>
+                  <td>Binarization</td>
+                  <td>Turn numeric values into 0/1 values using a threshold</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            This notebook introduces the idea that raw data often needs to be “massaged” into a form that is friendlier for optimization and modeling.
+          </div>
+
+<a class="btn btn-colab" href="https://colab.research.google.com/drive/1cCE-E_mZ0cEJ78eN4I65E8YoURaAlQM0" target="_blank" rel="noopener noreferrer">
+  <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
+  Open Notebook 4 (Data Preparation) in Colab →
+</a>
+        </section>
+
+        <section class="section" id="notebook-5">
+          <h2 class="section-title">Notebook 5 — Feature Selection</h2>
+
+          <p class="lead">
+            The fifth notebook focuses on keeping the most useful attributes and reducing the noise or redundancy that may hurt modeling.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Univariate selection</div>
+              <p>Ranks features using statistical relationships with the target.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">RFE</div>
+              <p>Recursively removes weaker features until only the desired subset remains.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Feature importance</div>
+              <p>Uses model-based scores to estimate which features contribute most.</p>
+            </div>
+          </div>
+
+          <p>
+            The purpose of feature selection is not only to simplify the model. It can also reduce overfitting, improve interpretability, and make training more efficient.
+          </p>
+
+          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1_fxigq3XcDd8X9HKgJWPYL1XxVVmwXJV" target="_blank" rel="noopener noreferrer">
+            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
+            Open Notebook 5 (Feature Selection) in Colab →
+          </a>
+        </section>
+
+        <section class="section" id="study-material">
+        <h2 class="section-title">Study Material</h2>
+
+        <div class="grid-2">
+            <div class="card">
+            <div class="card-title">Slides</div>
+            <strong>Lecture 7 Slides</strong>
+            <p>
+                Use the slide deck for the NumPy overview, array examples, and the five notebook stages of the practical data-preparation workflow.
+            </p>
+            <a class="btn-link" href="slides/lecture07.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+            </a>
+            </div>
+
+            <div class="card">
+            <div class="card-title">Transcript</div>
+            <strong>Lecture 7 Transcript</strong>
+            <p>
+                Use the transcript for the lecturer’s practical advice on templates, documentation, data cleaning mindset, and why exploratory data analysis should never be rushed.
+            </p>
+            <a class="btn-link" href="transcriptions/lecture07.pdf" target="_blank" rel="noopener noreferrer">
+                View PDF →
+            </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Course Repository</div>
+            <strong>AML-Basic GitHub</strong>
+            <p>
+            Repository with course notebooks, datasets, and hands-on material used throughout the lecture.
+            </p>
+            <a class="btn-link" href="https://github.com/dbonacorsi/AML-Basic" target="_blank" rel="noopener noreferrer">
+            Open Repository →
+            </a>
+        </div>
+
+        <p>
+            Because this is a hands-on lecture, the best study strategy is to keep the notebook material, the repository, and the lecture page open together.
+        </p>
+        </section>
+
+        <section class="section" id="quiz">
+          <h2 class="section-title">Quick Review Quiz</h2>
+
+          <details>
+            <summary>1. Why is NumPy important in machine learning?</summary>
+            <div class="details-body">
+              <p>Because it provides efficient multidimensional arrays and supports matrix-style numerical operations used constantly in machine learning.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>2. What is one key difference between a NumPy array and a Python list?</summary>
+            <div class="details-body">
+              <p>A NumPy array is homogeneous, meaning all elements share the same data type, while Python lists can mix different types.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. What does the <code>shape</code> of an array describe?</summary>
+            <div class="details-body">
+              <p>It describes how many elements the array has along each dimension.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>4. What is slicing used for in NumPy?</summary>
+            <div class="details-body">
+              <p>Slicing is used to select subparts of an array, such as ranges of rows or columns.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>5. What does broadcasting allow NumPy to do?</summary>
+            <div class="details-body">
+              <p>It allows arrays with compatible but different shapes to interact in arithmetic operations without manual repetition.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>6. Why is Pandas often preferred for dataset exploration?</summary>
+            <div class="details-body">
+              <p>Because DataFrames make tabular data easier to inspect, label, summarize, and manipulate interactively.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>7. What is the purpose of exploratory data analysis before modeling?</summary>
+            <div class="details-body">
+              <p>To understand the dataset, detect missing values, inspect scales and distributions, and identify problems before applying machine learning.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>8. What is the difference between a histogram and a density plot?</summary>
+            <div class="details-body">
+              <p>A histogram shows bin counts explicitly, while a density plot shows a smoothed version of the distribution trend.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>9. Why might data preparation include scaling or standardization?</summary>
+            <div class="details-body">
+              <p>Because features on very different numerical scales can make training less stable or less effective for some algorithms.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>10. What is the goal of feature selection?</summary>
+            <div class="details-body">
+              <p>To keep the most useful features, reduce redundancy, improve interpretability, and often reduce overfitting or training cost.</p>
+            </div>
+          </details>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture05B.html">← Previous</a>
+            <a class="btn-link" href="Lecture06.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Lecture 07 study page
+
+          <span class="persian-note" dir="rtl">
+          برای تو… کاش مثل یه pipeline خوب، قدم‌به‌قدم راهِ رسیدن به قلبت رو یاد بگیرم و هیچ مرحله‌ای رو خراب نکنم 😉
+          </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("lecture7");
+  </script>
+</body>
+</html>
