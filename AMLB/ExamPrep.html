@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Preparation Guide - Applied Machine Learning</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner hybrid-topbar">
+      <div class="topbar-desktop">
+        <div class="nav-group">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <a class="btn-link" href="ExamPrep.html">Exam Prep</a>
+        </div>
+
+        <div class="nav-group">
+          <a class="btn-link" href="Lecture08.html">← Previous</a>
+          <a class="btn-link" href="PracticeExam.html">Next →</a>
+          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+        </div>
+      </div>
+
+      <div class="topbar-mobile">
+        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
+        <a class="icon-btn" href="Lecture08.html" aria-label="Previous page" title="Previous">←</a>
+        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
+        <span class="topbar-title">Exam Prep</span>
+        <a class="icon-btn" href="PracticeExam.html" aria-label="Next page" title="Next">→</a>
+        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-split">
+        <div>
+          <div class="eyebrow">Applied Machine Learning · Basic</div>
+          <h1>Exam Preparation Guide</h1>
+          <p class="subtitle">
+            This page is not another lecture. It is a practical revision guide to help you prepare for the basic module exam efficiently,
+            understand what the questions are trying to test, and review the concepts that matter most without getting lost in details.
+          </p>
+
+          <div class="hero-meta">
+            <div class="pill">Strategy</div>
+            <div class="pill">Revision</div>
+            <div class="pill">Methodology</div>
+            <div class="pill">Exam Focus</div>
+            <div class="pill">Confidence</div>
+          </div>
+
+          <div class="status" id="completionStatus">Not completed yet</div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-image-card">
+            <img src="images/examprep/hero-cover.jpg" alt="Exam preparation and revision strategy">
+          </div>
+          <div class="hero-badge">Understand first, then answer</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <aside class="toc">
+        <h2>On this page</h2>
+        <a href="#big-picture">Big Picture</a>
+        <a href="#format">What the Written Exam Feels Like</a>
+        <a href="#how-to-study">How to Study Efficiently</a>
+        <a href="#priority-topics">Highest-Priority Topics</a>
+        <a href="#theory-check">What You Should Be Able to Explain</a>
+        <a href="#lecture-map">Lecture-by-Lecture Map</a>
+        <a href="#mistakes">Common Mistakes</a>
+        <a href="#multiple-choice">Multiple-Choice Strategy</a>
+        <a href="#last-minute">Last-Minute Checklist</a>
+        <a href="#next-step">Next Step</a>
+      </aside>
+
+      <div class="content">
+        <section class="section" id="big-picture">
+          <h2 class="section-title">Big Picture</h2>
+          <p class="lead">
+            The goal of the basic module exam is not to test whether you memorized isolated definitions. It is much closer to checking whether you understand the methodology,
+            the logic of machine learning workflows, and the meaning of the choices made throughout the course.
+          </p>
+
+          <div class="callout">
+            If you understand <strong>why</strong> a method is used, <strong>when</strong> it should be used, and <strong>what can go wrong</strong>, you are preparing in the right way.
+          </div>
+
+          <p>
+            This means that your revision should focus less on recalling sentences word for word and more on being able to recognize the right concept in a realistic situation.
+            A lot of questions are best approached by asking yourself: “What problem is this method trying to solve?”
+          </p>
+        </section>
+
+        <section class="section" id="format">
+          <h2 class="section-title">What the Written Exam Feels Like</h2>
+          <p class="lead">
+            The written part is designed as a <strong>15-question multiple-choice test</strong>. The point is not to reward memorization, but to check whether you can recognize the right methodological choice in a realistic machine learning situation.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Core format</div>
+              <ul>
+                <li>15 multiple-choice questions</li>
+                <li>4 options per question</li>
+                <li>reasoning-focused rather than coding-focused</li>
+                <li>more methodology than calculation</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">What matters most</div>
+              <ul>
+                <li>understanding workflow order</li>
+                <li>choosing the right metric or split</li>
+                <li>recognizing near-correct distractors</li>
+                <li>spotting common methodological mistakes</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            The written exam is much more about <strong>understanding why a method is used</strong> than about recalling a definition word for word.
+          </div>
+        </section>
+
+        <section class="section" id="how-to-study">
+          <h2 class="section-title">How to Study Efficiently</h2>
+          <p class="lead">
+            The best preparation for this written test is not to memorize isolated facts. It is to understand each concept well enough to recognize it in a question, distinguish it from similar concepts, and explain why it is the right choice.
+          </p>
+
+          <div class="grid-3">
+            <div class="card">
+              <div class="card-title">Step 1</div>
+              <p>Rebuild the course as a conceptual map, not only as a sequence of notebooks.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Step 2</div>
+              <p>For each topic, ask: what is it, when is it used, and what is it often confused with?</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Step 3</div>
+              <p>Practice explaining why one answer is correct and why the others are close but wrong.</p>
+            </div>
+          </div>
+
+          <div class="formula">
+            concept → distinction → use case → correct choice
+          </div>
+
+          <p>
+            If you can define a concept in your own words, contrast it with a related one, and explain why it applies in a given situation, then you are preparing in the right direction for this exam.
+          </p>
+        </section>
+
+        <section class="section" id="priority-topics">
+          <h2 class="section-title">Highest-Priority Topics</h2>
+          <p class="lead">
+            If your time is limited, prioritize the concepts that are both central to the course and easy to confuse during a multiple-choice exam.
+          </p>
+
+          <div class="table-wrapper">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>Priority topic</th>
+                  <th>What you should understand</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Overfitting vs underfitting</td>
+                  <td>What each means, how they appear, and how regularization or model complexity affects them.</td>
+                </tr>
+                <tr>
+                  <td>Bias vs variance</td>
+                  <td>Why they are different and how they relate to model behavior and diagnostics.</td>
+                </tr>
+                <tr>
+                  <td>Train / validation / test</td>
+                  <td>Why the roles of these sets are different and how mixing them creates leakage.</td>
+                </tr>
+                <tr>
+                  <td>Precision, recall, F1, ROC AUC</td>
+                  <td>What each metric measures and when one is more informative than another.</td>
+                </tr>
+                <tr>
+                  <td>EDA and cleaning</td>
+                  <td>Why data understanding comes before modeling and what kinds of issues EDA is meant to reveal.</td>
+                </tr>
+                <tr>
+                  <td>Scaling and preparation</td>
+                  <td>Why scaling matters, what it changes, and how it differs from cleaning.</td>
+                </tr>
+                <tr>
+                  <td>Cross-validation and resampling</td>
+                  <td>Why resampling exists, what changes across methods, and why K-fold is often the default choice.</td>
+                </tr>
+                <tr>
+                  <td>Model selection and tuning</td>
+                  <td>Why choosing an algorithm and tuning its hyperparameters are related but distinct decisions.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="section" id="theory-check">
+          <h2 class="section-title">What You Should Be Able to Explain</h2>
+          <p class="lead">
+            A good way to check whether you are really ready is to see whether you can explain the following distinctions clearly, without relying on memorized wording.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Core distinctions</div>
+              <ul>
+                <li>Overfitting vs underfitting</li>
+                <li>Bias vs variance</li>
+                <li>Precision vs recall</li>
+                <li>Accuracy vs Log Loss</li>
+                <li>Train vs validation vs test</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Methodological choices</div>
+              <ul>
+                <li>Why regularization helps</li>
+                <li>Why accuracy can fail on skewed classes</li>
+                <li>Why cross-validation is useful</li>
+                <li>Why scaling can matter for some models</li>
+                <li>Why data leakage is dangerous</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            If you can explain not only what these ideas are, but also what they are often confused with, you are much closer to the kind of understanding the written exam rewards.
+          </div>
+        </section>
+
+        <section class="section" id="lecture-map">
+          <h2 class="section-title">Lecture-by-Lecture Map</h2>
+          <p class="lead">
+            A useful way to revise is to remember what each lecture contributes to the full machine learning workflow.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Lectures 01–02</div>
+              <p>
+                Foundations: what machine learning is, supervised learning basics, linear regression, classification, logistic regression, and optimization ideas.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 03</div>
+              <p>
+                Practical Python and data tools: syntax, structures, notebooks, and the coding habits needed to work through later material.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 04</div>
+              <p>
+                Regularization, model evaluation, train/validation/test sets, learning curves, and bias–variance diagnosis.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 05</div>
+              <p>
+                Evaluation under skewed classes and practical tooling with Colab, runtimes, GPUs, and TPUs.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 07</div>
+              <p>
+                NumPy foundations and the first five notebook stages of the pipeline: load, explore, visualize, prepare, and select.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 06</div>
+              <p>
+                Full hands-on data analysis workflow: EDA, cleaning, scaling, and first regression modeling.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Lecture 08</div>
+              <p>
+                Reliable evaluation: resampling, metrics, comparing algorithms, and hyperparameter tuning.
+              </p>
+            </div>
+          </div>
+
+          <div class="callout">
+            If you feel lost, try this shortcut: rebuild the whole course as a pipeline, not as isolated lectures.
+          </div>
+        </section>
+
+        <section class="section" id="mistakes">
+          <h2 class="section-title">Common Mistakes</h2>
+          <p class="lead">
+            The easiest way to lose points is not by forgetting everything, but by confusing two concepts that sound related.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Accuracy vs confidence</div>
+              <p>
+                Accuracy only counts correct predictions. It does not tell you how certain the classifier was.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Train vs test contamination</div>
+              <p>
+                If test information influences training, the evaluation becomes unrealistically optimistic.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Bias vs variance</div>
+              <p>
+                High bias means the model is too simple. High variance means it adapts too much to the training data.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Metric mismatch</div>
+              <p>
+                Using the wrong metric for the problem can make a model look better than it really is.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Resampling confusion</div>
+              <p>
+                Static split, K-fold, LOOCV, and repeated splits are related, but they differ in reliability and computational cost.
+              </p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Model choice vs tuning</div>
+              <p>
+                Choosing a model family is not the same as optimizing its hyperparameters.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="multiple-choice">
+          <h2 class="section-title">Multiple-Choice Strategy</h2>
+          <p class="lead">
+            In this exam, the wrong answers are often not absurd. They are often close to the right idea, but wrong in stage, purpose, or interpretation.
+          </p>
+
+          <div class="comparison">
+            <div class="column">
+              <h3>What to do first</h3>
+              <ul>
+                <li>identify the topic immediately</li>
+                <li>ask what problem the question is really about</li>
+                <li>check which option matches the workflow stage</li>
+              </ul>
+            </div>
+
+            <div class="column">
+              <h3>What to watch out for</h3>
+              <ul>
+                <li>an answer that is generally true, but wrong here</li>
+                <li>an answer that belongs to another step of the pipeline</li>
+                <li>an answer that sounds technical but solves a different problem</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            A very common trap is the <strong>almost-right answer</strong>: correct concept, wrong use case.
+          </div>
+
+          <p>
+            If two options look similar, the correct one is usually the one that fits the context more precisely. In many questions, the difference is not the definition itself, but whether the concept is being applied at the right stage and for the right reason.
+          </p>
+        </section>
+
+        <section class="section" id="last-minute">
+          <h2 class="section-title">Last-Minute Checklist</h2>
+          <p class="lead">
+            If your exam is close, this is the strongest final pass for the written part.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-title">Final revision priorities</div>
+              <ul>
+                <li>Lecture 04: regularization, bias–variance, train/validation/test</li>
+                <li>Lecture 05A: precision, recall, F1, ROC AUC</li>
+                <li>Lecture 06–07: EDA, cleaning, scaling, feature preparation</li>
+                <li>Lecture 08: resampling, metrics, comparison, tuning</li>
+              </ul>
+            </div>
+
+            <div class="card">
+              <div class="card-title">Five questions to be able to answer</div>
+              <ul>
+                <li>Why can accuracy be misleading?</li>
+                <li>Why do we need train/validation/test separation?</li>
+                <li>What is the difference between high bias and high variance?</li>
+                <li>When should I use K-fold cross-validation?</li>
+                <li>What is the difference between Grid Search and Randomized Search?</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="callout">
+            For a 15-question written exam, clarity beats breadth. It is better to understand the core methodological choices well than to skim every detail once more.
+          </div>
+        </section>
+
+        <section class="section" id="next-step">
+          <h2 class="section-title">Next Step</h2>
+          <p class="lead">
+            Once you have revised the methodology, the best preparation is to simulate the exam style directly.
+          </p>
+
+          <div class="card">
+            <div class="card-title">Practice Exam</div>
+            <p>
+              The next page is meant to feel like the written part: a compact set of questions where the real challenge is choosing the right methodological answer among close alternatives.
+            </p>
+            <a class="btn-link" href="PracticeExam.html">Go to Practice Exam →</a>
+          </div>
+        </section>
+
+        <div class="bottom-nav">
+          <a class="btn-link" href="index.html">← Back to Index</a>
+          <div class="nav-group">
+            <a class="btn-link" href="Lecture08.html">← Previous</a>
+            <a class="btn-link" href="PracticeExam.html">Next →</a>
+            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Exam preparation guide
+
+          <span class="persian-note" dir="rtl">
+        که بهت ایمان دارم و مطمئنم موفق می‌شی 🏆
+        </span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="completionToast" class="completion-toast">Page marked as completed.</div>
+  <div class="toc-backdrop"></div>
+
+  <script src="script.js"></script>
+  <script>
+    initLecturePage("examprep");
+  </script>
+</body>
+</html>
