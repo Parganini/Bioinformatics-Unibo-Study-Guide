@@ -119,239 +119,864 @@
         <section class="section" id="exam">
           <h2 class="section-title">Practice Exam</h2>
 
-          <form class="exam-form" id="practiceExamForm">
-            <form class="exam-form" id="practiceExamForm">
+<form class="exam-form" id="practiceExamForm">
 
-            <!-- Q1 -->
-            <div class="card question-card" data-question="q1" data-correct="B">
-              <div class="card-title">1. What is the main purpose of regularization in ML models?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q1" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">To increase training accuracy</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regularization may reduce training accuracy slightly to improve generalization.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q1" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">To reduce overfitting</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Regularization penalizes complexity to avoid overfitting.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q1" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">To speed up computation</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">It affects the objective, not speed directly.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q1" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">To increase model complexity</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regularization typically reduces complexity.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+  <!-- Q1 -->
+  <div class="card question-card" data-question="q1" data-correct="B">
+    <div class="card-title">1. What is the main purpose of regularization in ML models?</div>
+    <div class="options-list">
 
-            <!-- Q2 -->
-            <div class="card question-card" data-question="q2" data-correct="B">
-              <div class="card-title">2. Which of the following best describes supervised learning?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q2" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Learning patterns without any labels</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">This is unsupervised learning.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q2" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Learning using labeled input-output pairs</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Supervised learning uses labeled data.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q2" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Learning by interacting with an environment</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That is reinforcement learning.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q2" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Learning only from neural networks</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Not tied to specific models.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q1" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">To increase training accuracy</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Regularization does not aim to maximize training accuracy. In fact, it can slightly reduce training fit in order to improve generalization on unseen data.
+        </div>
+      </label>
 
-            <!-- Q3 -->
-            <div class="card question-card" data-question="q3" data-correct="B">
-              <div class="card-title">3. Which metric is most appropriate for imbalanced classification problems?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q3" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Accuracy</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Misleading for imbalanced data.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q3" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Precision-Recall or F1 score</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Better reflects minority class performance.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q3" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Mean Squared Error</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regression metric.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q3" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">R² score</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regression metric.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q1" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">To reduce overfitting</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Regularization penalizes excessive model complexity, helping the model avoid fitting noise in the training data and generalize better.
+        </div>
+      </label>
 
-            <!-- Q4 -->
-            <div class="card question-card" data-question="q4" data-correct="C">
-              <div class="card-title">4. What is a key property of a good training dataset?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q4" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">It is as small as possible</span><span class="option-state">✕</span></div><div class="option-explanation">Too small may miss patterns.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q4" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">It contains only one class</span><span class="option-state">✕</span></div><div class="option-explanation">Not useful for classification.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q4" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">It is representative of the real-world data</span><span class="option-state">✓</span></div><div class="option-explanation">Ensures generalization.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q4" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">It is always larger than the test set</span><span class="option-state">✕</span></div><div class="option-explanation">Not essential property.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q1" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">To speed up computation</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Regularization changes the optimization objective, but its primary purpose is not faster computation.
+        </div>
+      </label>
 
-            <!-- Q5 -->
-            <div class="card question-card" data-question="q5" data-correct="B">
-              <div class="card-title">5. Which library is used for data manipulation?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q5" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">TensorFlow</span><span class="option-state">✕</span></div><div class="option-explanation">ML framework.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q5" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Pandas</span><span class="option-state">✓</span></div><div class="option-explanation">Main library for tabular data.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q5" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Matplotlib</span><span class="option-state">✕</span></div><div class="option-explanation">Visualization.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q5" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Keras</span><span class="option-state">✕</span></div><div class="option-explanation">Neural networks.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q1" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">To increase model complexity</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Regularization usually pushes in the opposite direction by discouraging overly complex models.
+        </div>
+      </label>
 
-            <!-- Q6 -->
-            <div class="card question-card" data-question="q6" data-correct="C">
-              <div class="card-title">6. What does overfitting mean?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q6" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">The model performs well on new data</span><span class="option-state">✕</span></div><div class="option-explanation">Opposite.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q6" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">The model is too simple</span><span class="option-state">✕</span></div><div class="option-explanation">Underfitting.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q6" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">The model memorizes training data but generalizes poorly</span><span class="option-state">✓</span></div><div class="option-explanation">Classic overfitting.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q6" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">The model cannot learn patterns</span><span class="option-state">✕</span></div><div class="option-explanation">Underfitting.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+    </div>
+    <div class="question-result"></div>
+  </div>
 
-            <!-- Q7 -->
-            <div class="card question-card" data-question="q7" data-correct="C">
-              <div class="card-title">7. Which statement about train/test split is correct?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q7" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">The test set is used to train the model</span><span class="option-state">✕</span></div><div class="option-explanation">Data leakage.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q7" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">The training set must be smaller than the test set</span><span class="option-state">✕</span></div><div class="option-explanation">No rule.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q7" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">The test set evaluates model performance on unseen data</span><span class="option-state">✓</span></div><div class="option-explanation">Correct role.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q7" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Both sets must contain identical samples</span><span class="option-state">✕</span></div><div class="option-explanation">Should be different.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+  <!-- Q2 -->
+  <div class="card question-card" data-question="q2" data-correct="B">
+    <div class="card-title">2. Which of the following best describes supervised learning?</div>
+    <div class="options-list">
 
-            <!-- Q8 -->
-            <div class="card question-card" data-question="q8" data-correct="C">
-              <div class="card-title">8. Which is a visualization library?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q8" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">NumPy</span><span class="option-state">✕</span></div><div class="option-explanation">Numerical library.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q8" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Pandas</span><span class="option-state">✕</span></div><div class="option-explanation">Data manipulation.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q8" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Matplotlib</span><span class="option-state">✓</span></div><div class="option-explanation">Standard plotting library.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q8" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Scikit-learn</span><span class="option-state">✕</span></div><div class="option-explanation">ML library.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q2" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Learning patterns without any labels</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          That describes unsupervised learning, where the model must find structure without target labels.
+        </div>
+      </label>
 
-            <!-- Q9 -->
-            <div class="card question-card" data-question="q9" data-correct="B">
-              <div class="card-title">9. What is the purpose of cross-validation?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q9" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">To increase dataset size</span><span class="option-state">✕</span></div><div class="option-explanation">No new data created.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q9" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">To estimate model performance more reliably</span><span class="option-state">✓</span></div><div class="option-explanation">More reliable estimate.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q9" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">To remove outliers</span><span class="option-state">✕</span></div><div class="option-explanation">Different task.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q9" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">To reduce dataset dimensionality</span><span class="option-state">✕</span></div><div class="option-explanation">Different task.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q2" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Learning using labeled input-output pairs</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Supervised learning uses examples where both the inputs and the correct outputs are known, so the model learns a mapping from inputs to targets.
+        </div>
+      </label>
 
-            <!-- Q10 -->
-            <div class="card question-card" data-question="q10" data-correct="C">
-              <div class="card-title">10. Which type of ML is used without labels?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q10" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">Supervised learning</span><span class="option-state">✕</span></div><div class="option-explanation">Needs labels.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q10" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Reinforcement learning</span><span class="option-state">✕</span></div><div class="option-explanation">Uses rewards.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q10" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Unsupervised learning</span><span class="option-state">✓</span></div><div class="option-explanation">No labels.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q10" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Deep learning only</span><span class="option-state">✕</span></div><div class="option-explanation">Not a learning type.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q2" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Learning by interacting with an environment</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          This is reinforcement learning, where feedback comes through rewards from actions in an environment.
+        </div>
+      </label>
 
-            <!-- Q11 -->
-            <div class="card question-card" data-question="q11" data-correct="C">
-              <div class="card-title">11. Which algorithm is used for classification?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q11" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">Linear Regression</span><span class="option-state">✕</span></div><div class="option-explanation">Regression.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q11" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">K-Means</span><span class="option-state">✕</span></div><div class="option-explanation">Clustering.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q11" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Logistic Regression</span><span class="option-state">✓</span></div><div class="option-explanation">Classification algorithm.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q11" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">PCA</span><span class="option-state">✕</span></div><div class="option-explanation">Dimensionality reduction.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q2" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Learning only from neural networks</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Supervised learning is a training setting, not a specific model family. Many algorithms besides neural networks can be supervised.
+        </div>
+      </label>
 
-            <!-- Q12 -->
-            <div class="card question-card" data-question="q12" data-correct="C">
-              <div class="card-title">12. What does a regression model predict?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q12" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">Categories</span><span class="option-state">✕</span></div><div class="option-explanation">Classification.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q12" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Clusters</span><span class="option-state">✕</span></div><div class="option-explanation">Clustering.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q12" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Continuous numerical values</span><span class="option-state">✓</span></div><div class="option-explanation">Regression predicts numeric outputs.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q12" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Labels only</span><span class="option-state">✕</span></div><div class="option-explanation">Classification task.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+    </div>
+    <div class="question-result"></div>
+  </div>
 
-            <!-- Q13 -->
-            <div class="card question-card" data-question="q13" data-correct="B">
-              <div class="card-title">13. How to handle missing data?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q13" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">Always ignore it</span><span class="option-state">✕</span></div><div class="option-explanation">Risky.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q13" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Replace it with mean/median values</span><span class="option-state">✓</span></div><div class="option-explanation">Common approach.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q13" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Duplicate the dataset</span><span class="option-state">✕</span></div><div class="option-explanation">Incorrect.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q13" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Remove the entire dataset</span><span class="option-state">✕</span></div><div class="option-explanation">Too extreme.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+  <!-- Q3 -->
+  <div class="card question-card" data-question="q3" data-correct="B">
+    <div class="card-title">3. Which metric is most appropriate for imbalanced classification problems?</div>
+    <div class="options-list">
 
-            <!-- Q14 -->
-            <div class="card question-card" data-question="q14" data-correct="B">
-              <div class="card-title">14. What is feature scaling for?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q14" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">To increase data size</span><span class="option-state">✕</span></div><div class="option-explanation">No.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q14" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">To make features comparable in magnitude</span><span class="option-state">✓</span></div><div class="option-explanation">Important for many models.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q14" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">To remove labels</span><span class="option-state">✕</span></div><div class="option-explanation">No.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q14" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">To reduce the number of features</span><span class="option-state">✕</span></div><div class="option-explanation">Different task.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q3" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Accuracy</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Accuracy can be misleading with imbalanced classes because a model may predict the majority class most of the time and still look strong.
+        </div>
+      </label>
 
-            <!-- Q15 -->
-            <div class="card question-card" data-question="q15" data-correct="C">
-              <div class="card-title">15. Which is a classification problem?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A"><input type="radio" name="q15" value="A"><div class="option-head"><span class="option-letter">A.</span><span class="option-text">Predict house prices</span><span class="option-state">✕</span></div><div class="option-explanation">Regression.</div></label>
-                <label class="option-card" data-option="B"><input type="radio" name="q15" value="B"><div class="option-head"><span class="option-letter">B.</span><span class="option-text">Predict temperature tomorrow</span><span class="option-state">✕</span></div><div class="option-explanation">Regression.</div></label>
-                <label class="option-card" data-option="C"><input type="radio" name="q15" value="C"><div class="option-head"><span class="option-letter">C.</span><span class="option-text">Predict whether an email is spam or not</span><span class="option-state">✓</span></div><div class="option-explanation">Binary classification.</div></label>
-                <label class="option-card" data-option="D"><input type="radio" name="q15" value="D"><div class="option-head"><span class="option-letter">D.</span><span class="option-text">Predict stock price value</span><span class="option-state">✕</span></div><div class="option-explanation">Regression.</div></label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q3" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Precision-Recall or F1 score</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Precision, recall, and F1 focus more directly on minority-class performance and the balance between false positives and false negatives.
+        </div>
+      </label>
 
-          </form>
-          </form>
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q3" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Mean Squared Error</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Mean Squared Error is mainly used for regression problems, not standard classification evaluation.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q3" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">R² score</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          R² is a regression metric that measures explained variance, so it is not appropriate here.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="card question-card" data-question="q4" data-correct="C">
+    <div class="card-title">4. What is a key property of a good training dataset?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q4" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">It is as small as possible</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          A very small dataset may miss important patterns and variability, making the model less reliable.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q4" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">It contains only one class</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          A one-class dataset is not suitable for most classification problems because it does not represent the full decision task.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q4" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">It is representative of the real-world data</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          A good training dataset should reflect the type of data the model will see in practice, so the learned patterns can generalize well.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q4" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">It is always larger than the test set</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Training data are often larger than test data, but the essential property is representativeness, not a strict size rule.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="card question-card" data-question="q5" data-correct="B">
+    <div class="card-title">5. Which of the following libraries is primarily used for data manipulation in Python?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q5" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">TensorFlow</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          TensorFlow is mainly a machine learning and deep learning framework, not the primary choice for manipulating tabular data.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q5" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Pandas</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Pandas is the standard Python library for tabular data manipulation, with DataFrames and tools for filtering, grouping, cleaning, and transforming data.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q5" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Matplotlib</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Matplotlib is primarily used for plotting and visualization rather than general data manipulation.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q5" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Keras</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Keras is an API for building neural networks, not a main tool for manipulating datasets.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="card question-card" data-question="q6" data-correct="C">
+    <div class="card-title">6. What does overfitting mean?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q6" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">The model performs well on new data</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Performing well on unseen data indicates good generalization, not overfitting.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q6" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">The model is too simple</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          A model that is too simple is more associated with underfitting than overfitting.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q6" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">The model memorizes training data but generalizes poorly</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Overfitting happens when the model captures noise and training-specific details instead of learning patterns that transfer to unseen data.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q6" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">The model cannot learn patterns</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          That is closer to underfitting or insufficient model capacity, not overfitting.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="card question-card" data-question="q7" data-correct="C">
+    <div class="card-title">7. Which statement about train/test split is correct?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q7" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">The test set is used to train the model</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Using the test set for training would contaminate evaluation and lead to data leakage.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q7" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">The training set must be smaller than the test set</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          There is no such rule. Usually the training set is larger, but that is not the key principle.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q7" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">The test set evaluates model performance on unseen data</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          The test set is kept separate so it can provide an honest estimate of how the model performs on new data.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q7" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Both sets must contain identical samples</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Train and test sets should come from the same problem distribution, but they must contain different samples.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="card question-card" data-question="q8" data-correct="C">
+    <div class="card-title">8. Which of the following is a visualization library in Python?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q8" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">NumPy</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          NumPy is mainly a numerical computing library for arrays and matrix operations.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q8" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Pandas</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Pandas is mainly used for data manipulation, even though it can interface with plotting libraries.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q8" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Matplotlib</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Matplotlib is one of the standard Python libraries for plotting charts, graphs, and general visualizations.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q8" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Scikit-learn</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Scikit-learn is primarily a machine learning library, not a visualization library.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="card question-card" data-question="q9" data-correct="B">
+    <div class="card-title">9. What is the purpose of cross-validation?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q9" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">To increase dataset size</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Cross-validation does not create new data. It reuses the existing dataset across multiple train/test splits.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q9" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">To estimate model performance more reliably</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Cross-validation evaluates the model multiple times on different splits, reducing dependence on one arbitrary split and giving a more stable estimate.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q9" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">To remove outliers</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Outlier removal is a data-cleaning decision, not the purpose of cross-validation.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q9" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">To reduce dataset dimensionality</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Dimensionality reduction is a separate task, for example using PCA.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="card question-card" data-question="q10" data-correct="C">
+    <div class="card-title">10. Which type of ML is used when no labels are available?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q10" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Supervised learning</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Supervised learning requires labeled targets, so it is not the right choice here.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q10" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Reinforcement learning</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Reinforcement learning is based on actions and rewards, not simply the absence of dataset labels.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q10" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Unsupervised learning</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Unsupervised learning is used when the data do not come with labels and the goal is to uncover patterns or structure.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q10" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Deep learning only</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Deep learning is a model family, not the learning type itself. It can be used in supervised or unsupervised settings.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="card question-card" data-question="q11" data-correct="C">
+    <div class="card-title">11. Which algorithm is commonly used for classification tasks?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q11" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Linear Regression</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Linear Regression is mainly used to predict continuous numerical outputs, not classes.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q11" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">K-Means</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          K-Means is an unsupervised clustering algorithm, not a standard supervised classifier.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q11" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Logistic Regression</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Logistic Regression is a classic supervised classification algorithm that models class probabilities.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q11" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">PCA</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          PCA is a dimensionality-reduction technique, not a classification algorithm.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="card question-card" data-question="q12" data-correct="C">
+    <div class="card-title">12. What does a regression model predict?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q12" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Categories</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Categories are usually the output of classification models, not regression models.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q12" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Clusters</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Clusters come from clustering methods, which are unsupervised.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q12" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Continuous numerical values</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Regression models are used when the target is numeric and continuous, such as price, demand, or temperature.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q12" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Labels only</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Labels are associated more with classification problems than regression.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="card question-card" data-question="q13" data-correct="B">
+    <div class="card-title">13. What is a common way to handle missing data?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q13" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Always ignore it</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Ignoring missing data blindly can create errors or distort conclusions.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q13" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Replace it with mean/median values</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          A common approach is imputation, where missing numerical values are replaced with estimates such as the mean or median.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q13" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Duplicate the dataset</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Duplicating the dataset does not solve missing-data issues and can create misleading statistics.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q13" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Remove the entire dataset</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Discarding the whole dataset is unnecessarily extreme and not a standard handling strategy.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q14 -->
+  <div class="card question-card" data-question="q14" data-correct="B">
+    <div class="card-title">14. What is the purpose of feature scaling?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q14" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">To increase dataset size</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Scaling changes the values of features, not the number of samples.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q14" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">To make features comparable in magnitude</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Feature scaling puts variables on comparable numeric ranges, which is especially important for distance-based methods and some optimization procedures.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q14" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">To remove labels</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Scaling affects input features, not the target labels.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q14" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">To reduce the number of features</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Reducing the number of features is a different process, such as feature selection or dimensionality reduction.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="card question-card" data-question="q15" data-correct="C">
+    <div class="card-title">15. Which of the following is an example of a classification problem?</div>
+    <div class="options-list">
+
+      <label class="option-card" data-option="A">
+        <input type="radio" name="q15" value="A">
+        <div class="option-head">
+          <span class="option-letter">A.</span>
+          <span class="option-text">Predict house prices</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          House price prediction is a regression problem because the output is a continuous numerical value.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="B">
+        <input type="radio" name="q15" value="B">
+        <div class="option-head">
+          <span class="option-letter">B.</span>
+          <span class="option-text">Predict temperature tomorrow</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Temperature prediction is also regression because the output is continuous.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="C">
+        <input type="radio" name="q15" value="C">
+        <div class="option-head">
+          <span class="option-letter">C.</span>
+          <span class="option-text">Predict whether an email is spam or not</span>
+          <span class="option-state">✓</span>
+        </div>
+        <div class="option-explanation">
+          Spam detection is classification because the output is a category, such as spam versus not spam.
+        </div>
+      </label>
+
+      <label class="option-card" data-option="D">
+        <input type="radio" name="q15" value="D">
+        <div class="option-head">
+          <span class="option-letter">D.</span>
+          <span class="option-text">Predict stock price value</span>
+          <span class="option-state">✕</span>
+        </div>
+        <div class="option-explanation">
+          Predicting a stock price value is a regression task because the target is numerical and continuous.
+        </div>
+      </label>
+
+    </div>
+    <div class="question-result"></div>
+  </div>
+
+</form>
 
           <div class="exam-actions">
             <button class="btn" type="button" id="finishExamBtn">Show Final Results</button>
