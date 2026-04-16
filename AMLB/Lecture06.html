@@ -1,477 +1,702 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture 06 - Getting Started with Data Analysis</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lecture 06 - Getting Started with Data Analysis</title>
 
-    <link rel="icon" href="images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner hybrid-topbar">
-      <div class="topbar-desktop">
-        <div class="nav-group">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="Lecture06.html">Lecture 06</a>
-        </div>
+		<link rel="icon" href="images/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="images/favicon-32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="images/favicon-16.png"
+		/>
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+		<link rel="stylesheet" href="styles.css" />
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="topbar-inner hybrid-topbar">
+				<div class="topbar-desktop">
+					<div class="nav-group">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<a class="btn-link" href="Lecture06.html">Lecture 06</a>
+					</div>
 
-        <div class="nav-group">
-          <a class="btn-link" href="Lecture07.html">← Previous</a>
-          <a class="btn-link" href="Lecture08.html">Next →</a>
-          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-        </div>
-      </div>
+					<div class="nav-group">
+						<a class="btn-link" href="Lecture07.html">← Previous</a>
+						<a class="btn-link" href="Lecture08.html">Next →</a>
+						<button class="btn btn-primary" data-complete-lecture>
+							Mark as Completed
+						</button>
+					</div>
+				</div>
 
-      <div class="topbar-mobile">
-        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
-        <a class="icon-btn" href="Lecture07.html" aria-label="Previous lecture" title="Previous">←</a>
-        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
-        <span class="topbar-title">L06</span>
-        <a class="icon-btn" href="Lecture08.html" aria-label="Next lecture" title="Next">→</a>
-        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
-      </div>
-    </div>
-  </header>
+				<div class="topbar-mobile">
+					<a
+						class="icon-btn"
+						href="index.html"
+						aria-label="Back to index"
+						title="Index"
+						>⌂</a
+					>
+					<a
+						class="icon-btn"
+						href="Lecture07.html"
+						aria-label="Previous lecture"
+						title="Previous"
+						>←</a
+					>
+					<button
+						class="icon-btn toc-toggle"
+						type="button"
+						aria-label="Open table of contents"
+						title="Contents"
+					>
+						≡
+					</button>
+					<span class="topbar-title">L06</span>
+					<a
+						class="icon-btn"
+						href="Lecture08.html"
+						aria-label="Next lecture"
+						title="Next"
+						>→</a
+					>
+					<button
+						class="icon-btn icon-btn-primary"
+						data-complete-lecture
+						aria-label="Mark as completed"
+						title="Completed"
+					>
+						✓
+					</button>
+				</div>
+			</div>
+		</header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-split">
-        <div>
-          <div class="eyebrow">Applied Machine Learning · Basic</div>
-          <h1>Lecture 06 — Getting Started with Data Analysis</h1>
-          <p class="subtitle">
-            This hands-on lecture walks through the main stages of a practical data analysis pipeline:
-            exploratory data analysis, data cleaning, feature scaling, and finally linear regression.
-            The focus is not only on code, but on the workflow and decisions that make real machine learning projects work.
-          </p>
+		<main class="container">
+			<section class="hero">
+				<div class="hero-split">
+					<div>
+						<div class="eyebrow">Applied Machine Learning · Basic</div>
+						<h1>Lecture 06 — Getting Started with Data Analysis</h1>
+						<p class="subtitle">
+							This hands-on lecture walks through the main stages of a practical
+							data analysis pipeline: exploratory data analysis, data cleaning,
+							feature scaling, and finally linear regression. The focus is not
+							only on code, but on the workflow and decisions that make real
+							machine learning projects work.
+						</p>
 
-          <div class="hero-meta">
-            <div class="pill">EDA</div>
-            <div class="pill">Cleaning</div>
-            <div class="pill">Scaling</div>
-            <div class="pill">Linear Regression</div>
-            <div class="pill">Hands-on</div>
-          </div>
+						<div class="hero-meta">
+							<div class="pill">EDA</div>
+							<div class="pill">Cleaning</div>
+							<div class="pill">Scaling</div>
+							<div class="pill">Linear Regression</div>
+							<div class="pill">Hands-on</div>
+						</div>
 
-          <div class="status" id="completionStatus">Not completed yet</div>
-        </div>
+						<div class="status" id="completionStatus">Not completed yet</div>
+					</div>
 
-        <div class="hero-visual">
-          <div class="hero-image-card video-card">
-            <div class="video-embed">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/rfro1XR_xEc"
-                title="Lecture 06 recording"
-                loading="lazy"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-          <div class="hero-badge">Lecture recording available</div>
-        </div>
-      </div>
-    </section>
+					<div class="hero-visual">
+						<div class="hero-image-card video-card">
+							<div class="video-embed">
+								<iframe
+									src="https://www.youtube-nocookie.com/embed/rfro1XR_xEc"
+									title="Lecture 06 recording"
+									loading="lazy"
+									allow="
+										accelerometer;
+										clipboard-write;
+										encrypted-media;
+										gyroscope;
+										picture-in-picture;
+										web-share;
+									"
+									allowfullscreen
+								>
+								</iframe>
+							</div>
+						</div>
+						<div class="hero-badge">Lecture recording available</div>
+					</div>
+				</div>
+			</section>
 
-    <div class="layout">
-      <aside class="toc">
-        <h2>On this page</h2>
-        <a href="#big-picture">Big Picture</a>
-        <a href="#eda">Exploratory Data Analysis</a>
-        <a href="#cleaning">Data Cleaning</a>
-        <a href="#scaling">Feature Scaling</a>
-        <a href="#linear-regression">Linear Regression</a>
-        <a href="#study-material">Study Material</a>
-        <a href="#quiz">Quick Review Quiz</a>
-      </aside>
+			<div class="layout">
+				<aside class="toc">
+					<h2>On this page</h2>
+					<a href="#big-picture">Big Picture</a>
+					<a href="#eda">Exploratory Data Analysis</a>
+					<a href="#cleaning">Data Cleaning</a>
+					<a href="#scaling">Feature Scaling</a>
+					<a href="#linear-regression">Linear Regression</a>
+					<a href="#study-material">Study Material</a>
+					<a href="#quiz">Quick Review Quiz</a>
+				</aside>
 
-      <div class="content">
-        <section class="section" id="big-picture">
-          <h2 class="section-title">Big Picture: The Data Analysis Pipeline</h2>
-          <p class="lead">
-            This lecture is built around a simple but realistic idea: most machine learning projects do not begin with a model.
-            They begin with understanding, cleaning, and preparing data.
-          </p>
+				<div class="content">
+					<section class="section" id="big-picture">
+						<h2 class="section-title">
+							Big Picture: The Data Analysis Pipeline
+						</h2>
+						<p class="lead">
+							This lecture is built around a simple but realistic idea: most
+							machine learning projects do not begin with a model. They begin
+							with understanding, cleaning, and preparing data.
+						</p>
 
-          <div class="callout">
-            One of the strongest practical messages of the lecture is the <strong>80/20 rule</strong>: in many real projects, around 80% of the time goes into data pre-processing and cleaning, while only about 20% goes into the actual modeling. 
-          </div>
+						<div class="callout">
+							One of the strongest practical messages of the lecture is the
+							<strong>80/20 rule</strong>: in many real projects, around 80% of
+							the time goes into data pre-processing and cleaning, while only
+							about 20% goes into the actual modeling.
+						</div>
 
-          <div class="figure">
-            <img src="images/lecture06/pipeline-overview.png" alt="Practical data analysis pipeline overview">
-            <div class="figure-body">
-              <div class="figure-kicker">A real workflow</div>
-              <div class="figure-caption">
-                The lecture organizes data analysis as a pipeline: explore the dataset, clean it, scale the features if needed, and finally build a first predictive model.
-              </div>
-            </div>
-          </div>
+						<div class="figure">
+							<img
+								src="images/lecture06/pipeline-overview.png"
+								alt="Practical data analysis pipeline overview"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">A real workflow</div>
+								<div class="figure-caption">
+									The lecture organizes data analysis as a pipeline: explore the
+									dataset, clean it, scale the features if needed, and finally
+									build a first predictive model.
+								</div>
+							</div>
+						</div>
 
-          <div class="grid-4 compact-grid">
-            <div class="card center-card">
-              <div class="card-title">1</div>
-              <p>EDA</p>
-            </div>
-            <div class="card center-card">
-              <div class="card-title">2</div>
-              <p>Cleaning</p>
-            </div>
-            <div class="card center-card">
-              <div class="card-title">3</div>
-              <p>Scaling</p>
-            </div>
-            <div class="card center-card">
-              <div class="card-title">4</div>
-              <p>Modeling</p>
-            </div>
-          </div>
+						<div class="grid-4 compact-grid">
+							<div class="card center-card">
+								<div class="card-title">1</div>
+								<p>EDA</p>
+							</div>
+							<div class="card center-card">
+								<div class="card-title">2</div>
+								<p>Cleaning</p>
+							</div>
+							<div class="card center-card">
+								<div class="card-title">3</div>
+								<p>Scaling</p>
+							</div>
+							<div class="card center-card">
+								<div class="card-title">4</div>
+								<p>Modeling</p>
+							</div>
+						</div>
 
-          <p>
-            This lecture also connects directly with your project mindset: before you train anything, you need to know what your dataset contains,
-            whether it has missing or suspicious values, how variables are distributed, and whether the data need transformation.
-          </p>
-        </section>
+						<p>
+							This lecture also connects directly with your project mindset:
+							before you train anything, you need to know what your dataset
+							contains, whether it has missing or suspicious values, how
+							variables are distributed, and whether the data need
+							transformation.
+						</p>
+					</section>
 
-        <section class="section" id="eda">
-          <h2 class="section-title">Exploratory Data Analysis (EDA)</h2>
-          <p class="lead">
-            EDA is the first serious contact with a dataset. Its goal is to understand structure, distributions, missing values, correlations, and possible issues before moving forward.
-          </p>
+					<section class="section" id="eda">
+						<h2 class="section-title">Exploratory Data Analysis (EDA)</h2>
+						<p class="lead">
+							EDA is the first serious contact with a dataset. Its goal is to
+							understand structure, distributions, missing values, correlations,
+							and possible issues before moving forward.
+						</p>
 
-          <div class="comparison">
-            <div class="column">
-              <h3>What to inspect first</h3>
-              <ul>
-                <li><code>df.info()</code> for structure, dtypes, and non-null counts</li>
-                <li><code>df.describe()</code> for summary statistics</li>
-                <li><code>df.isnull().sum()</code> for missing values</li>
-                <li><code>df.nunique()</code> for unique values</li>
-              </ul>
-            </div>
+						<div class="comparison">
+							<div class="column">
+								<h3>What to inspect first</h3>
+								<ul>
+									<li>
+										<code>df.info()</code> for structure, dtypes, and non-null
+										counts
+									</li>
+									<li><code>df.describe()</code> for summary statistics</li>
+									<li><code>df.isnull().sum()</code> for missing values</li>
+									<li><code>df.nunique()</code> for unique values</li>
+								</ul>
+							</div>
 
-            <div class="column">
-              <h3>What to inspect next</h3>
-              <ul>
-                <li>distribution of numerical variables</li>
-                <li>categorical distributions</li>
-                <li>grouped summaries with <code>groupby()</code></li>
-                <li>correlations between variables</li>
-              </ul>
-            </div>
-          </div>
+							<div class="column">
+								<h3>What to inspect next</h3>
+								<ul>
+									<li>distribution of numerical variables</li>
+									<li>categorical distributions</li>
+									<li>grouped summaries with <code>groupby()</code></li>
+									<li>correlations between variables</li>
+								</ul>
+							</div>
+						</div>
 
-          <div class="figure-grid">
-            <div class="figure">
-              <img src="images/lecture06/eda-histograms.png" alt="Histograms of multiple dataset features">
-              <div class="figure-body">
-                <div class="figure-kicker">Distribution overview</div>
-                <div class="figure-caption">
-                  Histograms give a quick visual impression of spread, concentration, skewness, and possible outliers in numerical variables.
-                </div>
-              </div>
-            </div>
+						<div class="figure-grid">
+							<div class="figure">
+								<img
+									src="images/lecture06/eda-histograms.png"
+									alt="Histograms of multiple dataset features"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Distribution overview</div>
+									<div class="figure-caption">
+										Histograms give a quick visual impression of spread,
+										concentration, skewness, and possible outliers in numerical
+										variables.
+									</div>
+								</div>
+							</div>
 
-            <div class="figure">
-              <img src="images/lecture06/eda-correlation-heatmap.png" alt="Correlation heatmap of dataset variables">
-              <div class="figure-body">
-                <div class="figure-kicker">Correlation patterns</div>
-                <div class="figure-caption">
-                  A heatmap helps identify highly correlated variables and makes it easier to spot relationships than reading a dense numerical matrix.
-                </div>
-              </div>
-            </div>
-          </div>
+							<div class="figure">
+								<img
+									src="images/lecture06/eda-correlation-heatmap.png"
+									alt="Correlation heatmap of dataset variables"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Correlation patterns</div>
+									<div class="figure-caption">
+										A heatmap helps identify highly correlated variables and
+										makes it easier to spot relationships than reading a dense
+										numerical matrix.
+									</div>
+								</div>
+							</div>
+						</div>
 
-          <div class="callout">
-            EDA is not a decorative step. It is how you prevent yourself from building a model on assumptions that are simply wrong.
-          </div>
+						<div class="callout">
+							EDA is not a decorative step. It is how you prevent yourself from
+							building a model on assumptions that are simply wrong.
+						</div>
 
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1dYginSAhEPpi7xs7yeTtVSjFSYEYqXf_" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open EDA Notebook in Colab →
-          </a>
-        </section>
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1dYginSAhEPpi7xs7yeTtVSjFSYEYqXf_"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open EDA Notebook in Colab →
+						</a>
+					</section>
 
-        <section class="section" id="cleaning">
-          <h2 class="section-title">Data Cleaning</h2>
-          <p class="lead">
-            Real datasets are often messy. A file may contain metadata before the real table begins, broken rows, strange delimiters, or even fake missing values encoded as numbers.
-          </p>
+					<section class="section" id="cleaning">
+						<h2 class="section-title">Data Cleaning</h2>
+						<p class="lead">
+							Real datasets are often messy. A file may contain metadata before
+							the real table begins, broken rows, strange delimiters, or even
+							fake missing values encoded as numbers.
+						</p>
 
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Common issue</th>
-                  <th>Typical fix</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Metadata before the table</td>
-                  <td>Use <code>skiprows</code> or read raw text first</td>
-                </tr>
-                <tr>
-                  <td>Broken rows split across lines</td>
-                  <td>Rebuild lines programmatically before loading</td>
-                </tr>
-                <tr>
-                  <td>Inconsistent delimiters</td>
-                  <td>Standardize separators during parsing</td>
-                </tr>
-                <tr>
-                  <td>Comma decimal separators</td>
-                  <td>Use the proper decimal setting when reading</td>
-                </tr>
-                <tr>
-                  <td>Fake missing values such as 9999</td>
-                  <td>Detect and replace them intentionally</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Common issue</th>
+										<th>Typical fix</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Metadata before the table</td>
+										<td>Use <code>skiprows</code> or read raw text first</td>
+									</tr>
+									<tr>
+										<td>Broken rows split across lines</td>
+										<td>Rebuild lines programmatically before loading</td>
+									</tr>
+									<tr>
+										<td>Inconsistent delimiters</td>
+										<td>Standardize separators during parsing</td>
+									</tr>
+									<tr>
+										<td>Comma decimal separators</td>
+										<td>Use the proper decimal setting when reading</td>
+									</tr>
+									<tr>
+										<td>Fake missing values such as 9999</td>
+										<td>Detect and replace them intentionally</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-          <div class="figure">
-            <img src="images/lecture06/data-cleaning-case.png" alt="Example of a dirty dataset requiring manual cleaning">
-            <div class="figure-body">
-              <div class="figure-kicker">Real-world cleaning</div>
-              <div class="figure-caption">
-                The lecture emphasizes that dirty data are normal, not exceptional. Cleaning is part of the work, not a sign that something went wrong.
-              </div>
-            </div>
-          </div>
+						<div class="figure">
+							<img
+								src="images/lecture06/data-cleaning-case.png"
+								alt="Example of a dirty dataset requiring manual cleaning"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">Real-world cleaning</div>
+								<div class="figure-caption">
+									The lecture emphasizes that dirty data are normal, not
+									exceptional. Cleaning is part of the work, not a sign that
+									something went wrong.
+								</div>
+							</div>
+						</div>
 
-          <p>
-            This is one of the most practical parts of the lecture: instead of assuming every CSV is clean, it shows how to reason about data files like an investigator.
-            If something looks suspicious, it probably deserves inspection.
-          </p>
+						<p>
+							This is one of the most practical parts of the lecture: instead of
+							assuming every CSV is clean, it shows how to reason about data
+							files like an investigator. If something looks suspicious, it
+							probably deserves inspection.
+						</p>
 
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1QF3AOJLDAEUFmoL3P2BfElgPdhBi_mVK" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Data Cleaning Notebook in Colab →
-          </a>
-        </section>
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1QF3AOJLDAEUFmoL3P2BfElgPdhBi_mVK"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Data Cleaning Notebook in Colab →
+						</a>
+					</section>
 
-        <section class="section" id="scaling">
-          <h2 class="section-title">Feature Scaling</h2>
-          <p class="lead">
-            Once the data are loaded and cleaned, the next question is whether feature values live on very different scales. If they do, some models and optimization procedures can behave poorly.
-          </p>
+					<section class="section" id="scaling">
+						<h2 class="section-title">Feature Scaling</h2>
+						<p class="lead">
+							Once the data are loaded and cleaned, the next question is whether
+							feature values live on very different scales. If they do, some
+							models and optimization procedures can behave poorly.
+						</p>
 
-          <div class="grid-3">
-            <div class="card">
-              <div class="card-title">Rescaling</div>
-              <p>Compress values into a specific interval such as 0 to 1.</p>
-            </div>
+						<div class="grid-3">
+							<div class="card">
+								<div class="card-title">Rescaling</div>
+								<p>Compress values into a specific interval such as 0 to 1.</p>
+							</div>
 
-            <div class="card">
-              <div class="card-title">Standardization</div>
-              <p>Center data at mean 0 with standard deviation 1.</p>
-            </div>
+							<div class="card">
+								<div class="card-title">Standardization</div>
+								<p>Center data at mean 0 with standard deviation 1.</p>
+							</div>
 
-            <div class="card">
-              <div class="card-title">Normalization</div>
-              <p>Scale observations according to a chosen norm such as L1 or L2.</p>
-            </div>
-          </div>
+							<div class="card">
+								<div class="card-title">Normalization</div>
+								<p>
+									Scale observations according to a chosen norm such as L1 or
+									L2.
+								</p>
+							</div>
+						</div>
 
-          <div class="callout">
-            Scaling is not magic. It does not automatically improve every model, but it is often important when variables live on very different numerical ranges or when optimization depends strongly on feature scale.
-          </div>
+						<div class="callout">
+							Scaling is not magic. It does not automatically improve every
+							model, but it is often important when variables live on very
+							different numerical ranges or when optimization depends strongly
+							on feature scale.
+						</div>
 
-          <p>
-            In the lecture, this step is introduced through scikit-learn’s transformation workflow:
-            <strong>fit</strong> learns the transformation parameters from the data, and <strong>transform</strong> applies them.
-          </p>
+						<p>
+							In the lecture, this step is introduced through scikit-learn’s
+							transformation workflow:
+							<strong>fit</strong> learns the transformation parameters from the
+							data, and <strong>transform</strong> applies them.
+						</p>
 
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1itficc1DE2HAONc0KsJBq0ZLOooZJOyO" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Feature Scaling Notebook in Colab →
-          </a>
-        </section>
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1itficc1DE2HAONc0KsJBq0ZLOooZJOyO"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Feature Scaling Notebook in Colab →
+						</a>
+					</section>
 
-        <section class="section" id="linear-regression">
-          <h2 class="section-title">Linear Regression: Putting Everything Together</h2>
-          <p class="lead">
-            The final step of the lecture is to use the prepared dataset to build a first real model: linear regression.
-          </p>
+					<section class="section" id="linear-regression">
+						<h2 class="section-title">
+							Linear Regression: Putting Everything Together
+						</h2>
+						<p class="lead">
+							The final step of the lecture is to use the prepared dataset to
+							build a first real model: linear regression.
+						</p>
 
-          <div class="comparison">
-            <div class="column">
-              <h3>Three implementation views</h3>
-              <ul>
-                <li>from scratch</li>
-                <li>with scikit-learn’s analytical solution</li>
-                <li>with a self-implemented gradient descent</li>
-              </ul>
-            </div>
+						<div class="comparison">
+							<div class="column">
+								<h3>Three implementation views</h3>
+								<ul>
+									<li>from scratch</li>
+									<li>with scikit-learn’s analytical solution</li>
+									<li>with a self-implemented gradient descent</li>
+								</ul>
+							</div>
 
-            <div class="column">
-              <h3>Why this matters</h3>
-              <p>
-                The lecture is not only about obtaining predictions. It is about seeing how cleaned and transformed data finally enter a modeling step in a coherent workflow.
-              </p>
-            </div>
-          </div>
+							<div class="column">
+								<h3>Why this matters</h3>
+								<p>
+									The lecture is not only about obtaining predictions. It is
+									about seeing how cleaned and transformed data finally enter a
+									modeling step in a coherent workflow.
+								</p>
+							</div>
+						</div>
 
-          <div class="figure">
-            <img src="images/lecture06/linear-regression-workflow.png" alt="Linear regression as the final step of the workflow">
-            <div class="figure-body">
-              <div class="figure-kicker">From data to model</div>
-              <div class="figure-caption">
-                Linear regression appears here as the first model that combines everything built earlier in the pipeline: exploration, cleaning, and scaling.
-              </div>
-            </div>
-          </div>
+						<div class="figure">
+							<img
+								src="images/lecture06/linear-regression-workflow.png"
+								alt="Linear regression as the final step of the workflow"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">From data to model</div>
+								<div class="figure-caption">
+									Linear regression appears here as the first model that
+									combines everything built earlier in the pipeline:
+									exploration, cleaning, and scaling.
+								</div>
+							</div>
+						</div>
 
-          <div class="callout">
-            This is the lecture’s central practical lesson: modeling only makes sense after the data work has been done properly.
-          </div>
+						<div class="callout">
+							This is the lecture’s central practical lesson: modeling only
+							makes sense after the data work has been done properly.
+						</div>
 
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1I6B8Be7QQ-mdJ18rmOW523R4R0Stjton" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Linear Regression Notebook in Colab →
-          </a>
-        </section>
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1I6B8Be7QQ-mdJ18rmOW523R4R0Stjton"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Linear Regression Notebook in Colab →
+						</a>
+					</section>
 
-        <section class="section" id="study-material">
-          <h2 class="section-title">Study Material</h2>
+					<section class="section" id="study-material">
+						<h2 class="section-title">Study Material</h2>
 
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Slides</div>
-              <strong>Lecture 6 Slides</strong>
-              <p>
-                Short outline of the hands-on session covering the data analysis pipeline, from EDA to linear regression.
-              </p>
-              <a class="btn-link" href="slides/lecture06.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-              </a>
-            </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Slides</div>
+								<strong>Lecture 6 Slides</strong>
+								<p>
+									Short outline of the hands-on session covering the data
+									analysis pipeline, from EDA to linear regression.
+								</p>
+								<a
+									class="btn-link"
+									href="slides/lecture06.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
 
-            <div class="card">
-              <div class="card-title">Transcript</div>
-              <strong>Lecture 6 Transcript</strong>
-              <p>
-                Especially useful here, because most of the value of this lecture is in the live explanations, the plotting walkthrough, and the practical comments around real data analysis.
-              </p>
-              <a class="btn-link" href="transcriptions/lecture06.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-              </a>
-            </div>
-          </div>
+							<div class="card">
+								<div class="card-title">Transcript</div>
+								<strong>Lecture 6 Transcript</strong>
+								<p>
+									Especially useful here, because most of the value of this
+									lecture is in the live explanations, the plotting walkthrough,
+									and the practical comments around real data analysis.
+								</p>
+								<a
+									class="btn-link"
+									href="transcriptions/lecture06.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
+						</div>
 
-          <p>
-            Because this is a full hands-on lecture, the best way to study it is with the lecture page open next to the notebook material, so you can connect the workflow with the actual code.
-          </p>
-        </section>
+						<p>
+							Because this is a full hands-on lecture, the best way to study it
+							is with the lecture page open next to the notebook material, so
+							you can connect the workflow with the actual code.
+						</p>
+					</section>
 
-        <section class="section" id="quiz">
-          <h2 class="section-title">Quick Review Quiz</h2>
+					<section class="section" id="quiz">
+						<h2 class="section-title">Quick Review Quiz</h2>
 
-          <details>
-            <summary>1. What does the “80/20 rule” mean in machine learning practice?</summary>
-            <div class="details-body">
-              <p>It means that a large share of project time often goes into data pre-processing and cleaning, while a smaller share goes into the actual modeling step.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								1. What does the “80/20 rule” mean in machine learning practice?
+							</summary>
+							<div class="details-body">
+								<p>
+									It means that a large share of project time often goes into
+									data pre-processing and cleaning, while a smaller share goes
+									into the actual modeling step.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>2. Why is <code>df.info()</code> a useful first step in EDA?</summary>
-            <div class="details-body">
-              <p>Because it quickly shows the dataset structure, non-null counts, data types, and memory usage, helping you catch type or missing-value issues early.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								2. Why is <code>df.info()</code> a useful first step in EDA?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because it quickly shows the dataset structure, non-null
+									counts, data types, and memory usage, helping you catch type
+									or missing-value issues early.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>3. What is the difference between a Figure and an Axis in Matplotlib?</summary>
-            <div class="details-body">
-              <p>A Figure is the overall plotting canvas, while an Axis is the specific plotting area where data, labels, and ticks are drawn.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								3. What is the difference between a Figure and an Axis in
+								Matplotlib?
+							</summary>
+							<div class="details-body">
+								<p>
+									A Figure is the overall plotting canvas, while an Axis is the
+									specific plotting area where data, labels, and ticks are
+									drawn.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>4. Why is a histogram different from a bar chart?</summary>
-            <div class="details-body">
-              <p>A histogram shows the distribution of a continuous variable through bins, while a bar chart compares discrete categories.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								4. Why is a histogram different from a bar chart?
+							</summary>
+							<div class="details-body">
+								<p>
+									A histogram shows the distribution of a continuous variable
+									through bins, while a bar chart compares discrete categories.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>5. Why can pie charts be misleading?</summary>
-            <div class="details-body">
-              <p>Because human perception is not especially good at accurately comparing slice angles and areas, so proportions can be harder to judge than in a bar chart.</p>
-            </div>
-          </details>
+						<details>
+							<summary>5. Why can pie charts be misleading?</summary>
+							<div class="details-body">
+								<p>
+									Because human perception is not especially good at accurately
+									comparing slice angles and areas, so proportions can be harder
+									to judge than in a bar chart.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>6. What does a correlation heatmap help you identify?</summary>
-            <div class="details-body">
-              <p>It helps identify strong or weak linear relationships between numerical variables in a visually intuitive way.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								6. What does a correlation heatmap help you identify?
+							</summary>
+							<div class="details-body">
+								<p>
+									It helps identify strong or weak linear relationships between
+									numerical variables in a visually intuitive way.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>7. Why is data cleaning often necessary before modeling?</summary>
-            <div class="details-body">
-              <p>Because real data may contain missing values, formatting problems, corrupted rows, or inconsistent separators that can break analysis or distort results.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								7. Why is data cleaning often necessary before modeling?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because real data may contain missing values, formatting
+									problems, corrupted rows, or inconsistent separators that can
+									break analysis or distort results.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>8. What is the purpose of feature scaling?</summary>
-            <div class="details-body">
-              <p>It makes variables more comparable numerically and can help optimization-based models work more effectively when features are on very different scales.</p>
-            </div>
-          </details>
+						<details>
+							<summary>8. What is the purpose of feature scaling?</summary>
+							<div class="details-body">
+								<p>
+									It makes variables more comparable numerically and can help
+									optimization-based models work more effectively when features
+									are on very different scales.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>9. What is the practical difference between <code>fit</code> and <code>transform</code> in scikit-learn?</summary>
-            <div class="details-body">
-              <p><code>fit</code> learns the transformation parameters from the data, while <code>transform</code> applies those learned parameters to produce the transformed data.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								9. What is the practical difference between <code>fit</code> and
+								<code>transform</code> in scikit-learn?
+							</summary>
+							<div class="details-body">
+								<p>
+									<code>fit</code> learns the transformation parameters from the
+									data, while <code>transform</code> applies those learned
+									parameters to produce the transformed data.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>10. Why is linear regression presented only after EDA, cleaning, and scaling?</summary>
-            <div class="details-body">
-              <p>Because the lecture wants to show that modeling should come after understanding and preparing the data, not before.</p>
-            </div>
-          </details>
-        </section>
+						<details>
+							<summary>
+								10. Why is linear regression presented only after EDA, cleaning,
+								and scaling?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because the lecture wants to show that modeling should come
+									after understanding and preparing the data, not before.
+								</p>
+							</div>
+						</details>
+					</section>
 
-        <div class="bottom-nav">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <div class="nav-group">
-            <a class="btn-link" href="Lecture07.html">← Previous</a>
-            <a class="btn-link" href="Lecture08.html">Next →</a>
-            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-          </div>
-        </div>
+					<div class="bottom-nav">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<div class="nav-group">
+							<a class="btn-link" href="Lecture07.html">← Previous</a>
+							<a class="btn-link" href="Lecture08.html">Next →</a>
+							<button class="btn btn-primary" data-complete-lecture>
+								Mark as Completed
+							</button>
+						</div>
+					</div>
 
-        <div class="footer-note">
-          Lecture 06 study page
+					<div class="footer-note">
+						Lecture 06 study page
 
-          <span class="persian-note" dir="rtl">
-            می‌خوام همه‌ی داده‌هاتو با تمام جزئیات بفهمم 🔍
-        </span>
-        </div>
-      </div>
-    </div>
-  </main>
+						<span class="persian-note" dir="rtl">
+							می‌خوام همه‌ی داده‌هاتو با تمام جزئیات بفهمم 🔍
+						</span>
+					</div>
+				</div>
+			</div>
+		</main>
 
-  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-  <div class="toc-backdrop"></div>
+		<div id="completionToast" class="completion-toast">
+			Lecture marked as completed.
+		</div>
+		<div class="toc-backdrop"></div>
 
-  <script src="script.js"></script>
-  <script>
-    initLecturePage("lecture6");
-  </script>
-</body>
+		<script src="script.js"></script>
+		<script>
+			initLecturePage("lecture6");
+		</script>
+	</body>
 </html>

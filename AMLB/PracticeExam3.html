@@ -1,613 +1,1234 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Practice Exam 3 - Applied Machine Learning</title>
-  <link rel="icon" type="image/png" href="images/favicon.png">
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="exam.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner hybrid-topbar">
-      <div class="topbar-desktop">
-        <div class="nav-group">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="PracticeExam3.html">Practice Exam 3</a>
-        </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Practice Exam 3 - Applied Machine Learning</title>
+		<link rel="icon" type="image/png" href="images/favicon.png" />
+		<link rel="stylesheet" href="styles.css" />
+		<link rel="stylesheet" href="exam.css" />
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="topbar-inner hybrid-topbar">
+				<div class="topbar-desktop">
+					<div class="nav-group">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<a class="btn-link" href="PracticeExam3.html">Practice Exam 3</a>
+					</div>
 
-        <div class="nav-group">
-          <a class="btn-link" href="PracticeExam2.html">← Previous</a>
-          <a class="btn-link" href="index.html">Finish →</a>
-          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-        </div>
-      </div>
+					<div class="nav-group">
+						<a class="btn-link" href="PracticeExam2.html">← Previous</a>
+						<a class="btn-link" href="index.html">Finish →</a>
+						<button class="btn btn-primary" data-complete-lecture>
+							Mark as Completed
+						</button>
+					</div>
+				</div>
 
-      <div class="topbar-mobile">
-        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
-        <a class="icon-btn" href="PracticeExam2.html" aria-label="Previous page" title="Previous">←</a>
-        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
-        <span class="topbar-title">Practice Exam 3</span>
-        <a class="icon-btn" href="index.html" aria-label="Finish" title="Finish">→</a>
-        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
-      </div>
-    </div>
-  </header>
+				<div class="topbar-mobile">
+					<a
+						class="icon-btn"
+						href="index.html"
+						aria-label="Back to index"
+						title="Index"
+						>⌂</a
+					>
+					<a
+						class="icon-btn"
+						href="PracticeExam2.html"
+						aria-label="Previous page"
+						title="Previous"
+						>←</a
+					>
+					<button
+						class="icon-btn toc-toggle"
+						type="button"
+						aria-label="Open table of contents"
+						title="Contents"
+					>
+						≡
+					</button>
+					<span class="topbar-title">Practice Exam 3</span>
+					<a
+						class="icon-btn"
+						href="index.html"
+						aria-label="Finish"
+						title="Finish"
+						>→</a
+					>
+					<button
+						class="icon-btn icon-btn-primary"
+						data-complete-lecture
+						aria-label="Mark as completed"
+						title="Completed"
+					>
+						✓
+					</button>
+				</div>
+			</div>
+		</header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-split">
-        <div>
-          <div class="eyebrow">Applied Machine Learning · Basic</div>
-          <h1>Practice Exam 3</h1>
-          <p class="subtitle">
-            A broader mock written test covering ML foundations, supervised vs. unsupervised learning,
-            gradient descent, regularization, metrics, data preparation, Python tools, and evaluation methodology.
-          </p>
+		<main class="container">
+			<section class="hero">
+				<div class="hero-split">
+					<div>
+						<div class="eyebrow">Applied Machine Learning · Basic</div>
+						<h1>Practice Exam 3</h1>
+						<p class="subtitle">
+							A broader mock written test covering ML foundations, supervised
+							vs. unsupervised learning, gradient descent, regularization,
+							metrics, data preparation, Python tools, and evaluation
+							methodology.
+						</p>
 
-          <div class="hero-meta">
-            <div class="pill">15 Questions</div>
-            <div class="pill">Multiple Choice</div>
-            <div class="pill">Broader Coverage</div>
-            <div class="pill">Reasoning</div>
-            <div class="pill">Mock Test</div>
-          </div>
+						<div class="hero-meta">
+							<div class="pill">15 Questions</div>
+							<div class="pill">Multiple Choice</div>
+							<div class="pill">Broader Coverage</div>
+							<div class="pill">Reasoning</div>
+							<div class="pill">Mock Test</div>
+						</div>
 
-          <div class="status" id="completionStatus">Not completed yet</div>
-        </div>
-      </div>
-    </section>
+						<div class="status" id="completionStatus">Not completed yet</div>
+					</div>
+				</div>
+			</section>
 
-    <div class="layout">
-      <aside class="toc">
-        <h2>On this page</h2>
-        <a href="#instructions">Instructions</a>
-        <a href="#exam">Practice Exam</a>
-        <a href="#results">Final Results</a>
-      </aside>
+			<div class="layout">
+				<aside class="toc">
+					<h2>On this page</h2>
+					<a href="#instructions">Instructions</a>
+					<a href="#exam">Practice Exam</a>
+					<a href="#results">Final Results</a>
+				</aside>
 
-      <div class="content">
-        <section class="section" id="instructions">
-          <h2 class="section-title">Instructions</h2>
-          <p class="lead">
-            Answer one option per question. After selecting, the page shows the correct answer and explains
-            why each option is right or wrong. Your score stays hidden until you click <strong>Show Final Results</strong>.
-          </p>
+				<div class="content">
+					<section class="section" id="instructions">
+						<h2 class="section-title">Instructions</h2>
+						<p class="lead">
+							Answer one option per question. After selecting, the page shows
+							the correct answer and explains why each option is right or wrong.
+							Your score stays hidden until you click
+							<strong>Show Final Results</strong>.
+						</p>
 
-          <div class="exam-toolbar">
-            <div class="score-box">
-              <span class="score-label">Questions</span>
-              <span>15 total</span>
-            </div>
-            <div class="score-box">
-              <span class="score-label">Answered</span>
-              <span id="answeredCounter">0 / 15</span>
-            </div>
-          </div>
+						<div class="exam-toolbar">
+							<div class="score-box">
+								<span class="score-label">Questions</span>
+								<span>15 total</span>
+							</div>
+							<div class="score-box">
+								<span class="score-label">Answered</span>
+								<span id="answeredCounter">0 / 15</span>
+							</div>
+						</div>
 
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Suggested approach</div>
-              <ul>
-                <li>identify the lecture topic first</li>
-                <li>watch for almost-correct distractors</li>
-                <li>compare related concepts carefully</li>
-                <li>read all explanations after answering</li>
-              </ul>
-            </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Suggested approach</div>
+								<ul>
+									<li>identify the lecture topic first</li>
+									<li>watch for almost-correct distractors</li>
+									<li>compare related concepts carefully</li>
+									<li>read all explanations after answering</li>
+								</ul>
+							</div>
 
-            <div class="card">
-              <div class="card-title">What this mock emphasizes</div>
-              <ul>
-                <li>definitions and distinctions</li>
-                <li>workflow reasoning</li>
-                <li>metric selection</li>
-                <li>evaluation and preprocessing logic</li>
-              </ul>
-            </div>
-          </div>
+							<div class="card">
+								<div class="card-title">What this mock emphasizes</div>
+								<ul>
+									<li>definitions and distinctions</li>
+									<li>workflow reasoning</li>
+									<li>metric selection</li>
+									<li>evaluation and preprocessing logic</li>
+								</ul>
+							</div>
+						</div>
 
-          <div class="callout">
-            This version explores more topics than the previous mocks, but keeps the same compact written-exam style.
-          </div>
-        </section>
+						<div class="callout">
+							This version explores more topics than the previous mocks, but
+							keeps the same compact written-exam style.
+						</div>
+					</section>
 
-        <section class="section" id="exam">
-          <h2 class="section-title">Practice Exam</h2>
+					<section class="section" id="exam">
+						<h2 class="section-title">Practice Exam</h2>
 
-          <form class="exam-form" id="practiceExamForm">
+						<form class="exam-form" id="practiceExamForm">
+							<div
+								class="card question-card"
+								data-question="q1"
+								data-correct="B"
+							>
+								<div class="card-title">
+									1. According to Mitchell’s framework, a machine learns when
+									its performance improves with experience on a task. Which
+									triplet matches that framework?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q1" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text">Task, hardware, memory</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Mitchell’s framework is not about hardware or memory
+											resources.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q1" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>Task, experience, performance</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											This is the classic T/E/P formulation: task, experience,
+											and performance measure.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q1" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Target, execution, prediction</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Those words may sound related, but they are not Mitchell’s
+											formal framework.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q1" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Training, evaluation, preprocessing</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											These are workflow stages, not the formal definition
+											components.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q1" data-correct="B">
-              <div class="card-title">1. According to Mitchell’s framework, a machine learns when its performance improves with experience on a task. Which triplet matches that framework?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q1" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Task, hardware, memory</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Mitchell’s framework is not about hardware or memory resources.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q1" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Task, experience, performance</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">This is the classic T/E/P formulation: task, experience, and performance measure.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q1" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Target, execution, prediction</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Those words may sound related, but they are not Mitchell’s formal framework.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q1" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Training, evaluation, preprocessing</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">These are workflow stages, not the formal definition components.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q2"
+								data-correct="D"
+							>
+								<div class="card-title">
+									2. You want to group patients into subtypes without having
+									target labels. Which learning setting fits best?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q2" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text">Supervised learning</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Supervised learning requires known target outputs.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q2" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text">Regression</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Regression predicts continuous values from labeled
+											examples.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q2" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text">Classification</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Classification also requires labeled classes.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q2" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text">Unsupervised learning</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Without labels, the goal is to uncover structure or
+											grouping, which is an unsupervised setting.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q2" data-correct="D">
-              <div class="card-title">2. You want to group patients into subtypes without having target labels. Which learning setting fits best?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q2" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Supervised learning</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Supervised learning requires known target outputs.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q2" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Regression</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regression predicts continuous values from labeled examples.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q2" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Classification</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Classification also requires labeled classes.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q2" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Unsupervised learning</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Without labels, the goal is to uncover structure or grouping, which is an unsupervised setting.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q3"
+								data-correct="A"
+							>
+								<div class="card-title">
+									3. What is the role of the learning rate in gradient descent?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q3" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>It controls the size of each parameter update
+												step</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											The learning rate determines how aggressively gradient
+											descent moves in the direction of lower cost.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q3" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>It defines the number of features in the model</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											The number of features comes from the dataset
+											representation, not the learning rate.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q3" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>It decides whether the task is regression or
+												classification</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											The problem type is defined by the target, not by the
+											optimizer settings.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q3" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>It measures model accuracy during training</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Accuracy is an evaluation metric, not the meaning of the
+											learning rate.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q3" data-correct="A">
-              <div class="card-title">3. What is the role of the learning rate in gradient descent?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q3" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">It controls the size of each parameter update step</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">The learning rate determines how aggressively gradient descent moves in the direction of lower cost.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q3" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">It defines the number of features in the model</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">The number of features comes from the dataset representation, not the learning rate.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q3" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">It decides whether the task is regression or classification</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">The problem type is defined by the target, not by the optimizer settings.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q3" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">It measures model accuracy during training</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Accuracy is an evaluation metric, not the meaning of the learning rate.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q4"
+								data-correct="C"
+							>
+								<div class="card-title">
+									4. If the learning rate is too large, what is a common
+									consequence?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q4" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Guaranteed faster convergence to the best
+												solution</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											A large learning rate can overshoot the minimum instead of
+											converging smoothly.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q4" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>The model becomes automatically regularized</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Regularization is a separate idea from the step size used
+											by optimization.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q4" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>The algorithm may overshoot or fail to converge</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											If the steps are too large, gradient descent can oscillate
+											or diverge instead of settling into a minimum.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q4" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>The cost function becomes convex automatically</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Convexity depends on the objective, not on the learning
+											rate.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q4" data-correct="C">
-              <div class="card-title">4. If the learning rate is too large, what is a common consequence?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q4" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Guaranteed faster convergence to the best solution</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">A large learning rate can overshoot the minimum instead of converging smoothly.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q4" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">The model becomes automatically regularized</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regularization is a separate idea from the step size used by optimization.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q4" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">The algorithm may overshoot or fail to converge</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">If the steps are too large, gradient descent can oscillate or diverge instead of settling into a minimum.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q4" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">The cost function becomes convex automatically</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Convexity depends on the objective, not on the learning rate.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q5"
+								data-correct="B"
+							>
+								<div class="card-title">
+									5. Logistic regression is mainly used to predict:
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q5" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Any continuous value directly</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											That is the role of regression models for continuous
+											targets.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q5" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>The probability of belonging to a class</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Logistic regression models class probabilities and is
+											widely used for classification decisions.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q5" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text">Only cluster assignments</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Clustering is an unsupervised task, not logistic
+											regression’s role.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q5" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Only the training labels exactly as stored</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											The model estimates probabilities and decision boundaries
+											rather than memorizing labels directly.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q5" data-correct="B">
-              <div class="card-title">5. Logistic regression is mainly used to predict:</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q5" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Any continuous value directly</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That is the role of regression models for continuous targets.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q5" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">The probability of belonging to a class</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Logistic regression models class probabilities and is widely used for classification decisions.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q5" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Only cluster assignments</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Clustering is an unsupervised task, not logistic regression’s role.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q5" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Only the training labels exactly as stored</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">The model estimates probabilities and decision boundaries rather than memorizing labels directly.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q6"
+								data-correct="D"
+							>
+								<div class="card-title">
+									6. What is the main idea of one-vs-all multiclass
+									classification?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q6" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Train one regression model for all classes at
+												once</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											One-vs-all uses multiple binary classifiers, not one
+											regression model for all classes.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q6" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>Treat all classes as if they were continuous
+												values</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Multiclass classification does not convert classes into a
+											regression target in this method.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q6" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Train one classifier only on the most frequent
+												class</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											That would ignore the rest of the classes and not solve
+											the multiclass problem properly.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q6" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Train one binary classifier per class against all the
+												others</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Each class is treated as positive once, while all
+											remaining classes are grouped as the negative class.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q6" data-correct="D">
-              <div class="card-title">6. What is the main idea of one-vs-all multiclass classification?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q6" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Train one regression model for all classes at once</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">One-vs-all uses multiple binary classifiers, not one regression model for all classes.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q6" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Treat all classes as if they were continuous values</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Multiclass classification does not convert classes into a regression target in this method.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q6" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Train one classifier only on the most frequent class</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That would ignore the rest of the classes and not solve the multiclass problem properly.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q6" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Train one binary classifier per class against all the others</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Each class is treated as positive once, while all remaining classes are grouped as the negative class.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q7"
+								data-correct="A"
+							>
+								<div class="card-title">
+									7. Stronger regularization typically tends to:
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q7" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Reduce variance and risk of overfitting</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Regularization constrains the model, which often reduces
+											overfitting and variance, though it can increase bias.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q7" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text">Always reduce bias</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Stronger regularization more often increases bias rather
+											than reducing it.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q7" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Increase model flexibility</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Regularization discourages excessive flexibility.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q7" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Eliminate the need for train/validation/test
+												splits</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Regularization helps modeling, but it does not replace
+											sound evaluation methodology.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q7" data-correct="A">
-              <div class="card-title">7. Stronger regularization typically tends to:</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q7" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Reduce variance and risk of overfitting</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Regularization constrains the model, which often reduces overfitting and variance, though it can increase bias.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q7" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Always reduce bias</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Stronger regularization more often increases bias rather than reducing it.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q7" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Increase model flexibility</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regularization discourages excessive flexibility.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q7" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Eliminate the need for train/validation/test splits</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Regularization helps modeling, but it does not replace sound evaluation methodology.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q8"
+								data-correct="C"
+							>
+								<div class="card-title">
+									8. A model has low training error but high validation error.
+									This is most consistent with:
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q8" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text">High bias / underfitting</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											High bias would usually cause both training and validation
+											errors to remain high.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q8" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text">Perfect generalization</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Large disagreement between training and validation
+											performance is a warning sign, not a success sign.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q8" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>High variance / overfitting</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											The model fits the training set well but fails to
+											generalize, which is the classic pattern of overfitting.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q8" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>A perfectly balanced dataset</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Dataset balance is a different issue and does not explain
+											this error pattern by itself.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q8" data-correct="C">
-              <div class="card-title">8. A model has low training error but high validation error. This is most consistent with:</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q8" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">High bias / underfitting</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">High bias would usually cause both training and validation errors to remain high.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q8" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Perfect generalization</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Large disagreement between training and validation performance is a warning sign, not a success sign.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q8" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">High variance / overfitting</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">The model fits the training set well but fails to generalize, which is the classic pattern of overfitting.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q8" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">A perfectly balanced dataset</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Dataset balance is a different issue and does not explain this error pattern by itself.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q9"
+								data-correct="B"
+							>
+								<div class="card-title">
+									9. In a highly imbalanced cancer-screening problem, why can
+									accuracy be deceptive?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q9" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Because accuracy only works for regression</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Accuracy is a classification metric, but it may be
+											misleading in skewed settings.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q9" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>Because predicting the majority class can still produce
+												a high score</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											If positives are rare, a trivial classifier can appear
+											strong on accuracy while failing on the cases that matter
+											most.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q9" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Because accuracy always equals recall</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Accuracy and recall are different metrics with different
+											interpretations.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q9" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Because accuracy ignores true negatives
+												completely</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Accuracy does count true negatives; that is part of why it
+											can be misleading in skewed data.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q9" data-correct="B">
-              <div class="card-title">9. In a highly imbalanced cancer-screening problem, why can accuracy be deceptive?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q9" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Because accuracy only works for regression</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Accuracy is a classification metric, but it may be misleading in skewed settings.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q9" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Because predicting the majority class can still produce a high score</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">If positives are rare, a trivial classifier can appear strong on accuracy while failing on the cases that matter most.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q9" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Because accuracy always equals recall</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Accuracy and recall are different metrics with different interpretations.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q9" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Because accuracy ignores true negatives completely</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Accuracy does count true negatives; that is part of why it can be misleading in skewed data.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q10"
+								data-correct="D"
+							>
+								<div class="card-title">
+									10. What does precision answer in a binary classification
+									problem?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q10" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>How many actual positives were found</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											That is recall, not precision.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q10" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>How many total predictions were made</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Precision is a ratio about predicted positives, not the
+											raw count of all predictions.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q10" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>How close regression values are to targets</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											That belongs to regression error analysis, not precision.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q10" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Of the predicted positives, how many were actually
+												positive</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Precision focuses on the quality of positive predictions,
+											so it is sensitive to false positives.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q10" data-correct="D">
-              <div class="card-title">10. What does precision answer in a binary classification problem?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q10" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">How many actual positives were found</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That is recall, not precision.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q10" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">How many total predictions were made</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Precision is a ratio about predicted positives, not the raw count of all predictions.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q10" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">How close regression values are to targets</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That belongs to regression error analysis, not precision.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q10" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Of the predicted positives, how many were actually positive</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Precision focuses on the quality of positive predictions, so it is sensitive to false positives.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q11"
+								data-correct="A"
+							>
+								<div class="card-title">
+									11. Which tool is most naturally associated with tabular data
+									manipulation and exploration in Python?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q11" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text">Pandas</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											Pandas provides DataFrames and many tools for inspection,
+											cleaning, aggregation, and tabular analysis.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q11" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text">Matplotlib</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Matplotlib is mainly a visualization library.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q11" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text">Keras</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Keras is used for building neural network models, not
+											general data manipulation.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q11" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text">SQL only</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											SQL is useful for databases, but the lecture workflow
+											emphasizes Pandas for Python-based tabular analysis.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q11" data-correct="A">
-              <div class="card-title">11. Which tool is most naturally associated with tabular data manipulation and exploration in Python?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q11" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Pandas</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">Pandas provides DataFrames and many tools for inspection, cleaning, aggregation, and tabular analysis.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q11" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Matplotlib</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Matplotlib is mainly a visualization library.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q11" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Keras</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Keras is used for building neural network models, not general data manipulation.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q11" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">SQL only</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">SQL is useful for databases, but the lecture workflow emphasizes Pandas for Python-based tabular analysis.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q12"
+								data-correct="C"
+							>
+								<div class="card-title">
+									12. What is one main purpose of EDA before modeling?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q12" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>To guarantee maximum final accuracy</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											EDA can improve decisions, but it does not guarantee
+											optimal performance by itself.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q12" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>To eliminate the need for cleaning</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											EDA often reveals why cleaning is needed; it does not
+											replace it.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q12" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>To understand structure, distributions, and issues in
+												the data</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											EDA is about learning what kind of data you have, spotting
+											missingness, outliers, distributions, and other practical
+											issues.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q12" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>To replace train/test splitting</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											EDA is complementary to, not a substitute for, correct
+											evaluation methodology.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q12" data-correct="C">
-              <div class="card-title">12. What is one main purpose of EDA before modeling?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q12" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">To guarantee maximum final accuracy</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">EDA can improve decisions, but it does not guarantee optimal performance by itself.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q12" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">To eliminate the need for cleaning</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">EDA often reveals why cleaning is needed; it does not replace it.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q12" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">To understand structure, distributions, and issues in the data</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">EDA is about learning what kind of data you have, spotting missingness, outliers, distributions, and other practical issues.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q12" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">To replace train/test splitting</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">EDA is complementary to, not a substitute for, correct evaluation methodology.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q13"
+								data-correct="B"
+							>
+								<div class="card-title">
+									13. Why is K-fold cross-validation often preferred when in
+									doubt?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q13" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Because it is always faster than a static split</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											K-fold is usually slower because the model is trained
+											multiple times.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q13" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>Because it balances reliability and computational cost
+												reasonably well</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											K-fold reduces dependence on a single split while
+											remaining practical enough for many problems.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q13" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Because it removes all variance from evaluation</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											K-fold reduces variance relative to one split, but it does
+											not eliminate it entirely.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q13" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Because it makes hyperparameter tuning
+												unnecessary</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Tuning is still needed; K-fold just gives a more reliable
+											evaluation setup.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q13" data-correct="B">
-              <div class="card-title">13. Why is K-fold cross-validation often preferred when in doubt?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q13" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Because it is always faster than a static split</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">K-fold is usually slower because the model is trained multiple times.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q13" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Because it balances reliability and computational cost reasonably well</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">K-fold reduces dependence on a single split while remaining practical enough for many problems.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q13" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Because it removes all variance from evaluation</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">K-fold reduces variance relative to one split, but it does not eliminate it entirely.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q13" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Because it makes hyperparameter tuning unnecessary</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Tuning is still needed; K-fold just gives a more reliable evaluation setup.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q14"
+								data-correct="D"
+							>
+								<div class="card-title">
+									14. What is the main risk of comparing algorithms under
+									different train/test conditions?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q14" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>They become mathematically undefined</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											The models remain defined, but the comparison becomes
+											unreliable.
+										</div>
+									</label>
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q14" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>The algorithms stop learning automatically</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Different conditions do not stop training; they just
+											weaken the fairness of the comparison.
+										</div>
+									</label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q14" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>The test set becomes part of the model
+												architecture</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											That wording is incorrect. The issue is methodological
+											unfairness, not architecture.
+										</div>
+									</label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q14" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>The results may reflect the setup rather than the real
+												model differences</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											If evaluation conditions differ, performance gaps may come
+											from the setup rather than from the algorithms themselves.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
 
-            <div class="card question-card" data-question="q14" data-correct="D">
-              <div class="card-title">14. What is the main risk of comparing algorithms under different train/test conditions?</div>
-              <div class="options-list">
-                <label class="option-card" data-option="A">
-                  <input type="radio" name="q14" value="A">
-                  <div class="option-head"><span class="option-letter">A.</span><span class="option-text">They become mathematically undefined</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">The models remain defined, but the comparison becomes unreliable.</div>
-                </label>
-                <label class="option-card" data-option="B">
-                  <input type="radio" name="q14" value="B">
-                  <div class="option-head"><span class="option-letter">B.</span><span class="option-text">The algorithms stop learning automatically</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">Different conditions do not stop training; they just weaken the fairness of the comparison.</div>
-                </label>
-                <label class="option-card" data-option="C">
-                  <input type="radio" name="q14" value="C">
-                  <div class="option-head"><span class="option-letter">C.</span><span class="option-text">The test set becomes part of the model architecture</span><span class="option-state">✕</span></div>
-                  <div class="option-explanation">That wording is incorrect. The issue is methodological unfairness, not architecture.</div>
-                </label>
-                <label class="option-card" data-option="D">
-                  <input type="radio" name="q14" value="D">
-                  <div class="option-head"><span class="option-letter">D.</span><span class="option-text">The results may reflect the setup rather than the real model differences</span><span class="option-state">✓</span></div>
-                  <div class="option-explanation">If evaluation conditions differ, performance gaps may come from the setup rather than from the algorithms themselves.</div>
-                </label>
-              </div>
-              <div class="question-result"></div>
-            </div>
+							<div
+								class="card question-card"
+								data-question="q15"
+								data-correct="C"
+							>
+								<div class="card-title">
+									15. Why is it important to keep preprocessing consistent
+									between training and test data?
+								</div>
+								<div class="options-list">
+									<label class="option-card" data-option="A">
+										<input type="radio" name="q15" value="A" />
+										<div class="option-head">
+											<span class="option-letter">A.</span
+											><span class="option-text"
+												>Because it makes the dataset larger</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Preprocessing does not increase the amount of data. It
+											changes how existing features are represented.
+										</div>
+									</label>
 
-<div class="card question-card" data-question="q15" data-correct="C">
-  <div class="card-title">15. Why is it important to keep preprocessing consistent between training and test data?</div>
-  <div class="options-list">
+									<label class="option-card" data-option="B">
+										<input type="radio" name="q15" value="B" />
+										<div class="option-head">
+											<span class="option-letter">B.</span
+											><span class="option-text"
+												>Because it guarantees perfect accuracy</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Consistent preprocessing is important for correctness, but
+											it does not guarantee perfect predictive performance.
+										</div>
+									</label>
 
-    <label class="option-card" data-option="A">
-      <input type="radio" name="q15" value="A">
-      <div class="option-head"><span class="option-letter">A.</span><span class="option-text">Because it makes the dataset larger</span><span class="option-state">✕</span></div>
-      <div class="option-explanation">
-        Preprocessing does not increase the amount of data. It changes how existing features are represented.
-      </div>
-    </label>
+									<label class="option-card" data-option="C">
+										<input type="radio" name="q15" value="C" />
+										<div class="option-head">
+											<span class="option-letter">C.</span
+											><span class="option-text"
+												>Because the model expects features transformed in the
+												same way at training and inference time</span
+											><span class="option-state">✓</span>
+										</div>
+										<div class="option-explanation">
+											A model learns from features in a specific representation.
+											If the test data are scaled, cleaned, or encoded
+											differently, the inputs no longer match what the model was
+											trained on.
+										</div>
+									</label>
 
-    <label class="option-card" data-option="B">
-      <input type="radio" name="q15" value="B">
-      <div class="option-head"><span class="option-letter">B.</span><span class="option-text">Because it guarantees perfect accuracy</span><span class="option-state">✕</span></div>
-      <div class="option-explanation">
-        Consistent preprocessing is important for correctness, but it does not guarantee perfect predictive performance.
-      </div>
-    </label>
+									<label class="option-card" data-option="D">
+										<input type="radio" name="q15" value="D" />
+										<div class="option-head">
+											<span class="option-letter">D.</span
+											><span class="option-text"
+												>Because preprocessing is only needed for the test
+												set</span
+											><span class="option-state">✕</span>
+										</div>
+										<div class="option-explanation">
+											Preprocessing is defined from the training pipeline and
+											then applied consistently to validation and test data. It
+											is not a test-only step.
+										</div>
+									</label>
+								</div>
+								<div class="question-result"></div>
+							</div>
+						</form>
+					</section>
+					<section class="section" id="actions">
+						<h2 class="section-title">Show Results</h2>
+						<div class="exam-actions">
+							<button class="btn" type="button" id="finishExamBtn">
+								Show Final Results
+							</button>
+							<button class="btn" type="button" id="resetExamBtn">
+								Reset Attempt
+							</button>
+						</div>
 
-    <label class="option-card" data-option="C">
-      <input type="radio" name="q15" value="C">
-      <div class="option-head"><span class="option-letter">C.</span><span class="option-text">Because the model expects features transformed in the same way at training and inference time</span><span class="option-state">✓</span></div>
-      <div class="option-explanation">
-        A model learns from features in a specific representation. If the test data are scaled, cleaned, or encoded differently, the inputs no longer match what the model was trained on.
-      </div>
-    </label>
+						<div class="score-summary" id="scoreSummary">
+							Answer all the questions, then click “Show Final Results”.
+						</div>
+					</section>
 
-    <label class="option-card" data-option="D">
-      <input type="radio" name="q15" value="D">
-      <div class="option-head"><span class="option-letter">D.</span><span class="option-text">Because preprocessing is only needed for the test set</span><span class="option-state">✕</span></div>
-      <div class="option-explanation">
-        Preprocessing is defined from the training pipeline and then applied consistently to validation and test data. It is not a test-only step.
-      </div>
-    </label>
+					<section class="section" id="results">
+						<h2 class="section-title">Final Results</h2>
 
-  </div>
-  <div class="question-result"></div>
-</div>
+						<div class="final-results" id="finalResultsBox">
+							<div class="callout"><strong>Final Results</strong></div>
 
-          </form>
- 
-        </section>
-        <section class="section" id="actions">
-          <h2 class="section-title">Show Results</h2>
-          <div class="exam-actions">
-            <button class="btn" type="button" id="finishExamBtn">Show Final Results</button>
-            <button class="btn" type="button" id="resetExamBtn">Reset Attempt</button>
-          </div>
+							<div class="final-results-grid">
+								<div class="card">
+									<div class="card-title">Final Score</div>
+									<p id="finalScoreText">0 / 15</p>
+								</div>
 
-          <div class="score-summary" id="scoreSummary">
-            Answer all the questions, then click “Show Final Results”.
-          </div>
-        </section>
+								<div class="card">
+									<div class="card-title">Answered</div>
+									<p id="finalAnsweredText">0 / 15</p>
+								</div>
 
-        <section class="section" id="results">
-          <h2 class="section-title">Final Results</h2>
+								<div class="card">
+									<div class="card-title">Accuracy</div>
+									<p id="finalPercentText">0%</p>
+								</div>
+							</div>
+						</div>
 
-          <div class="final-results" id="finalResultsBox">
-            <div class="callout"><strong>Final Results</strong></div>
+						<div class="callout">
+							This mock is especially useful for checking whether you can
+							distinguish similar concepts, not only recognize definitions.
+						</div>
+					</section>
 
-            <div class="final-results-grid">
-              <div class="card">
-                <div class="card-title">Final Score</div>
-                <p id="finalScoreText">0 / 15</p>
-              </div>
+					<div class="bottom-nav">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<div class="nav-group">
+							<a class="btn-link" href="PracticeExam2.html">← Previous</a>
+							<a class="btn-link" href="index.html">Finish →</a>
+							<button class="btn btn-primary" data-complete-lecture>
+								Mark as Completed
+							</button>
+						</div>
+					</div>
 
-              <div class="card">
-                <div class="card-title">Answered</div>
-                <p id="finalAnsweredText">0 / 15</p>
-              </div>
+					<div class="footer-note">
+						Practice exam 3 page
 
-              <div class="card">
-                <div class="card-title">Accuracy</div>
-                <p id="finalPercentText">0%</p>
-              </div>
-            </div>
-          </div>
+						<span class="persian-note" dir="rtl">
+							که داری قدم‌به‌قدم به چیزی که می‌خوای نزدیک‌تر می‌شی ❤️
+						</span>
+					</div>
+				</div>
+			</div>
+		</main>
 
-          <div class="callout">
-            This mock is especially useful for checking whether you can distinguish similar concepts, not only recognize definitions.
-          </div>
-        </section>
+		<div id="completionToast" class="completion-toast">
+			Page marked as completed.
+		</div>
+		<div class="toc-backdrop"></div>
 
-        <div class="bottom-nav">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <div class="nav-group">
-            <a class="btn-link" href="PracticeExam2.html">← Previous</a>
-            <a class="btn-link" href="index.html">Finish →</a>
-            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-          </div>
-        </div>
-
-        <div class="footer-note">
-          Practice exam 3 page
-
-          <span class="persian-note" dir="rtl">
-           که داری قدم‌به‌قدم به چیزی که می‌خوای نزدیک‌تر می‌شی ❤️
-          </span>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <div id="completionToast" class="completion-toast">Page marked as completed.</div>
-  <div class="toc-backdrop"></div>
-
-  <script src="script.js"></script>
-  <script src="exam.js"></script>
-  <script>
-    initLecturePage("practiceexam3");
-    initPracticeExam();
-  </script>
-</body>
+		<script src="script.js"></script>
+		<script src="exam.js"></script>
+		<script>
+			initLecturePage("practiceexam3");
+			initPracticeExam();
+		</script>
+	</body>
 </html>

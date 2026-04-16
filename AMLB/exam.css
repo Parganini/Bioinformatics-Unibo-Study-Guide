@@ -1,197 +1,200 @@
 .exam-toolbar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
 }
 
 .score-box {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.75rem 1rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	padding: 0.75rem 1rem;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	font-weight: 600;
 }
 
 .score-label {
-    opacity: 0.8;
-    font-weight: 500;
+	opacity: 0.8;
+	font-weight: 500;
 }
 
 .question-card {
-    margin-bottom: 1.25rem;
+	margin-bottom: 1.25rem;
 }
 
 .question-card.is-answered {
-    border-color: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.12);
 }
 
 .question-card .card-title {
-    line-height: 1.5;
+	line-height: 1.5;
 }
 
 .options-list {
-    display: grid;
-    gap: 0.85rem;
-    margin-top: 1rem;
+	display: grid;
+	gap: 0.85rem;
+	margin-top: 1rem;
 }
 
 .option-card {
-    display: block;
-    padding: 1rem 1rem 0.9rem;
-    border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(255, 255, 255, 0.03);
-    cursor: pointer;
-    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+	display: block;
+	padding: 1rem 1rem 0.9rem;
+	border-radius: 14px;
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.03);
+	cursor: pointer;
+	transition:
+		border-color 0.2s ease,
+		transform 0.2s ease,
+		background 0.2s ease;
 }
 
 .option-card:hover {
-    transform: translateY(-1px);
-    border-color: rgba(255, 255, 255, 0.18);
+	transform: translateY(-1px);
+	border-color: rgba(255, 255, 255, 0.18);
 }
 
 .option-card input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
 }
 
 .option-head {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    font-weight: 600;
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	font-weight: 600;
 }
 
 .option-letter {
-    opacity: 0.8;
-    min-width: 1.25rem;
+	opacity: 0.8;
+	min-width: 1.25rem;
 }
 
 .option-text {
-    flex: 1;
+	flex: 1;
 }
 
 .option-state {
-    font-size: 0.95rem;
-    font-weight: 700;
-    display: none;
+	font-size: 0.95rem;
+	font-weight: 700;
+	display: none;
 }
 
 .option-explanation {
-    margin: 0.75rem 0 0 1.95rem;
-    opacity: 0.86;
-    line-height: 1.6;
-    display: none;
+	margin: 0.75rem 0 0 1.95rem;
+	opacity: 0.86;
+	line-height: 1.6;
+	display: none;
 }
 
 .question-card.is-answered .option-card {
-    cursor: default;
+	cursor: default;
 }
 
 .question-card.is-answered .option-card:hover {
-    transform: none;
+	transform: none;
 }
 
 /* Show all explanations after one answer is selected */
 .question-card.is-answered .option-card .option-explanation {
-    display: block;
+	display: block;
 }
 
 .question-card.is-answered .option-card .option-state {
-    display: inline;
+	display: inline;
 }
 
 /* Selected wrong option */
 .question-card.is-answered .option-card.is-selected {
-    border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.08);
+	border-color: #ef4444;
+	background: rgba(239, 68, 68, 0.08);
 }
 
 .question-card.is-answered .option-card.is-selected .option-state {
-    color: #fca5a5;
+	color: #fca5a5;
 }
 
 /* Correct option */
 .question-card.is-answered .option-card.is-correct {
-    border-color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
+	border-color: #22c55e;
+	background: rgba(34, 197, 94, 0.1);
 }
 
 .question-card.is-answered .option-card.is-correct .option-state {
-    color: #86efac;
+	color: #86efac;
 }
 
 /* If selected option is also correct */
 .question-card.is-answered .option-card.is-selected.is-correct {
-    border-color: #22c55e;
-    background: rgba(34, 197, 94, 0.1);
+	border-color: #22c55e;
+	background: rgba(34, 197, 94, 0.1);
 }
 
 .question-result {
-    margin-top: 1rem;
-    font-weight: 600;
-    display: none;
+	margin-top: 1rem;
+	font-weight: 600;
+	display: none;
 }
 
 .question-result.correct {
-    color: #86efac;
+	color: #86efac;
 }
 
 .question-result.incorrect {
-    color: #fca5a5;
+	color: #fca5a5;
 }
 
 .question-card.is-answered .question-result {
-    display: block;
+	display: block;
 }
 
 .exam-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    margin-top: 1.25rem;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+	margin-top: 1.25rem;
 }
 
 .score-summary {
-    margin-top: 1rem;
-    opacity: 0.85;
+	margin-top: 1rem;
+	opacity: 0.85;
 }
 
 .final-results {
-    display: none;
-    margin-top: 1.5rem;
+	display: none;
+	margin-top: 1.5rem;
 }
 
 .final-results.is-visible {
-    display: block;
+	display: block;
 }
 
 .final-results-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem;
-    margin-top: 1rem;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	margin-top: 1rem;
 }
 
 /* Optional: nicer spacing on smaller screens */
 @media (max-width: 640px) {
-    .option-head {
-        align-items: flex-start;
-    }
+	.option-head {
+		align-items: flex-start;
+	}
 
-    .option-explanation {
-        margin-left: 0;
-    }
+	.option-explanation {
+		margin-left: 0;
+	}
 
-    .score-box {
-        width: 100%;
-        justify-content: space-between;
-    }
+	.score-box {
+		width: 100%;
+		justify-content: space-between;
+	}
 }

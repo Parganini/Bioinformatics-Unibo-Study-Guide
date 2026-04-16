@@ -1,217 +1,282 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture 03 - Applied Machine Learning</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lecture 03 - Applied Machine Learning</title>
 
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner hybrid-topbar">
-      <div class="topbar-desktop">
-        <div class="nav-group">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="Lecture03.html">Lecture 03</a>
-        </div>
+		<link rel="icon" href="images/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="images/favicon-32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="images/favicon-16.png"
+		/>
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="topbar-inner hybrid-topbar">
+				<div class="topbar-desktop">
+					<div class="nav-group">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<a class="btn-link" href="Lecture03.html">Lecture 03</a>
+					</div>
 
-        <div class="nav-group">
-          <a class="btn-link" href="Lecture02B.html">← Previous</a>
-          <a class="btn-link" href="Lecture04A.html">Next →</a>
-          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-        </div>
-      </div>
+					<div class="nav-group">
+						<a class="btn-link" href="Lecture02B.html">← Previous</a>
+						<a class="btn-link" href="Lecture04A.html">Next →</a>
+						<button class="btn btn-primary" data-complete-lecture>
+							Mark as Completed
+						</button>
+					</div>
+				</div>
 
-      <div class="topbar-mobile">
-        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
-        <a class="icon-btn" href="Lecture02B.html" aria-label="Previous lecture" title="Previous">←</a>
-        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
-        <span class="topbar-title">L03</span>
-        <a class="icon-btn" href="Lecture04A.html" aria-label="Next lecture" title="Next">→</a>
-        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
-        
-      </div>
-    </div>
-  </header>
+				<div class="topbar-mobile">
+					<a
+						class="icon-btn"
+						href="index.html"
+						aria-label="Back to index"
+						title="Index"
+						>⌂</a
+					>
+					<a
+						class="icon-btn"
+						href="Lecture02B.html"
+						aria-label="Previous lecture"
+						title="Previous"
+						>←</a
+					>
+					<button
+						class="icon-btn toc-toggle"
+						type="button"
+						aria-label="Open table of contents"
+						title="Contents"
+					>
+						≡
+					</button>
+					<span class="topbar-title">L03</span>
+					<a
+						class="icon-btn"
+						href="Lecture04A.html"
+						aria-label="Next lecture"
+						title="Next"
+						>→</a
+					>
+					<button
+						class="icon-btn icon-btn-primary"
+						data-complete-lecture
+						aria-label="Mark as completed"
+						title="Completed"
+					>
+						✓
+					</button>
+				</div>
+			</div>
+		</header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-split">
-        <div>
-          <div class="eyebrow">Applied Machine Learning · Hands-on</div>
-          <h1>Lecture 03 — Python Basics, Data Structures, and Pandas</h1>
-          <p class="subtitle">
-            A practical companion to the hands-on lecture: Python syntax, functions, data structures,
-            Jupyter/Colab workflow, and the first essential Pandas tools for data analysis.
-          </p>
+		<main class="container">
+			<section class="hero">
+				<div class="hero-split">
+					<div>
+						<div class="eyebrow">Applied Machine Learning · Hands-on</div>
+						<h1>Lecture 03 — Python Basics, Data Structures, and Pandas</h1>
+						<p class="subtitle">
+							A practical companion to the hands-on lecture: Python syntax,
+							functions, data structures, Jupyter/Colab workflow, and the first
+							essential Pandas tools for data analysis.
+						</p>
 
-          <div class="hero-meta">
-            <div class="pill">Hands-on</div>
-            <div class="pill">Python Basics</div>
-            <div class="pill">Data Structures</div>
-            <div class="pill">Jupyter / Colab</div>
-            <div class="pill">Pandas</div>
-          </div>
+						<div class="hero-meta">
+							<div class="pill">Hands-on</div>
+							<div class="pill">Python Basics</div>
+							<div class="pill">Data Structures</div>
+							<div class="pill">Jupyter / Colab</div>
+							<div class="pill">Pandas</div>
+						</div>
 
-          <div class="status" id="completionStatus">Not completed yet</div>
-        </div>
+						<div class="status" id="completionStatus">Not completed yet</div>
+					</div>
 
-        <div class="hero-visual">
-          <div class="hero-image-card">
-            <img src="images/lecture03/hero-cover.jpg" alt="Python hands-on lecture cover">
-          </div>
-          <div class="hero-badge">Hands-on lecture</div>
-        </div>
-      </div>
-    </section>
+					<div class="hero-visual">
+						<div class="hero-image-card">
+							<img
+								src="images/lecture03/hero-cover.jpg"
+								alt="Python hands-on lecture cover"
+							/>
+						</div>
+						<div class="hero-badge">Hands-on lecture</div>
+					</div>
+				</div>
+			</section>
 
-    <div class="layout">
-      <aside class="toc">
-        <h2>On this page</h2>
-        <a href="#big-picture">Big Picture</a>
-        <a href="#python-environments">How to Use Python</a>
-        <a href="#jupyter-colab">Jupyter and Colab</a>
-        <a href="#python-basics">Python Basics</a>
-        <a href="#functions-modules">Functions and Modules</a>
-        <a href="#data-structures">Data Structures</a>
-        <a href="#pandas">Pandas Essentials</a>
-        <a href="#matplotlib">Matplotlib Essentials</a>
-        <a href="#try-it-yourself">Try It Yourself</a>
-        <a href="#study-material">Study Material</a>
-        <a href="#quiz">Review Quiz</a>
-      </aside>
+			<div class="layout">
+				<aside class="toc">
+					<h2>On this page</h2>
+					<a href="#big-picture">Big Picture</a>
+					<a href="#python-environments">How to Use Python</a>
+					<a href="#jupyter-colab">Jupyter and Colab</a>
+					<a href="#python-basics">Python Basics</a>
+					<a href="#functions-modules">Functions and Modules</a>
+					<a href="#data-structures">Data Structures</a>
+					<a href="#pandas">Pandas Essentials</a>
+					<a href="#matplotlib">Matplotlib Essentials</a>
+					<a href="#try-it-yourself">Try It Yourself</a>
+					<a href="#study-material">Study Material</a>
+					<a href="#quiz">Review Quiz</a>
+				</aside>
 
-      <div class="content">
-        <section class="section" id="big-picture">
-          <h2 class="section-title">Big Picture</h2>
+				<div class="content">
+					<section class="section" id="big-picture">
+						<h2 class="section-title">Big Picture</h2>
 
-          <p class="lead">
-            This lecture is different from the previous ones: it is a hands-on session, so the goal is not just to read concepts,
-            but to actively try code and build familiarity with the tools.
-          </p>
+						<p class="lead">
+							This lecture is different from the previous ones: it is a hands-on
+							session, so the goal is not just to read concepts, but to actively
+							try code and build familiarity with the tools.
+						</p>
 
-          <div class="callout">
-            This page should be used side by side with the notebook material. Read a little, run a little, test a little.
-          </div>
+						<div class="callout">
+							This page should be used side by side with the notebook material.
+							Read a little, run a little, test a little.
+						</div>
 
-          <p>
-            The lecture covers a practical introduction to Python, the main built-in data structures, the basic workflow of Jupyter/Colab,
-            and the first Pandas tools used in data science. 
-          </p>
-        </section>
+						<p>
+							The lecture covers a practical introduction to Python, the main
+							built-in data structures, the basic workflow of Jupyter/Colab, and
+							the first Pandas tools used in data science.
+						</p>
+					</section>
 
-        <section class="section" id="python-environments">
-          <h2 class="section-title">How to Use Python</h2>
+					<section class="section" id="python-environments">
+						<h2 class="section-title">How to Use Python</h2>
 
-          <p class="lead">
-            The slides present three main ways to work with Python: the shell, an IDE, and Jupyter notebooks.
-          </p>
+						<p class="lead">
+							The slides present three main ways to work with Python: the shell,
+							an IDE, and Jupyter notebooks.
+						</p>
 
-          <div class="comparison">
-            <div class="column">
-              <h3>Python Shell</h3>
-              <p>Useful for quick testing of small snippets.</p>
-            </div>
+						<div class="comparison">
+							<div class="column">
+								<h3>Python Shell</h3>
+								<p>Useful for quick testing of small snippets.</p>
+							</div>
 
-            <div class="column">
-              <h3>IDE</h3>
-              <p>Better for larger projects, debugging, and package management.</p>
-            </div>
-          </div>
+							<div class="column">
+								<h3>IDE</h3>
+								<p>
+									Better for larger projects, debugging, and package management.
+								</p>
+							</div>
+						</div>
 
-          <div class="card">
-            <div class="card-title">Jupyter / Colab</div>
-            <p>
-              Best for interactive coding, quick prototyping, explanations, and sharing. This is the environment most aligned with the lecture workflow.
-            </p>
-          </div>
+						<div class="card">
+							<div class="card-title">Jupyter / Colab</div>
+							<p>
+								Best for interactive coding, quick prototyping, explanations,
+								and sharing. This is the environment most aligned with the
+								lecture workflow.
+							</p>
+						</div>
 
-          <div class="figure">
-            <img src="images/lecture03/how-to-use-python.png" alt="Python shell, IDE, and Jupyter notebook comparison">
-            <div class="figure-body">
-              <div class="figure-kicker">Workflow options</div>
-              <div class="figure-caption">
-                The lecture contrasts shell, IDE, and notebook-based workflows, with a strong emphasis on notebooks and Google Colab.
-              </div>
-            </div>
-          </div>
-        </section>
+						<div class="figure">
+							<img
+								src="images/lecture03/how-to-use-python.png"
+								alt="Python shell, IDE, and Jupyter notebook comparison"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">Workflow options</div>
+								<div class="figure-caption">
+									The lecture contrasts shell, IDE, and notebook-based
+									workflows, with a strong emphasis on notebooks and Google
+									Colab.
+								</div>
+							</div>
+						</div>
+					</section>
 
-        <section class="section" id="jupyter-colab">
-          <h2 class="section-title">Jupyter and Google Colab</h2>
+					<section class="section" id="jupyter-colab">
+						<h2 class="section-title">Jupyter and Google Colab</h2>
 
-          <p class="lead">
-            Jupyter notebooks combine code, text, equations, and outputs in one place, which makes them especially useful for data science and machine learning.
-          </p>
+						<p class="lead">
+							Jupyter notebooks combine code, text, equations, and outputs in
+							one place, which makes them especially useful for data science and
+							machine learning.
+						</p>
 
-          <div class="comparison">
-            <div class="column">
-              <h3>Why Jupyter is useful</h3>
-              <ul>
-                <li>interactive code cells</li>
-                <li>markdown explanations</li>
-                <li>good for prototyping and sharing</li>
-              </ul>
-            </div>
+						<div class="comparison">
+							<div class="column">
+								<h3>Why Jupyter is useful</h3>
+								<ul>
+									<li>interactive code cells</li>
+									<li>markdown explanations</li>
+									<li>good for prototyping and sharing</li>
+								</ul>
+							</div>
 
-            <div class="column">
-              <h3>Why Colab is useful</h3>
-              <ul>
-                <li>browser-based</li>
-                <li>no setup required</li>
-                <li>easy collaboration</li>
-              </ul>
-            </div>
-          </div>
+							<div class="column">
+								<h3>Why Colab is useful</h3>
+								<ul>
+									<li>browser-based</li>
+									<li>no setup required</li>
+									<li>easy collaboration</li>
+								</ul>
+							</div>
+						</div>
 
-          <div class="callout">
-            For this course, Colab is especially practical because it reduces setup friction and keeps the focus on understanding the syntax and workflow. 
-          </div>
-        </section>
+						<div class="callout">
+							For this course, Colab is especially practical because it reduces
+							setup friction and keeps the focus on understanding the syntax and
+							workflow.
+						</div>
+					</section>
 
-        <section class="section" id="python-basics">
-          <h2 class="section-title">Python Basics</h2>
+					<section class="section" id="python-basics">
+						<h2 class="section-title">Python Basics</h2>
 
-          <p class="lead">
-            Python is interpreted, dynamically typed, and strongly shaped by indentation-based syntax.
-          </p>
+						<p class="lead">
+							Python is interpreted, dynamically typed, and strongly shaped by
+							indentation-based syntax.
+						</p>
 
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Feature</th>
-                  <th>Main Idea</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Indentation</td>
-                  <td>Defines code blocks and control flow</td>
-                </tr>
-                <tr>
-                  <td>Dynamic typing</td>
-                  <td>Variables do not need explicit type declarations</td>
-                </tr>
-                <tr>
-                  <td>Interpreted execution</td>
-                  <td>Useful for interactive testing and notebooks</td>
-                </tr>
-                <tr>
-                  <td>Readable syntax</td>
-                  <td>Designed to be compact and close to pseudo-code</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Feature</th>
+										<th>Main Idea</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Indentation</td>
+										<td>Defines code blocks and control flow</td>
+									</tr>
+									<tr>
+										<td>Dynamic typing</td>
+										<td>Variables do not need explicit type declarations</td>
+									</tr>
+									<tr>
+										<td>Interpreted execution</td>
+										<td>Useful for interactive testing and notebooks</td>
+									</tr>
+									<tr>
+										<td>Readable syntax</td>
+										<td>Designed to be compact and close to pseudo-code</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-          <h3>Example</h3>
-          <pre><code>x = 10
+						<h3>Example</h3>
+						<pre><code>x = 10
 name = "Alice"
 is_student = True
 
@@ -219,139 +284,154 @@ print(type(x))
 print(type(name))
 print(type(is_student))</code></pre>
 
-          <details>
-            <summary>What should this print?</summary>
-            <div class="details-body">
-              <p>It prints the types <code>int</code>, <code>str</code>, and <code>bool</code>.</p>
-            </div>
-          </details>
+						<details>
+							<summary>What should this print?</summary>
+							<div class="details-body">
+								<p>
+									It prints the types <code>int</code>, <code>str</code>, and
+									<code>bool</code>.
+								</p>
+							</div>
+						</details>
 
-          <div class="callout">
-            Type annotations can improve readability, but they do not force Python to enforce types by themselves. 
-          </div>
+						<div class="callout">
+							Type annotations can improve readability, but they do not force
+							Python to enforce types by themselves.
+						</div>
 
-          <div class="callout">
-            Want to practice this part directly?
-            <a class="btn btn-colab" href="https://colab.research.google.com/drive/1FFAY6xkTOLI5U-yrxJjiOcXRDdUmJc0Z" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Python 101 in Colab →
-            </a>
-        </div>
+						<div class="callout">
+							Want to practice this part directly?
+							<a
+								class="btn btn-colab"
+								href="https://colab.research.google.com/drive/1FFAY6xkTOLI5U-yrxJjiOcXRDdUmJc0Z"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src="images/icons/colab.svg"
+									alt="Colab"
+									class="colab-icon"
+								/>
+								Open Python 101 in Colab →
+							</a>
+						</div>
+					</section>
 
+					<section class="section" id="functions-modules">
+						<h2 class="section-title">Functions and Modules</h2>
 
-        </section>
+						<p class="lead">
+							Functions make code reusable, cleaner, and easier to debug.
+						</p>
 
-        <section class="section" id="functions-modules">
-          <h2 class="section-title">Functions and Modules</h2>
-
-          <p class="lead">
-            Functions make code reusable, cleaner, and easier to debug.
-          </p>
-
-          <pre><code>def add(p, q, r):
+						<pre><code>def add(p, q, r):
     temp = p + q + r
     return temp
 
 result = add(1, 10, 100)
 print(result)</code></pre>
 
-          <p>
-            The lecture also emphasizes that modules and packages help organize code into reusable components,
-            and that third-party packages extend Python’s functionality substantially. 
-          </p>
+						<p>
+							The lecture also emphasizes that modules and packages help
+							organize code into reusable components, and that third-party
+							packages extend Python’s functionality substantially.
+						</p>
 
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Functions</div>
-              <ul>
-                <li>avoid repetition</li>
-                <li>improve readability</li>
-                <li>make logic reusable</li>
-              </ul>
-            </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Functions</div>
+								<ul>
+									<li>avoid repetition</li>
+									<li>improve readability</li>
+									<li>make logic reusable</li>
+								</ul>
+							</div>
 
-            <div class="card">
-              <div class="card-title">Packages</div>
-              <ul>
-                <li>extend functionality</li>
-                <li>save implementation time</li>
-                <li>support data and ML workflows</li>
-              </ul>
-            </div>
-          </div>
-        </section>
+							<div class="card">
+								<div class="card-title">Packages</div>
+								<ul>
+									<li>extend functionality</li>
+									<li>save implementation time</li>
+									<li>support data and ML workflows</li>
+								</ul>
+							</div>
+						</div>
+					</section>
 
-        <section class="section" id="data-structures">
-          <h2 class="section-title">Data Structures</h2>
+					<section class="section" id="data-structures">
+						<h2 class="section-title">Data Structures</h2>
 
-          <p class="lead">
-            Choosing the right data structure matters for readability, performance, and the way data is manipulated in machine learning workflows.
-          </p>
+						<p class="lead">
+							Choosing the right data structure matters for readability,
+							performance, and the way data is manipulated in machine learning
+							workflows.
+						</p>
 
-            <div class="table-wrapper">
-            <table class="custom-table">
-                <thead>
-                <tr>
-                    <th>Structure</th>
-                    <th>Ordered?</th>
-                    <th>Mutable?</th>
-                    <th>Duplicates?</th>
-                    <th>Typical Use</th>
-                    <th>Example</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>List</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>General-purpose ordered collection</td>
-                    <td><code>[1, 2, 3]</code></td>
-                </tr>
-                <tr>
-                    <td>Dictionary</td>
-                    <td>Yes*</td>
-                    <td>Yes</td>
-                    <td>Keys: No<br>Values: Yes</td>
-                    <td>Key-value data (structured records)</td>
-                    <td><code>{"a": 1, "b": 2}</code></td>
-                </tr>
-                <tr>
-                    <td>Set</td>
-                    <td>No</td>
-                    <td>Yes</td>
-                    <td>No</td>
-                    <td>Unique elements, fast membership checks</td>
-                    <td><code>{1, 2, 3}</code></td>
-                </tr>
-                <tr>
-                    <td>Tuple</td>
-                    <td>Yes</td>
-                    <td>No</td>
-                    <td>Yes</td>
-                    <td>Fixed, immutable collections</td>
-                    <td><code>(1, 2, 3)</code></td>
-                </tr>
-                <tr>
-                    <td>NumPy Array</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>Yes</td>
-                    <td>Efficient numerical computation</td>
-                    <td><code>np.array([1, 2, 3])</code></td>
-                </tr>
-                </tbody>
-            </table>
-            </div>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Structure</th>
+										<th>Ordered?</th>
+										<th>Mutable?</th>
+										<th>Duplicates?</th>
+										<th>Typical Use</th>
+										<th>Example</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>List</td>
+										<td>Yes</td>
+										<td>Yes</td>
+										<td>Yes</td>
+										<td>General-purpose ordered collection</td>
+										<td><code>[1, 2, 3]</code></td>
+									</tr>
+									<tr>
+										<td>Dictionary</td>
+										<td>Yes*</td>
+										<td>Yes</td>
+										<td>Keys: No<br />Values: Yes</td>
+										<td>Key-value data (structured records)</td>
+										<td><code>{"a": 1, "b": 2}</code></td>
+									</tr>
+									<tr>
+										<td>Set</td>
+										<td>No</td>
+										<td>Yes</td>
+										<td>No</td>
+										<td>Unique elements, fast membership checks</td>
+										<td><code>{1, 2, 3}</code></td>
+									</tr>
+									<tr>
+										<td>Tuple</td>
+										<td>Yes</td>
+										<td>No</td>
+										<td>Yes</td>
+										<td>Fixed, immutable collections</td>
+										<td><code>(1, 2, 3)</code></td>
+									</tr>
+									<tr>
+										<td>NumPy Array</td>
+										<td>Yes</td>
+										<td>Yes</td>
+										<td>Yes</td>
+										<td>Efficient numerical computation</td>
+										<td><code>np.array([1, 2, 3])</code></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-            <div class="callout">
-            Choosing the right data structure can make your code simpler, faster, and easier to understand.
-            </div>
+						<div class="callout">
+							Choosing the right data structure can make your code simpler,
+							faster, and easier to understand.
+						</div>
 
-          <h3>Mini examples</h3>
+						<h3>Mini examples</h3>
 
-          <pre><code># list
+						<pre><code># list
 my_list = [10, 20, 30]
 print(my_list[1])
 
@@ -367,46 +447,51 @@ print(unique_words)
 import numpy as np
 arr = np.array([1, 2, 3, 4, 5])
 print(arr * 2)</code></pre>
-        </section>
-        
-        <section class="section" id="pandas">
-        <h2 class="section-title">Pandas Essentials</h2>
+					</section>
 
-        <p class="lead">
-            Pandas is one of the most important tools in applied machine learning because it turns raw tabular data
-            into something easier to inspect, clean, transform, and analyze.
-        </p>
+					<section class="section" id="pandas">
+						<h2 class="section-title">Pandas Essentials</h2>
 
-        <div class="callout">
-            In practice, Pandas often acts as the bridge between raw data files and machine learning-ready datasets.
-        </div>
+						<p class="lead">
+							Pandas is one of the most important tools in applied machine
+							learning because it turns raw tabular data into something easier
+							to inspect, clean, transform, and analyze.
+						</p>
 
-        <h3>What Pandas gives you</h3>
+						<div class="callout">
+							In practice, Pandas often acts as the bridge between raw data
+							files and machine learning-ready datasets.
+						</div>
 
-        <div class="grid-2">
-            <div class="card">
-            <div class="card-title">Series</div>
-            <p>
-                A 1D labeled array. Useful for single columns, indexed values, and intermediate calculations.
-            </p>
-            </div>
+						<h3>What Pandas gives you</h3>
 
-            <div class="card">
-            <div class="card-title">DataFrame</div>
-            <p>
-                A 2D labeled table with rows and columns. This is the main structure used for tabular datasets.
-            </p>
-            </div>
-        </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Series</div>
+								<p>
+									A 1D labeled array. Useful for single columns, indexed values,
+									and intermediate calculations.
+								</p>
+							</div>
 
-        <p>
-            The slides explicitly frame Pandas around data wrangling, cleaning, transforming, indexing,
-            aggregation, and merging, which is exactly why it is so central in data science workflows. 
-        </p>
+							<div class="card">
+								<div class="card-title">DataFrame</div>
+								<p>
+									A 2D labeled table with rows and columns. This is the main
+									structure used for tabular datasets.
+								</p>
+							</div>
+						</div>
 
-        <h3>Creating data</h3>
+						<p>
+							The slides explicitly frame Pandas around data wrangling,
+							cleaning, transforming, indexing, aggregation, and merging, which
+							is exactly why it is so central in data science workflows.
+						</p>
 
-        <pre><code>import pandas as pd
+						<h3>Creating data</h3>
+
+						<pre><code>import pandas as pd
 
         series = pd.Series([10, 20, 30], index=["a", "b", "c"])
         print(series)
@@ -418,50 +503,51 @@ print(arr * 2)</code></pre>
 
         print(df)</code></pre>
 
-        <h3>Loading data from files</h3>
+						<h3>Loading data from files</h3>
 
-        <pre><code>import pandas as pd
+						<pre><code>import pandas as pd
 
         df = pd.read_csv("data.csv")
         print(df.head())</code></pre>
 
-        <div class="table-wrapper">
-            <table class="custom-table">
-            <thead>
-                <tr>
-                <th>Task</th>
-                <th>Pandas Tool</th>
-                <th>Why It Matters</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td>Load CSV data</td>
-                <td><code>pd.read_csv()</code></td>
-                <td>Fast entry point for tabular datasets</td>
-                </tr>
-                <tr>
-                <td>Load Excel data</td>
-                <td><code>pd.read_excel()</code></td>
-                <td>Useful for spreadsheets and lab/export files</td>
-                </tr>
-                <tr>
-                <td>Preview rows</td>
-                <td><code>.head()</code></td>
-                <td>Quick inspection of structure and values</td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Task</th>
+										<th>Pandas Tool</th>
+										<th>Why It Matters</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Load CSV data</td>
+										<td><code>pd.read_csv()</code></td>
+										<td>Fast entry point for tabular datasets</td>
+									</tr>
+									<tr>
+										<td>Load Excel data</td>
+										<td><code>pd.read_excel()</code></td>
+										<td>Useful for spreadsheets and lab/export files</td>
+									</tr>
+									<tr>
+										<td>Preview rows</td>
+										<td><code>.head()</code></td>
+										<td>Quick inspection of structure and values</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-        <h3>Selection and indexing</h3>
+						<h3>Selection and indexing</h3>
 
-        <p>
-            The lecture highlights two core access patterns:
-            <strong>.loc[]</strong> for label-based selection and <strong>.iloc[]</strong> for position-based selection. 
-        </p>
+						<p>
+							The lecture highlights two core access patterns:
+							<strong>.loc[]</strong> for label-based selection and
+							<strong>.iloc[]</strong> for position-based selection.
+						</p>
 
-        <pre><code># label-based
+						<pre><code># label-based
         print(df.loc[0, "name"])
 
         # position-based
@@ -470,14 +556,15 @@ print(arr * 2)</code></pre>
         # select a whole column
         print(df["score"])</code></pre>
 
-        <h3>Cleaning and preparation</h3>
+						<h3>Cleaning and preparation</h3>
 
-        <p>
-            Real-world data is messy: missing values, wrong types, duplicates, and inconsistent text are normal.
-            Pandas is useful because it gives you direct tools for cleaning before modeling. 
-        </p>
+						<p>
+							Real-world data is messy: missing values, wrong types, duplicates,
+							and inconsistent text are normal. Pandas is useful because it
+							gives you direct tools for cleaning before modeling.
+						</p>
 
-        <pre><code># drop missing rows
+						<pre><code># drop missing rows
         clean_df = df.dropna()
 
         # fill missing values
@@ -486,84 +573,105 @@ print(arr * 2)</code></pre>
         # remove duplicates
         dedup_df = df.drop_duplicates()</code></pre>
 
-        <div class="comparison">
-            <div class="column">
-            <h3>Before cleaning</h3>
-            <p>
-                Missing values, duplicate rows, and inconsistent formats can break analysis or distort model training.
-            </p>
-            </div>
+						<div class="comparison">
+							<div class="column">
+								<h3>Before cleaning</h3>
+								<p>
+									Missing values, duplicate rows, and inconsistent formats can
+									break analysis or distort model training.
+								</p>
+							</div>
 
-            <div class="column">
-            <h3>After cleaning</h3>
-            <p>
-                Data becomes more reliable, easier to summarize, and safer to pass into downstream ML code.
-            </p>
-            </div>
-        </div>
+							<div class="column">
+								<h3>After cleaning</h3>
+								<p>
+									Data becomes more reliable, easier to summarize, and safer to
+									pass into downstream ML code.
+								</p>
+							</div>
+						</div>
 
-        <h3>Aggregation and summary</h3>
+						<h3>Aggregation and summary</h3>
 
-        <p>
-            One of Pandas’ most powerful features is summarizing large tables through grouping and aggregation.
-        </p>
+						<p>
+							One of Pandas’ most powerful features is summarizing large tables
+							through grouping and aggregation.
+						</p>
 
-        <pre><code>grouped = df.groupby("name")["score"].mean()
+						<pre><code>grouped = df.groupby("name")["score"].mean()
         print(grouped)</code></pre>
 
-        <h3>Merging and joining</h3>
+						<h3>Merging and joining</h3>
 
-        <p>
-            The slides also emphasize relational-style operations: combining information from multiple tables.
-        </p>
+						<p>
+							The slides also emphasize relational-style operations: combining
+							information from multiple tables.
+						</p>
 
-        <pre><code>left = pd.DataFrame({"id": [1, 2], "name": ["Alice", "Bob"]})
+						<pre><code>left = pd.DataFrame({"id": [1, 2], "name": ["Alice", "Bob"]})
         right = pd.DataFrame({"id": [1, 2], "score": [91, 84]})
 
         merged = pd.merge(left, right, on="id")
         print(merged)</code></pre>
 
-        <div class="figure">
-            <img src="images/lecture03/pandas-workflow.png" alt="Pandas workflow from loading to cleaning and aggregation">
-            <div class="figure-body">
-            <div class="figure-kicker">Typical workflow</div>
-            <div class="figure-caption">
-                In practice, Pandas is often used in a sequence: load data, inspect it, clean it, select what matters,
-                summarize it, and only then move into modeling.
-            </div>
-            </div>
-        </div>
+						<div class="figure">
+							<img
+								src="images/lecture03/pandas-workflow.png"
+								alt="Pandas workflow from loading to cleaning and aggregation"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">Typical workflow</div>
+								<div class="figure-caption">
+									In practice, Pandas is often used in a sequence: load data,
+									inspect it, clean it, select what matters, summarize it, and
+									only then move into modeling.
+								</div>
+							</div>
+						</div>
 
-        <div class="callout">
-            Want to practice this part directly?
-            <a class="btn btn-colab" href="https://colab.research.google.com/drive/1Zo5kce7ZuUz06QR0fV3BKfj7ajbYIsry" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Pandas 101 in Colab →
-            </a>
-        </div>
-        </section>
+						<div class="callout">
+							Want to practice this part directly?
+							<a
+								class="btn btn-colab"
+								href="https://colab.research.google.com/drive/1Zo5kce7ZuUz06QR0fV3BKfj7ajbYIsry"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src="images/icons/colab.svg"
+									alt="Colab"
+									class="colab-icon"
+								/>
+								Open Pandas 101 in Colab →
+							</a>
+						</div>
+					</section>
 
-        <section class="section" id="matplotlib">
-            <h2 class="section-title">Matplotlib Essentials</h2>
+					<section class="section" id="matplotlib">
+						<h2 class="section-title">Matplotlib Essentials</h2>
 
-            <p class="lead">
-                Matplotlib is one of the foundational libraries for visualization in Python.
-                It is used to create plots that help inspect data, understand patterns, and communicate results.
-            </p>
+						<p class="lead">
+							Matplotlib is one of the foundational libraries for visualization
+							in Python. It is used to create plots that help inspect data,
+							understand patterns, and communicate results.
+						</p>
 
-            <div class="callout">
-                In machine learning, visualization is not decoration — it is part of understanding the data and checking what the model is doing.
-            </div>
+						<div class="callout">
+							In machine learning, visualization is not decoration — it is part
+							of understanding the data and checking what the model is doing.
+						</div>
 
-            <p>
-                The notes summarize Matplotlib as the core plotting library, with a quick interface through
-                <code>pyplot</code> and a more structured object-oriented view based on <strong>Figure</strong>,
-                <strong>Axes</strong>, and visible plot elements. 
-            </p>
+						<p>
+							The notes summarize Matplotlib as the core plotting library, with
+							a quick interface through
+							<code>pyplot</code> and a more structured object-oriented view
+							based on <strong>Figure</strong>, <strong>Axes</strong>, and
+							visible plot elements.
+						</p>
 
-            <h3>Basic plotting with pyplot</h3>
+						<h3>Basic plotting with pyplot</h3>
 
-            <pre><code>import matplotlib.pyplot as plt
+						<pre><code>import matplotlib.pyplot as plt
 
             x = [1, 2, 3, 4]
             y = [2, 4, 6, 8]
@@ -574,62 +682,62 @@ print(arr * 2)</code></pre>
             plt.title("Simple Line Plot")
             plt.show()</code></pre>
 
-            <h3>Why plotting matters</h3>
+						<h3>Why plotting matters</h3>
 
-            <div class="grid-2">
-                <div class="card">
-                <div class="card-title">Before modeling</div>
-                <ul>
-                    <li>inspect distributions</li>
-                    <li>spot outliers</li>
-                    <li>understand relationships</li>
-                </ul>
-                </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Before modeling</div>
+								<ul>
+									<li>inspect distributions</li>
+									<li>spot outliers</li>
+									<li>understand relationships</li>
+								</ul>
+							</div>
 
-                <div class="card">
-                <div class="card-title">After modeling</div>
-                <ul>
-                    <li>visualize predictions</li>
-                    <li>check trends</li>
-                    <li>communicate results clearly</li>
-                </ul>
-                </div>
-            </div>
+							<div class="card">
+								<div class="card-title">After modeling</div>
+								<ul>
+									<li>visualize predictions</li>
+									<li>check trends</li>
+									<li>communicate results clearly</li>
+								</ul>
+							</div>
+						</div>
 
-            <h3>Main concepts</h3>
+						<h3>Main concepts</h3>
 
-            <div class="table-wrapper">
-                <table class="custom-table">
-                <thead>
-                    <tr>
-                    <th>Concept</th>
-                    <th>Meaning</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                    <td>Figure</td>
-                    <td>The whole canvas or plotting area</td>
-                    </tr>
-                    <tr>
-                    <td>Axes</td>
-                    <td>The actual plot region inside the figure</td>
-                    </tr>
-                    <tr>
-                    <td>Axis</td>
-                    <td>The x or y scale</td>
-                    </tr>
-                    <tr>
-                    <td>Artists</td>
-                    <td>Visual elements such as lines, markers, and text</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Concept</th>
+										<th>Meaning</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Figure</td>
+										<td>The whole canvas or plotting area</td>
+									</tr>
+									<tr>
+										<td>Axes</td>
+										<td>The actual plot region inside the figure</td>
+									</tr>
+									<tr>
+										<td>Axis</td>
+										<td>The x or y scale</td>
+									</tr>
+									<tr>
+										<td>Artists</td>
+										<td>Visual elements such as lines, markers, and text</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 
-            <h3>Common plot types</h3>
+						<h3>Common plot types</h3>
 
-            <pre><code>import matplotlib.pyplot as plt
+						<pre><code>import matplotlib.pyplot as plt
 
             values = [5, 7, 3, 8]
 
@@ -637,7 +745,7 @@ print(arr * 2)</code></pre>
             plt.title("Bar Chart Example")
             plt.show()</code></pre>
 
-            <pre><code>import matplotlib.pyplot as plt
+						<pre><code>import matplotlib.pyplot as plt
 
             x = [1, 2, 3, 4, 5]
             y = [5, 7, 6, 9, 10]
@@ -646,64 +754,85 @@ print(arr * 2)</code></pre>
             plt.title("Scatter Plot Example")
             plt.show()</code></pre>
 
-            <p>
-                For this lecture, the goal is not to master the entire plotting API, but to become comfortable
-                reading and writing simple plots that are useful in exploratory data analysis.
-            </p>
+						<p>
+							For this lecture, the goal is not to master the entire plotting
+							API, but to become comfortable reading and writing simple plots
+							that are useful in exploratory data analysis.
+						</p>
 
-            <div class="figure">
-                <img src="images/lecture03/matplotlib-overview.png" alt="Matplotlib figure and axes overview">
-                <div class="figure-body">
-                <div class="figure-kicker">Plot anatomy</div>
-                <div class="figure-caption">
-                    A useful mental model is: the Figure is the whole canvas, while Axes are the actual subplots where data is drawn.
-                </div>
-                </div>
-            </div>
+						<div class="figure">
+							<img
+								src="images/lecture03/matplotlib-overview.png"
+								alt="Matplotlib figure and axes overview"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">Plot anatomy</div>
+								<div class="figure-caption">
+									A useful mental model is: the Figure is the whole canvas,
+									while Axes are the actual subplots where data is drawn.
+								</div>
+							</div>
+						</div>
 
-            <div class="callout">
-                Want to practice this part directly?
-                <a class="btn btn-colab" href="https://colab.research.google.com/drive/1Dq6170LvSpCJWQqKx31E8Ct9ARn8zpaD" target="_blank" rel="noopener noreferrer">
-                <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-                Open Matplotlib 101 in Colab →
-                </a>
-            </div>
-        </section>
+						<div class="callout">
+							Want to practice this part directly?
+							<a
+								class="btn btn-colab"
+								href="https://colab.research.google.com/drive/1Dq6170LvSpCJWQqKx31E8Ct9ARn8zpaD"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src="images/icons/colab.svg"
+									alt="Colab"
+									class="colab-icon"
+								/>
+								Open Matplotlib 101 in Colab →
+							</a>
+						</div>
+					</section>
 
-        <section class="section" id="try-it-yourself">
-          <h2 class="section-title">Try It Yourself</h2>
+					<section class="section" id="try-it-yourself">
+						<h2 class="section-title">Try It Yourself</h2>
 
-          <div class="card">
-            <div class="card-title">Exercise 1</div>
-            <p>Create a list with four numbers and print the last two elements using slicing.</p>
-            <details>
-              <summary>Possible solution</summary>
-              <div class="details-body">
-                <pre><code>numbers = [3, 7, 10, 15]
+						<div class="card">
+							<div class="card-title">Exercise 1</div>
+							<p>
+								Create a list with four numbers and print the last two elements
+								using slicing.
+							</p>
+							<details>
+								<summary>Possible solution</summary>
+								<div class="details-body">
+									<pre><code>numbers = [3, 7, 10, 15]
 print(numbers[2:])</code></pre>
-              </div>
-            </details>
-          </div>
+								</div>
+							</details>
+						</div>
 
-          <div class="card">
-            <div class="card-title">Exercise 2</div>
-            <p>Create a dictionary for a student with keys <code>name</code> and <code>course</code>, then print the course.</p>
-            <details>
-              <summary>Possible solution</summary>
-              <div class="details-body">
-                <pre><code>student = {"name": "Fateme", "course": "Bioinformatics"}
+						<div class="card">
+							<div class="card-title">Exercise 2</div>
+							<p>
+								Create a dictionary for a student with keys
+								<code>name</code> and <code>course</code>, then print the
+								course.
+							</p>
+							<details>
+								<summary>Possible solution</summary>
+								<div class="details-body">
+									<pre><code>student = {"name": "Fateme", "course": "Bioinformatics"}
 print(student["course"])</code></pre>
-              </div>
-            </details>
-          </div>
+								</div>
+							</details>
+						</div>
 
-          <div class="card">
-            <div class="card-title">Exercise 3</div>
-            <p>Load a small DataFrame in Pandas and select one column.</p>
-            <details>
-              <summary>Possible solution</summary>
-              <div class="details-body">
-                <pre><code>import pandas as pd
+						<div class="card">
+							<div class="card-title">Exercise 3</div>
+							<p>Load a small DataFrame in Pandas and select one column.</p>
+							<details>
+								<summary>Possible solution</summary>
+								<div class="details-body">
+									<pre><code>import pandas as pd
 
 df = pd.DataFrame({
     "city": ["Bologna", "Rome", "Milan"],
@@ -711,21 +840,21 @@ df = pd.DataFrame({
 })
 
 print(df["city"])</code></pre>
-              </div>
-            </details>
-          </div>
+								</div>
+							</details>
+						</div>
 
-          <div class="card">
-            <div class="card-title">Exercise 4 — First Plot</div>
-            <p>
-                Create a simple line plot using Matplotlib with x = [1,2,3,4] and y = [2,4,6,8].
-                Add labels and a title.
-            </p>
+						<div class="card">
+							<div class="card-title">Exercise 4 — First Plot</div>
+							<p>
+								Create a simple line plot using Matplotlib with x = [1,2,3,4]
+								and y = [2,4,6,8]. Add labels and a title.
+							</p>
 
-            <details>
-                <summary>Possible solution</summary>
-                <div class="details-body">
-                <pre><code>import matplotlib.pyplot as plt
+							<details>
+								<summary>Possible solution</summary>
+								<div class="details-body">
+									<pre><code>import matplotlib.pyplot as plt
 
             x = [1, 2, 3, 4]
             y = [2, 4, 6, 8]
@@ -735,22 +864,21 @@ print(df["city"])</code></pre>
             plt.ylabel("y")
             plt.title("Line Plot")
             plt.show()</code></pre>
-                </div>
-            </details>
-            </div>
+								</div>
+							</details>
+						</div>
 
-            <div class="card">
-                <div class="card-title">Exercise 5 — Scatter vs Pattern</div>
-                <p>
-                    Create a scatter plot with:
-                    x = [1,2,3,4,5] and y = [5,7,6,9,10].
-                    What pattern do you observe?
-                </p>
+						<div class="card">
+							<div class="card-title">Exercise 5 — Scatter vs Pattern</div>
+							<p>
+								Create a scatter plot with: x = [1,2,3,4,5] and y =
+								[5,7,6,9,10]. What pattern do you observe?
+							</p>
 
-                <details>
-                    <summary>Possible solution</summary>
-                    <div class="details-body">
-                    <pre><code>import matplotlib.pyplot as plt
+							<details>
+								<summary>Possible solution</summary>
+								<div class="details-body">
+									<pre><code>import matplotlib.pyplot as plt
 
                 x = [1, 2, 3, 4, 5]
                 y = [5, 7, 6, 9, 10]
@@ -759,144 +887,200 @@ print(df["city"])</code></pre>
                 plt.title("Scatter Plot")
                 plt.show()</code></pre>
 
-                    <p>
-                        The points show an increasing trend, which suggests a positive relationship between x and y.
-                    </p>
-                    </div>
-                </details>
-                </div>
+									<p>
+										The points show an increasing trend, which suggests a
+										positive relationship between x and y.
+									</p>
+								</div>
+							</details>
+						</div>
+					</section>
 
-        </section>
+					<section class="section" id="study-material">
+						<h2 class="section-title">Study Material</h2>
 
-        <section class="section" id="study-material">
-        <h2 class="section-title">Study Material</h2>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Slides</div>
+								<strong>Lecture 3 Slides</strong>
+								<p>
+									Full overview of Python basics, data structures, Pandas, and
+									the hands-on workflow.
+								</p>
+								<a
+									class="btn-link"
+									href="slides/lecture03.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
 
-        <div class="grid-2">
-            <div class="card">
-            <div class="card-title">Slides</div>
-            <strong>Lecture 3 Slides</strong>
-            <p>
-                Full overview of Python basics, data structures, Pandas, and the hands-on workflow.
-            </p>
-            <a class="btn-link" href="slides/lecture03.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-            </a>
-            </div>
+							<div class="card">
+								<div class="card-title">Transcript</div>
+								<strong>Lecture 3 Transcript</strong>
+								<p>
+									Useful for the lecturer’s practical advice, coding workflow,
+									and comments around tools and setup.
+								</p>
+								<a
+									class="btn-link"
+									href="transcriptions/lecture03.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
+						</div>
 
-            <div class="card">
-            <div class="card-title">Transcript</div>
-            <strong>Lecture 3 Transcript</strong>
-            <p>
-                Useful for the lecturer’s practical advice, coding workflow, and comments around tools and setup.
-            </p>
-            <a class="btn-link" href="transcriptions/lecture03.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-            </a>
-            </div>
-        </div>
+						<div class="card">
+							<div class="card-title">Course Repository</div>
+							<strong>AMLBas2526 GitHub from Prof. Clissa</strong>
+							<p>
+								Repository with course code and notebook material used in the
+								lecture.
+							</p>
+							<a
+								class="btn btn-github"
+								href="https://github.com/clissa/AMLBas2526"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src="images/icons/github.svg"
+									alt="GitHub"
+									class="github-icon"
+								/>
+								Open GitHub Repository →
+							</a>
+						</div>
 
-        <div class="card">
-            <div class="card-title">Course Repository</div>
-            <strong>AMLBas2526 GitHub from Prof. Clissa</strong>
-            <p>
-            Repository with course code and notebook material used in the lecture.
-            </p>
-            <a class="btn btn-github" href="https://github.com/clissa/AMLBas2526" target="_blank" rel="noopener noreferrer">
-              <img src="images/icons/github.svg" alt="GitHub" class="github-icon">
-              Open GitHub Repository →
-            </a>
-        </div>
+						<p>
+							Because this is a hands-on lecture, the best study strategy is to
+							keep the notebook material and the lecture page open together.
+						</p>
+					</section>
 
-        <p>
-            Because this is a hands-on lecture, the best study strategy is to keep the notebook material and the lecture page open together.
-        </p>
-        </section>
+					<section class="section" id="quiz">
+						<h2 class="section-title">Quick Review Quiz</h2>
 
-        <section class="section" id="quiz">
-          <h2 class="section-title">Quick Review Quiz</h2>
+						<details>
+							<summary>1. Why does indentation matter in Python?</summary>
+							<div class="details-body">
+								<p>Because it defines code blocks and control structures.</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>1. Why does indentation matter in Python?</summary>
-            <div class="details-body">
-              <p>Because it defines code blocks and control structures.</p>
-            </div>
-          </details>
+						<details>
+							<summary>2. What is dynamic typing?</summary>
+							<div class="details-body">
+								<p>
+									Variables do not need explicit type declarations and can be
+									rebound to different types.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>2. What is dynamic typing?</summary>
-            <div class="details-body">
-              <p>Variables do not need explicit type declarations and can be rebound to different types.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								3. What is the difference between a list and a set?
+							</summary>
+							<div class="details-body">
+								<p>
+									A list is ordered and allows duplicates; a set is unordered
+									and keeps only unique elements.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>3. What is the difference between a list and a set?</summary>
-            <div class="details-body">
-              <p>A list is ordered and allows duplicates; a set is unordered and keeps only unique elements.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								4. Why is NumPy often preferred for numerical work?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because it is faster and supports efficient vectorized
+									operations.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>4. Why is NumPy often preferred for numerical work?</summary>
-            <div class="details-body">
-              <p>Because it is faster and supports efficient vectorized operations.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								5. What are the two main Pandas structures introduced here?
+							</summary>
+							<div class="details-body">
+								<p>Series and DataFrame.</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>5. What are the two main Pandas structures introduced here?</summary>
-            <div class="details-body">
-              <p>Series and DataFrame.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								6. What is the purpose of <code>.loc[]</code> and
+								<code>.iloc[]</code>?
+							</summary>
+							<div class="details-body">
+								<p>
+									<code>.loc[]</code> is label-based selection, while
+									<code>.iloc[]</code> is position-based selection.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>6. What is the purpose of <code>.loc[]</code> and <code>.iloc[]</code>?</summary>
-            <div class="details-body">
-              <p><code>.loc[]</code> is label-based selection, while <code>.iloc[]</code> is position-based selection.</p>
-            </div>
-          </details>
+						<details>
+							<summary>
+								7. Why are Jupyter notebooks useful for ML work?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because they combine code, outputs, and explanations in one
+									interactive document.
+								</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>7. Why are Jupyter notebooks useful for ML work?</summary>
-            <div class="details-body">
-              <p>Because they combine code, outputs, and explanations in one interactive document.</p>
-            </div>
-          </details>
+						<details>
+							<summary>8. What is one good use case for dictionaries?</summary>
+							<div class="details-body">
+								<p>
+									Storing structured key-value information, such as settings or
+									hyperparameters.
+								</p>
+							</div>
+						</details>
+					</section>
 
-          <details>
-            <summary>8. What is one good use case for dictionaries?</summary>
-            <div class="details-body">
-              <p>Storing structured key-value information, such as settings or hyperparameters.</p>
-            </div>
-          </details>
-        </section>
+					<div class="bottom-nav">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<div class="nav-group">
+							<a class="btn-link" href="Lecture02B.html">← Previous</a>
+							<a class="btn-link" href="Lecture04A.html">Next →</a>
+							<button class="btn btn-primary" data-complete-lecture>
+								Mark as Completed
+							</button>
+						</div>
+					</div>
 
-        <div class="bottom-nav">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <div class="nav-group">
-            <a class="btn-link" href="Lecture02B.html">← Previous</a>
-            <a class="btn-link" href="Lecture04A.html">Next →</a>
-            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-          </div>
-        </div>
+					<div class="footer-note">
+						Lecture 03 study page
+						<span class="persian-note" dir="rtl">
+							که با تو، حتی بی‌نظم‌ترین داده‌های دنیام هم مرتب می‌شن 🌙
+						</span>
+					</div>
+				</div>
+			</div>
+		</main>
 
-        <div class="footer-note">
-          Lecture 03 study page
-            <span class="persian-note" dir="rtl">
-              که با تو، حتی بی‌نظم‌ترین داده‌های دنیام هم مرتب می‌شن 🌙
-            </span>
-        </div>
-      </div>
-    </div>
-  </main>
+		<div id="completionToast" class="completion-toast">
+			Lecture marked as completed.
+		</div>
 
-  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-  
-  <div class="toc-backdrop"></div>
-  <script src="script.js"></script>
-  <script>
-    initLecturePage("lecture3");
-  </script>
-</body>
+		<div class="toc-backdrop"></div>
+		<script src="script.js"></script>
+		<script>
+			initLecturePage("lecture3");
+		</script>
+	</body>
 </html>

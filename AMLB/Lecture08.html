@@ -1,563 +1,841 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture 08 - Reliable Model Evaluation and Selection</title>
-
-    <link rel="icon" href="images/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</head>
-<body>
-  <header class="topbar">
-    <div class="topbar-inner hybrid-topbar">
-      <div class="topbar-desktop">
-        <div class="nav-group">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="Lecture08.html">Lecture 08</a>
-        </div>
-
-        <div class="nav-group">
-          <a class="btn-link" href="Lecture06.html">← Previous</a>
-          <a class="btn-link" href="ExamPrep.html">Next →</a>
-          <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-        </div>
-      </div>
-
-      <div class="topbar-mobile">
-        <a class="icon-btn" href="index.html" aria-label="Back to index" title="Index">⌂</a>
-        <a class="icon-btn" href="Lecture06.html" aria-label="Previous lecture" title="Previous">←</a>
-        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
-        <span class="topbar-title">L08</span>
-        <a class="icon-btn" href="ExamPrep.html" aria-label="Next page" title="Next">→</a>
-        <button class="icon-btn icon-btn-primary" data-complete-lecture aria-label="Mark as completed" title="Completed">✓</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <div class="hero-split">
-        <div>
-          <div class="eyebrow">Applied Machine Learning · Basic</div>
-          <h1>Lecture 08 — Reliable Model Evaluation and Selection</h1>
-          <p class="subtitle">
-            This lecture turns machine learning into a disciplined decision process. It covers how to split data correctly,
-            how to evaluate classifiers and regressors with the right metrics, how to compare multiple algorithms fairly,
-            and how to tune hyperparameters without fooling yourself with data leakage.
-          </p>
-
-          <div class="hero-meta">
-            <div class="pill">Resampling</div>
-            <div class="pill">Metrics</div>
-            <div class="pill">Model Selection</div>
-            <div class="pill">Hyperparameter Tuning</div>
-            <div class="pill">Hands-on</div>
-          </div>
-
-          <div class="status" id="completionStatus">Not completed yet</div>
-        </div>
-
-        <div class="hero-visual">
-          <div class="hero-image-card video-card">
-            <div class="video-embed">
-              <iframe
-                src="https://www.youtube-nocookie.com/embed/kFWRtyTwBL8"
-                title="Lecture 06 recording"
-                loading="lazy"
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-          <div class="hero-badge">Lecture recording available</div>
-        </div>
-      </div>
-    </section>
-
-    <div class="layout">
-      <aside class="toc">
-        <h2>On this page</h2>
-        <a href="#big-picture">Big Picture</a>
-        <a href="#notebook-6">Notebook 6: Evaluation Resampling</a>
-        <a href="#notebook-7">Notebook 7: Performance Metrics</a>
-        <a href="#notebook-8">Notebook 8: Comparing Algorithms</a>
-        <a href="#notebook-9">Notebook 9: Hyperparameter Tuning</a>
-        <a href="#pitfalls">Common Pitfalls</a>
-        <a href="#study-material">Study Material</a>
-        <a href="#quiz">Quick Review Quiz</a>
-      </aside>
-
-      <div class="content">
-        <section class="section" id="big-picture">
-          <h2 class="section-title">Big Picture: Reliable Model Evaluation</h2>
-          <p class="lead">
-            Once you have prepared your data and trained a first model, a bigger question appears: how do you know whether the model is actually good?
-            This lecture answers that by focusing on methodology rather than just code.
-          </p>
-
-          <div class="callout">
-            The central idea of this lecture is that a machine learning model is only as trustworthy as the evaluation procedure used to judge it.
-          </div>
-
-          <div class="figure">
-            <img src="images/lecture08/evaluation-workflow.png" alt="Workflow for reliable model evaluation">
-            <div class="figure-body">
-              <div class="figure-kicker">A disciplined workflow</div>
-              <div class="figure-caption">
-                Reliable evaluation means splitting data correctly, using metrics that fit the task, comparing algorithms fairly, and tuning parameters without leaking information from the test process back into training.
-              </div>
-            </div>
-          </div>
-
-          <p>
-            This is also the lecture where the practical pipeline becomes more mature. Earlier lectures showed how to prepare and model data.
-            Here, the emphasis shifts toward making decisions that are statistically sound and reproducible.
-          </p>
-        </section>
-
-        <section class="section" id="notebook-6">
-          <h2 class="section-title">Notebook 6 — Evaluation Resampling</h2>
-          <p class="lead">
-            The first notebook of this lecture is about how to split data in a way that gives a realistic estimate of performance on unseen examples.
-          </p>
-
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Method</th>
-                  <th>Main idea</th>
-                  <th>Strength</th>
-                  <th>Weakness</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Static split</td>
-                  <td>One train/test division</td>
-                  <td>Fast and simple</td>
-                  <td>High variance across different splits</td>
-                </tr>
-                <tr>
-                  <td>K-Fold CV</td>
-                  <td>Rotate the test fold K times</td>
-                  <td>More stable estimate with mean and std</td>
-                  <td>Training takes K times longer</td>
-                </tr>
-                <tr>
-                  <td>LOOCV</td>
-                  <td>Leave exactly one example out each time</td>
-                  <td>Uses almost all data for training</td>
-                  <td>Very slow and can fluctuate a lot</td>
-                </tr>
-                <tr>
-                  <td>Repeated random splits</td>
-                  <td>Repeat random train/test splits many times</td>
-                  <td>Fast compromise between speed and stability</td>
-                  <td>Some results may be slightly polluted by overlap patterns</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="callout">
-            Golden rule: if you are not sure what to use, start with <strong>K-Fold cross-validation</strong> with <strong>K = 5</strong> or <strong>K = 10</strong>.
-          </div>
-
-          <div class="comparison">
-            <div class="column">
-              <h3>Why random seeds matter</h3>
-              <p>
-                A fixed random seed makes the split reproducible. That means you can compare algorithms or configurations fairly on the same shuffled data.
-              </p>
-            </div>
-
-            <div class="column">
-              <h3>Why data leakage matters</h3>
-              <p>
-                If information from the test process contaminates training, your results become too optimistic and stop reflecting true generalization.
-              </p>
-            </div>
-          </div>
-
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1ElBL29biOePIHaL3sGESFVgLnRhFHEuH" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Notebook 6 (Evaluation Resampling) in Colab →
-          </a>
-        </section>
-
-        <section class="section" id="notebook-7">
-          <h2 class="section-title">Notebook 7 — Performance Metrics</h2>
-          <p class="lead">
-            The second notebook focuses on the numbers used to judge prediction quality. The right metric depends on the task and on what kind of mistake matters most.
-          </p>
-
-          <h3>Classification metrics</h3>
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Accuracy</div>
-              <p>Counts how often predictions are correct, but ignores how confident the model was.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Log Loss / Cross-Entropy</div>
-              <p>Measures uncertainty. Lower is better because confident correct predictions are rewarded more strongly.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">ROC AUC</div>
-              <p>Measures discrimination ability across thresholds, from random guessing at 0.5 to perfect separation at 1.0.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Confusion Matrix</div>
-              <p>Shows the full error structure: true positives, true negatives, false positives, and false negatives.</p>
-            </div>
-          </div>
-
-          <div class="callout">
-            High accuracy does not automatically mean a good classifier. A model can be right often, but still be uncertain or make the wrong kinds of errors.
-          </div>
-
-          <h3>Regression metrics</h3>
-          <div class="figure-grid">
-            <div class="figure">
-              <img src="images/lecture08/regression-metrics.png" alt="Overview of regression metrics">
-              <div class="figure-body">
-                <div class="figure-kicker">Distance-based errors</div>
-                <div class="figure-caption">
-                  Regression quality is measured by how close predictions are to true values, not by simple correctness counts.
-                </div>
-              </div>
-            </div>
-
-            <div class="figure">
-              <img src="images/lecture08/confusion-vs-auc.png" alt="Different evaluation views for classifiers">
-              <div class="figure-body">
-                <div class="figure-kicker">Different views of quality</div>
-                <div class="figure-caption">
-                  Metrics are not interchangeable. Each one answers a different question about model behavior.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Metric</th>
-                  <th>What it emphasizes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>MAE</td>
-                  <td>Average absolute distance between prediction and truth</td>
-                </tr>
-                <tr>
-                  <td>MSE</td>
-                  <td>Squares errors, so large mistakes are penalized more strongly</td>
-                </tr>
-                <tr>
-                  <td>R²</td>
-                  <td>How well the model fits the observed variation in the target</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>
-            One practical detail in scikit-learn is that some metrics appear with a <code>neg_</code> prefix.
-            This is just a convention so that “higher is better” even for quantities that are naturally minimized, such as error values.
-          </p>
-
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1lCp_7k8PiccwYKpeHuc_FeZGM9jpjieb" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Notebook 7 (Performance Metrics) in Colab →
-          </a>
-        </section>
-
-        <section class="section" id="notebook-8">
-          <h2 class="section-title">Notebook 8 — Comparing Algorithms</h2>
-          <p class="lead">
-            Once the evaluation method is fixed, the next step is to compare several algorithms under the same conditions instead of choosing one blindly.
-          </p>
-
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Typical candidates</div>
-              <ul>
-                <li>Logistic Regression</li>
-                <li>LDA</li>
-                <li>KNN</li>
-                <li>SVM</li>
-              </ul>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Main idea</div>
-              <p>
-                Keep the dataset and evaluation procedure fixed, and compare multiple models with the same pipeline so the differences in performance are meaningful.
-              </p>
-            </div>
-          </div>
-
-          <div class="figure">
-            <img src="images/lecture08/algorithm-zoo.png" alt="Comparison of multiple algorithms under the same evaluation setup">
-            <div class="figure-body">
-              <div class="figure-kicker">The algorithm zoo</div>
-              <div class="figure-caption">
-                Early in model selection, it is often more productive to test several reasonable algorithms than to overcommit too soon to one favorite method.
-              </div>
-            </div>
-          </div>
-
-          <div class="callout">
-            This notebook is less about finding the perfect algorithm immediately and more about building a fair comparison framework.
-          </div>
-
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1CN6FD6JftpjtGhMJoPyYeKXaDpU31HzD" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Notebook 8 (Comparing Algorithms) in Colab →
-          </a>
-        </section>
-
-        <section class="section" id="notebook-9">
-          <h2 class="section-title">Notebook 9 — Hyperparameter Tuning</h2>
-          <p class="lead">
-            After choosing a promising model family, the next question is how to choose its hyperparameters. This notebook introduces the two standard tuning strategies used throughout machine learning practice.
-          </p>
-
-          <div class="comparison">
-            <div class="column">
-              <h3>Grid Search</h3>
-              <p>
-                Checks every combination in a predefined parameter grid. It is systematic and easy to reason about, but it is limited to the exact values you provide.
-              </p>
-            </div>
-
-            <div class="column">
-              <h3>Randomized Search</h3>
-              <p>
-                Samples parameter values from distributions for a fixed number of attempts. It is often more efficient when the search space is wide or continuous.
-              </p>
-            </div>
-          </div>
-
-          <div class="figure-grid">
-            <div class="figure">
-              <img src="images/lecture08/grid-search.png" alt="Grid search exploring a predefined hyperparameter grid">
-              <div class="figure-body">
-                <div class="figure-kicker">Exhaustive search</div>
-                <div class="figure-caption">
-                  Grid search is thorough, but it may waste time checking many combinations that are not especially informative.
-                </div>
-              </div>
-            </div>
-
-            <div class="figure">
-              <img src="images/lecture08/random-search.png" alt="Randomized search sampling hyperparameters from distributions">
-              <div class="figure-body">
-                <div class="figure-kicker">Sampled exploration</div>
-                <div class="figure-caption">
-                  Randomized search trades exhaustiveness for efficiency and often works well when only a few parameters matter strongly.
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="callout">
-            Tuning only makes sense after the evaluation setup is already trustworthy. Otherwise, you are just optimizing on top of a weak methodology.
-          </div>
-
-          <a class="btn btn-colab" href="https://colab.research.google.com/drive/1RcIu2zIFFu9v7URwRZTwBSCKb8fw51Lv" target="_blank" rel="noopener noreferrer">
-            <img src="images/icons/colab.svg" alt="Colab" class="colab-icon">
-            Open Notebook 9 (Hyperparameter Tuning) in Colab →
-          </a>
-        </section>
-
-        <section class="section" id="pitfalls">
-          <h2 class="section-title">Common Pitfalls</h2>
-          <p class="lead">
-            This lecture is full of methodology traps that can make a weak experiment look strong. Spotting them early is part of becoming reliable in machine learning.
-          </p>
-
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Data leakage</div>
-              <p>Any contamination of evaluation data into training leads to unrealistically optimistic results.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Blind trust in accuracy</div>
-              <p>A single number can hide poor confidence or the wrong balance of mistakes.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Unfair comparisons</div>
-              <p>Changing the split, the seed, and the metric at the same time makes algorithm comparison much less meaningful.</p>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Weak tuning logic</div>
-              <p>Hyperparameter search without a good validation setup just creates better-looking noise.</p>
-            </div>
-          </div>
-
-          <div class="callout">
-            The practical lesson is simple: good machine learning is not only about making predictions. It is about making trustworthy claims about those predictions.
-          </div>
-        </section>
-
-        <section class="section" id="study-material">
-          <h2 class="section-title">Study Material</h2>
-
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Slides</div>
-              <strong>Lecture 8 Slides</strong>
-              <p>
-                Use the slide deck for the notebook roadmap on resampling, metrics, algorithm comparison, and hyperparameter tuning.
-              </p>
-              <a class="btn-link" href="slides/lecture08.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-              </a>
-            </div>
-
-            <div class="card">
-              <div class="card-title">Transcript</div>
-              <strong>Lecture 8 Transcript</strong>
-              <p>
-                Use the transcript for the lecturer’s practical explanations on seeds, data splitting, metric interpretation, and why evaluation methodology matters so much.
-              </p>
-              <a class="btn-link" href="transcriptions/lecture08.pdf" target="_blank" rel="noopener noreferrer">
-                View PDF →
-              </a>
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Course Repository</div>
-            <strong>AML-Basic GitHub</strong>
-            <p>
-              Repository with the notebook material used in the basic module, including the modeling notebooks used in this lecture.
-            </p>
-            <a class="btn btn-github" href="https://github.com/dbonacorsi/AML-Basic" target="_blank" rel="noopener noreferrer">
-              <img src="images/icons/github.svg" alt="GitHub" class="github-icon">
-              Open Repository →
-            </a>
-          </div>
-
-          <p>
-            This lecture works best when you study the page together with the notebooks, because almost every important idea here is tied to a concrete evaluation workflow.
-          </p>
-        </section>
-
-        <section class="section" id="quiz">
-          <h2 class="section-title">Quick Review Quiz</h2>
-
-          <details>
-            <summary>1. Why is a random seed important when splitting data?</summary>
-            <div class="details-body">
-              <p>Because it makes the shuffle and split reproducible, so different algorithms or settings can be compared fairly on the same data partitions.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>2. What is the main drawback of Leave-One-Out Cross-Validation?</summary>
-            <div class="details-body">
-              <p>It is computationally expensive because the model must be trained once for each individual observation.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>3. How does Log Loss differ from Accuracy?</summary>
-            <div class="details-body">
-              <p>Accuracy only counts correct versus incorrect predictions, while Log Loss also measures how confident the model was in those predictions.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>4. When is a confusion matrix more informative than a single accuracy score?</summary>
-            <div class="details-body">
-              <p>When you need to understand the specific types of errors being made, such as false positives versus false negatives.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>5. Why do some scikit-learn metrics start with <code>neg_</code>?</summary>
-            <div class="details-body">
-              <p>Because scikit-learn uses a convention where higher is always better, so naturally minimized error quantities are negated.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>6. What happens to training time as K increases in K-Fold Cross-Validation?</summary>
-            <div class="details-body">
-              <p>Training time increases roughly linearly with K because the model must be trained and tested K times.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>7. What is the recommended default choice when you are unsure about the resampling method?</summary>
-            <div class="details-body">
-              <p>K-Fold Cross-Validation with K = 5 or K = 10 is a strong default choice.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>8. What is the difference between Grid Search and Randomized Search?</summary>
-            <div class="details-body">
-              <p>Grid Search checks every combination in a predefined grid, while Randomized Search samples parameter values from distributions for a fixed number of tries.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>9. Why can a model have high accuracy but still poor Log Loss?</summary>
-            <div class="details-body">
-              <p>Because it may predict the correct class often, but with low confidence, which Log Loss penalizes.</p>
-            </div>
-          </details>
-
-          <details>
-            <summary>10. What does R² tell you in a regression problem?</summary>
-            <div class="details-body">
-              <p>It tells you how well the predictions explain the variation of the target values, giving a sense of goodness-of-fit.</p>
-            </div>
-          </details>
-        </section>
-
-        <div class="bottom-nav">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <div class="nav-group">
-            <a class="btn-link" href="Lecture06.html">← Previous</a>
-            <a class="btn-link" href="ExamPrep.html">Next →</a>
-            <button class="btn btn-primary" data-complete-lecture>Mark as Completed</button>
-          </div>
-        </div>
-
-        <div class="footer-note">
-          Lecture 08 study page
-
-          <span class="persian-note" dir="rtl">
-کاش مثل یه مدلِ خوب، همیشه بهترین تصمیم رو برای خوشحال کردنت بگی        رم 😊</span>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <div id="completionToast" class="completion-toast">Lecture marked as completed.</div>
-  <div class="toc-backdrop"></div>
-
-  <script src="script.js"></script>
-  <script>
-    initLecturePage("lecture8");
-  </script>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lecture 08 - Reliable Model Evaluation and Selection</title>
+
+		<link rel="icon" href="images/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="images/favicon-32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="images/favicon-16.png"
+		/>
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+		<link rel="stylesheet" href="styles.css" />
+		<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	</head>
+	<body>
+		<header class="topbar">
+			<div class="topbar-inner hybrid-topbar">
+				<div class="topbar-desktop">
+					<div class="nav-group">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<a class="btn-link" href="Lecture08.html">Lecture 08</a>
+					</div>
+
+					<div class="nav-group">
+						<a class="btn-link" href="Lecture06.html">← Previous</a>
+						<a class="btn-link" href="ExamPrep.html">Next →</a>
+						<button class="btn btn-primary" data-complete-lecture>
+							Mark as Completed
+						</button>
+					</div>
+				</div>
+
+				<div class="topbar-mobile">
+					<a
+						class="icon-btn"
+						href="index.html"
+						aria-label="Back to index"
+						title="Index"
+						>⌂</a
+					>
+					<a
+						class="icon-btn"
+						href="Lecture06.html"
+						aria-label="Previous lecture"
+						title="Previous"
+						>←</a
+					>
+					<button
+						class="icon-btn toc-toggle"
+						type="button"
+						aria-label="Open table of contents"
+						title="Contents"
+					>
+						≡
+					</button>
+					<span class="topbar-title">L08</span>
+					<a
+						class="icon-btn"
+						href="ExamPrep.html"
+						aria-label="Next page"
+						title="Next"
+						>→</a
+					>
+					<button
+						class="icon-btn icon-btn-primary"
+						data-complete-lecture
+						aria-label="Mark as completed"
+						title="Completed"
+					>
+						✓
+					</button>
+				</div>
+			</div>
+		</header>
+
+		<main class="container">
+			<section class="hero">
+				<div class="hero-split">
+					<div>
+						<div class="eyebrow">Applied Machine Learning · Basic</div>
+						<h1>Lecture 08 — Reliable Model Evaluation and Selection</h1>
+						<p class="subtitle">
+							This lecture turns machine learning into a disciplined decision
+							process. It covers how to split data correctly, how to evaluate
+							classifiers and regressors with the right metrics, how to compare
+							multiple algorithms fairly, and how to tune hyperparameters
+							without fooling yourself with data leakage.
+						</p>
+
+						<div class="hero-meta">
+							<div class="pill">Resampling</div>
+							<div class="pill">Metrics</div>
+							<div class="pill">Model Selection</div>
+							<div class="pill">Hyperparameter Tuning</div>
+							<div class="pill">Hands-on</div>
+						</div>
+
+						<div class="status" id="completionStatus">Not completed yet</div>
+					</div>
+
+					<div class="hero-visual">
+						<div class="hero-image-card video-card">
+							<div class="video-embed">
+								<iframe
+									src="https://www.youtube-nocookie.com/embed/kFWRtyTwBL8"
+									title="Lecture 06 recording"
+									loading="lazy"
+									allow="
+										accelerometer;
+										clipboard-write;
+										encrypted-media;
+										gyroscope;
+										picture-in-picture;
+										web-share;
+									"
+									allowfullscreen
+								>
+								</iframe>
+							</div>
+						</div>
+						<div class="hero-badge">Lecture recording available</div>
+					</div>
+				</div>
+			</section>
+
+			<div class="layout">
+				<aside class="toc">
+					<h2>On this page</h2>
+					<a href="#big-picture">Big Picture</a>
+					<a href="#notebook-6">Notebook 6: Evaluation Resampling</a>
+					<a href="#notebook-7">Notebook 7: Performance Metrics</a>
+					<a href="#notebook-8">Notebook 8: Comparing Algorithms</a>
+					<a href="#notebook-9">Notebook 9: Hyperparameter Tuning</a>
+					<a href="#pitfalls">Common Pitfalls</a>
+					<a href="#study-material">Study Material</a>
+					<a href="#quiz">Quick Review Quiz</a>
+				</aside>
+
+				<div class="content">
+					<section class="section" id="big-picture">
+						<h2 class="section-title">
+							Big Picture: Reliable Model Evaluation
+						</h2>
+						<p class="lead">
+							Once you have prepared your data and trained a first model, a
+							bigger question appears: how do you know whether the model is
+							actually good? This lecture answers that by focusing on
+							methodology rather than just code.
+						</p>
+
+						<div class="callout">
+							The central idea of this lecture is that a machine learning model
+							is only as trustworthy as the evaluation procedure used to judge
+							it.
+						</div>
+
+						<div class="figure">
+							<img
+								src="images/lecture08/evaluation-workflow.png"
+								alt="Workflow for reliable model evaluation"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">A disciplined workflow</div>
+								<div class="figure-caption">
+									Reliable evaluation means splitting data correctly, using
+									metrics that fit the task, comparing algorithms fairly, and
+									tuning parameters without leaking information from the test
+									process back into training.
+								</div>
+							</div>
+						</div>
+
+						<p>
+							This is also the lecture where the practical pipeline becomes more
+							mature. Earlier lectures showed how to prepare and model data.
+							Here, the emphasis shifts toward making decisions that are
+							statistically sound and reproducible.
+						</p>
+					</section>
+
+					<section class="section" id="notebook-6">
+						<h2 class="section-title">Notebook 6 — Evaluation Resampling</h2>
+						<p class="lead">
+							The first notebook of this lecture is about how to split data in a
+							way that gives a realistic estimate of performance on unseen
+							examples.
+						</p>
+
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Method</th>
+										<th>Main idea</th>
+										<th>Strength</th>
+										<th>Weakness</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Static split</td>
+										<td>One train/test division</td>
+										<td>Fast and simple</td>
+										<td>High variance across different splits</td>
+									</tr>
+									<tr>
+										<td>K-Fold CV</td>
+										<td>Rotate the test fold K times</td>
+										<td>More stable estimate with mean and std</td>
+										<td>Training takes K times longer</td>
+									</tr>
+									<tr>
+										<td>LOOCV</td>
+										<td>Leave exactly one example out each time</td>
+										<td>Uses almost all data for training</td>
+										<td>Very slow and can fluctuate a lot</td>
+									</tr>
+									<tr>
+										<td>Repeated random splits</td>
+										<td>Repeat random train/test splits many times</td>
+										<td>Fast compromise between speed and stability</td>
+										<td>
+											Some results may be slightly polluted by overlap patterns
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="callout">
+							Golden rule: if you are not sure what to use, start with
+							<strong>K-Fold cross-validation</strong> with
+							<strong>K = 5</strong> or <strong>K = 10</strong>.
+						</div>
+
+						<div class="comparison">
+							<div class="column">
+								<h3>Why random seeds matter</h3>
+								<p>
+									A fixed random seed makes the split reproducible. That means
+									you can compare algorithms or configurations fairly on the
+									same shuffled data.
+								</p>
+							</div>
+
+							<div class="column">
+								<h3>Why data leakage matters</h3>
+								<p>
+									If information from the test process contaminates training,
+									your results become too optimistic and stop reflecting true
+									generalization.
+								</p>
+							</div>
+						</div>
+
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1ElBL29biOePIHaL3sGESFVgLnRhFHEuH"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Notebook 6 (Evaluation Resampling) in Colab →
+						</a>
+					</section>
+
+					<section class="section" id="notebook-7">
+						<h2 class="section-title">Notebook 7 — Performance Metrics</h2>
+						<p class="lead">
+							The second notebook focuses on the numbers used to judge
+							prediction quality. The right metric depends on the task and on
+							what kind of mistake matters most.
+						</p>
+
+						<h3>Classification metrics</h3>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Accuracy</div>
+								<p>
+									Counts how often predictions are correct, but ignores how
+									confident the model was.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Log Loss / Cross-Entropy</div>
+								<p>
+									Measures uncertainty. Lower is better because confident
+									correct predictions are rewarded more strongly.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">ROC AUC</div>
+								<p>
+									Measures discrimination ability across thresholds, from random
+									guessing at 0.5 to perfect separation at 1.0.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Confusion Matrix</div>
+								<p>
+									Shows the full error structure: true positives, true
+									negatives, false positives, and false negatives.
+								</p>
+							</div>
+						</div>
+
+						<div class="callout">
+							High accuracy does not automatically mean a good classifier. A
+							model can be right often, but still be uncertain or make the wrong
+							kinds of errors.
+						</div>
+
+						<h3>Regression metrics</h3>
+						<div class="figure-grid">
+							<div class="figure">
+								<img
+									src="images/lecture08/regression-metrics.png"
+									alt="Overview of regression metrics"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Distance-based errors</div>
+									<div class="figure-caption">
+										Regression quality is measured by how close predictions are
+										to true values, not by simple correctness counts.
+									</div>
+								</div>
+							</div>
+
+							<div class="figure">
+								<img
+									src="images/lecture08/confusion-vs-auc.png"
+									alt="Different evaluation views for classifiers"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Different views of quality</div>
+									<div class="figure-caption">
+										Metrics are not interchangeable. Each one answers a
+										different question about model behavior.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Metric</th>
+										<th>What it emphasizes</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>MAE</td>
+										<td>
+											Average absolute distance between prediction and truth
+										</td>
+									</tr>
+									<tr>
+										<td>MSE</td>
+										<td>
+											Squares errors, so large mistakes are penalized more
+											strongly
+										</td>
+									</tr>
+									<tr>
+										<td>R²</td>
+										<td>
+											How well the model fits the observed variation in the
+											target
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<p>
+							One practical detail in scikit-learn is that some metrics appear
+							with a <code>neg_</code> prefix. This is just a convention so that
+							“higher is better” even for quantities that are naturally
+							minimized, such as error values.
+						</p>
+
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1lCp_7k8PiccwYKpeHuc_FeZGM9jpjieb"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Notebook 7 (Performance Metrics) in Colab →
+						</a>
+					</section>
+
+					<section class="section" id="notebook-8">
+						<h2 class="section-title">Notebook 8 — Comparing Algorithms</h2>
+						<p class="lead">
+							Once the evaluation method is fixed, the next step is to compare
+							several algorithms under the same conditions instead of choosing
+							one blindly.
+						</p>
+
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Typical candidates</div>
+								<ul>
+									<li>Logistic Regression</li>
+									<li>LDA</li>
+									<li>KNN</li>
+									<li>SVM</li>
+								</ul>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Main idea</div>
+								<p>
+									Keep the dataset and evaluation procedure fixed, and compare
+									multiple models with the same pipeline so the differences in
+									performance are meaningful.
+								</p>
+							</div>
+						</div>
+
+						<div class="figure">
+							<img
+								src="images/lecture08/algorithm-zoo.png"
+								alt="Comparison of multiple algorithms under the same evaluation setup"
+							/>
+							<div class="figure-body">
+								<div class="figure-kicker">The algorithm zoo</div>
+								<div class="figure-caption">
+									Early in model selection, it is often more productive to test
+									several reasonable algorithms than to overcommit too soon to
+									one favorite method.
+								</div>
+							</div>
+						</div>
+
+						<div class="callout">
+							This notebook is less about finding the perfect algorithm
+							immediately and more about building a fair comparison framework.
+						</div>
+
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1CN6FD6JftpjtGhMJoPyYeKXaDpU31HzD"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Notebook 8 (Comparing Algorithms) in Colab →
+						</a>
+					</section>
+
+					<section class="section" id="notebook-9">
+						<h2 class="section-title">Notebook 9 — Hyperparameter Tuning</h2>
+						<p class="lead">
+							After choosing a promising model family, the next question is how
+							to choose its hyperparameters. This notebook introduces the two
+							standard tuning strategies used throughout machine learning
+							practice.
+						</p>
+
+						<div class="comparison">
+							<div class="column">
+								<h3>Grid Search</h3>
+								<p>
+									Checks every combination in a predefined parameter grid. It is
+									systematic and easy to reason about, but it is limited to the
+									exact values you provide.
+								</p>
+							</div>
+
+							<div class="column">
+								<h3>Randomized Search</h3>
+								<p>
+									Samples parameter values from distributions for a fixed number
+									of attempts. It is often more efficient when the search space
+									is wide or continuous.
+								</p>
+							</div>
+						</div>
+
+						<div class="figure-grid">
+							<div class="figure">
+								<img
+									src="images/lecture08/grid-search.png"
+									alt="Grid search exploring a predefined hyperparameter grid"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Exhaustive search</div>
+									<div class="figure-caption">
+										Grid search is thorough, but it may waste time checking many
+										combinations that are not especially informative.
+									</div>
+								</div>
+							</div>
+
+							<div class="figure">
+								<img
+									src="images/lecture08/random-search.png"
+									alt="Randomized search sampling hyperparameters from distributions"
+								/>
+								<div class="figure-body">
+									<div class="figure-kicker">Sampled exploration</div>
+									<div class="figure-caption">
+										Randomized search trades exhaustiveness for efficiency and
+										often works well when only a few parameters matter strongly.
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="callout">
+							Tuning only makes sense after the evaluation setup is already
+							trustworthy. Otherwise, you are just optimizing on top of a weak
+							methodology.
+						</div>
+
+						<a
+							class="btn btn-colab"
+							href="https://colab.research.google.com/drive/1RcIu2zIFFu9v7URwRZTwBSCKb8fw51Lv"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							<img
+								src="images/icons/colab.svg"
+								alt="Colab"
+								class="colab-icon"
+							/>
+							Open Notebook 9 (Hyperparameter Tuning) in Colab →
+						</a>
+					</section>
+
+					<section class="section" id="pitfalls">
+						<h2 class="section-title">Common Pitfalls</h2>
+						<p class="lead">
+							This lecture is full of methodology traps that can make a weak
+							experiment look strong. Spotting them early is part of becoming
+							reliable in machine learning.
+						</p>
+
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Data leakage</div>
+								<p>
+									Any contamination of evaluation data into training leads to
+									unrealistically optimistic results.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Blind trust in accuracy</div>
+								<p>
+									A single number can hide poor confidence or the wrong balance
+									of mistakes.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Unfair comparisons</div>
+								<p>
+									Changing the split, the seed, and the metric at the same time
+									makes algorithm comparison much less meaningful.
+								</p>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Weak tuning logic</div>
+								<p>
+									Hyperparameter search without a good validation setup just
+									creates better-looking noise.
+								</p>
+							</div>
+						</div>
+
+						<div class="callout">
+							The practical lesson is simple: good machine learning is not only
+							about making predictions. It is about making trustworthy claims
+							about those predictions.
+						</div>
+					</section>
+
+					<section class="section" id="study-material">
+						<h2 class="section-title">Study Material</h2>
+
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Slides</div>
+								<strong>Lecture 8 Slides</strong>
+								<p>
+									Use the slide deck for the notebook roadmap on resampling,
+									metrics, algorithm comparison, and hyperparameter tuning.
+								</p>
+								<a
+									class="btn-link"
+									href="slides/lecture08.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
+
+							<div class="card">
+								<div class="card-title">Transcript</div>
+								<strong>Lecture 8 Transcript</strong>
+								<p>
+									Use the transcript for the lecturer’s practical explanations
+									on seeds, data splitting, metric interpretation, and why
+									evaluation methodology matters so much.
+								</p>
+								<a
+									class="btn-link"
+									href="transcriptions/lecture08.pdf"
+									target="_blank"
+									rel="noopener noreferrer"
+								>
+									View PDF →
+								</a>
+							</div>
+						</div>
+
+						<div class="card">
+							<div class="card-title">Course Repository</div>
+							<strong>AML-Basic GitHub</strong>
+							<p>
+								Repository with the notebook material used in the basic module,
+								including the modeling notebooks used in this lecture.
+							</p>
+							<a
+								class="btn btn-github"
+								href="https://github.com/dbonacorsi/AML-Basic"
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<img
+									src="images/icons/github.svg"
+									alt="GitHub"
+									class="github-icon"
+								/>
+								Open Repository →
+							</a>
+						</div>
+
+						<p>
+							This lecture works best when you study the page together with the
+							notebooks, because almost every important idea here is tied to a
+							concrete evaluation workflow.
+						</p>
+					</section>
+
+					<section class="section" id="quiz">
+						<h2 class="section-title">Quick Review Quiz</h2>
+
+						<details>
+							<summary>
+								1. Why is a random seed important when splitting data?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because it makes the shuffle and split reproducible, so
+									different algorithms or settings can be compared fairly on the
+									same data partitions.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								2. What is the main drawback of Leave-One-Out Cross-Validation?
+							</summary>
+							<div class="details-body">
+								<p>
+									It is computationally expensive because the model must be
+									trained once for each individual observation.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>3. How does Log Loss differ from Accuracy?</summary>
+							<div class="details-body">
+								<p>
+									Accuracy only counts correct versus incorrect predictions,
+									while Log Loss also measures how confident the model was in
+									those predictions.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								4. When is a confusion matrix more informative than a single
+								accuracy score?
+							</summary>
+							<div class="details-body">
+								<p>
+									When you need to understand the specific types of errors being
+									made, such as false positives versus false negatives.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								5. Why do some scikit-learn metrics start with
+								<code>neg_</code>?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because scikit-learn uses a convention where higher is always
+									better, so naturally minimized error quantities are negated.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								6. What happens to training time as K increases in K-Fold
+								Cross-Validation?
+							</summary>
+							<div class="details-body">
+								<p>
+									Training time increases roughly linearly with K because the
+									model must be trained and tested K times.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								7. What is the recommended default choice when you are unsure
+								about the resampling method?
+							</summary>
+							<div class="details-body">
+								<p>
+									K-Fold Cross-Validation with K = 5 or K = 10 is a strong
+									default choice.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								8. What is the difference between Grid Search and Randomized
+								Search?
+							</summary>
+							<div class="details-body">
+								<p>
+									Grid Search checks every combination in a predefined grid,
+									while Randomized Search samples parameter values from
+									distributions for a fixed number of tries.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								9. Why can a model have high accuracy but still poor Log Loss?
+							</summary>
+							<div class="details-body">
+								<p>
+									Because it may predict the correct class often, but with low
+									confidence, which Log Loss penalizes.
+								</p>
+							</div>
+						</details>
+
+						<details>
+							<summary>
+								10. What does R² tell you in a regression problem?
+							</summary>
+							<div class="details-body">
+								<p>
+									It tells you how well the predictions explain the variation of
+									the target values, giving a sense of goodness-of-fit.
+								</p>
+							</div>
+						</details>
+					</section>
+
+					<div class="bottom-nav">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<div class="nav-group">
+							<a class="btn-link" href="Lecture06.html">← Previous</a>
+							<a class="btn-link" href="ExamPrep.html">Next →</a>
+							<button class="btn btn-primary" data-complete-lecture>
+								Mark as Completed
+							</button>
+						</div>
+					</div>
+
+					<div class="footer-note">
+						Lecture 08 study page
+
+						<span class="persian-note" dir="rtl">
+							کاش مثل یه مدلِ خوب، همیشه بهترین تصمیم رو برای خوشحال کردنت بگی
+							رم 😊</span
+						>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<div id="completionToast" class="completion-toast">
+			Lecture marked as completed.
+		</div>
+		<div class="toc-backdrop"></div>
+
+		<script src="script.js"></script>
+		<script>
+			initLecturePage("lecture8");
+		</script>
+	</body>
 </html>

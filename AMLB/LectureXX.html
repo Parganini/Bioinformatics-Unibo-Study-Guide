@@ -1,305 +1,314 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lecture XX - Applied Machine Learning</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Lecture XX - Applied Machine Learning</title>
 
-  <link rel="icon" href="images/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
-  <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
-  <!-- =========================
+		<link rel="icon" href="images/favicon.ico" />
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="images/favicon-32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="images/favicon-16.png"
+		/>
+		<link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<!-- =========================
        TOP BAR (HYBRID)
   ========================== -->
-  <header class="topbar">
-    <div class="topbar-inner hybrid-topbar">
+		<header class="topbar">
+			<div class="topbar-inner hybrid-topbar">
+				<!-- Desktop -->
+				<div class="topbar-desktop">
+					<div class="nav-group">
+						<a class="btn-link" href="index.html">← Back to Index</a>
+						<a class="btn-link" href="LectureXX.html">Lecture XX</a>
+						<button
+							class="icon-btn toc-toggle"
+							type="button"
+							aria-label="Open table of contents"
+							title="Contents"
+						>
+							≡ Contents
+						</button>
+					</div>
 
-      <!-- Desktop -->
-      <div class="topbar-desktop">
-        <div class="nav-group">
-          <a class="btn-link" href="index.html">← Back to Index</a>
-          <a class="btn-link" href="LectureXX.html">Lecture XX</a>
-          <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡ Contents</button>
-        </div>
+					<div class="nav-group">
+						<a class="btn-link" href="LectureXX.html">← Previous</a>
+						<a class="btn-link" href="LectureXX.html">Next →</a>
+						<button class="btn btn-primary" data-complete-lecture>
+							Mark as Completed
+						</button>
+					</div>
+				</div>
 
-        <div class="nav-group">
-          <a class="btn-link" href="LectureXX.html">← Previous</a>
-          <a class="btn-link" href="LectureXX.html">Next →</a>
-          <button class="btn btn-primary" data-complete-lecture>
-            Mark as Completed
-          </button>
-        </div>
-      </div>
+				<!-- Mobile -->
+				<div class="topbar-mobile">
+					<a class="icon-btn" href="index.html" title="Index">⌂</a>
+					<a class="icon-btn" href="LectureXX.html" title="Previous">←</a>
+					<button
+						class="icon-btn toc-toggle"
+						type="button"
+						aria-label="Open table of contents"
+						title="Contents"
+					>
+						≡
+					</button>
+					<span class="topbar-title">LXX</span>
+					<a class="icon-btn" href="LectureXX.html" title="Next">→</a>
+					<button class="icon-btn icon-btn-primary" data-complete-lecture>
+						✓
+					</button>
+				</div>
+			</div>
+		</header>
 
-      <!-- Mobile -->
-      <div class="topbar-mobile">
-        <a class="icon-btn" href="index.html" title="Index">⌂</a>
-        <a class="icon-btn" href="LectureXX.html" title="Previous">←</a>
-        <button class="icon-btn toc-toggle" type="button" aria-label="Open table of contents" title="Contents">≡</button>
-        <span class="topbar-title">LXX</span>
-        <a class="icon-btn" href="LectureXX.html" title="Next">→</a>
-        <button class="icon-btn icon-btn-primary" data-complete-lecture>✓</button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- =========================
+		<!-- =========================
        HERO
   ========================== -->
-  <main class="container">
+		<main class="container">
+			<section class="hero">
+				<div class="hero-split">
+					<div>
+						<div class="eyebrow">Applied Machine Learning · Basic</div>
 
-    <section class="hero">
-      <div class="hero-split">
+						<h1>Lecture XX — TITLE HERE</h1>
 
-        <div>
-          <div class="eyebrow">Applied Machine Learning · Basic</div>
+						<p class="subtitle">
+							Short description of what this lecture covers.
+						</p>
 
-          <h1>Lecture XX — TITLE HERE</h1>
+						<div class="hero-meta">
+							<div class="pill">Topic 1</div>
+							<div class="pill">Topic 2</div>
+							<div class="pill">Topic 3</div>
+						</div>
 
-          <p class="subtitle">
-            Short description of what this lecture covers.
-          </p>
+						<div class="status" id="completionStatus">Not completed yet</div>
+					</div>
 
-          <div class="hero-meta">
-            <div class="pill">Topic 1</div>
-            <div class="pill">Topic 2</div>
-            <div class="pill">Topic 3</div>
-          </div>
+					<div class="hero-visual">
+						<div class="hero-image-card">
+							<img src="images/lectureXX/hero.jpg" alt="Lecture visual" />
+						</div>
+						<div class="hero-badge">Lecture overview</div>
+					</div>
+				</div>
+			</section>
 
-          <div class="status" id="completionStatus">
-            Not completed yet
-          </div>
-        </div>
-
-        <div class="hero-visual">
-          <div class="hero-image-card">
-            <img src="images/lectureXX/hero.jpg" alt="Lecture visual">
-          </div>
-          <div class="hero-badge">Lecture overview</div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =========================
+			<!-- =========================
          LAYOUT
     ========================== -->
-    <div class="layout">
+			<div class="layout">
+				<!-- TOC -->
+				<aside class="toc">
+					<h2>On this page</h2>
+					<a href="#section1">Section 1</a>
+					<a href="#section2">Section 2</a>
+					<a href="#section3">Section 3</a>
+					<a href="#math">Math</a>
+					<a href="#examples">Examples</a>
+					<a href="#visuals">Visuals</a>
+					<a href="#recording">Recording</a>
+					<a href="#quiz">Quiz</a>
+					<a href="#references">References</a>
+				</aside>
 
-      <!-- TOC -->
-      <aside class="toc">
-        <h2>On this page</h2>
-        <a href="#section1">Section 1</a>
-        <a href="#section2">Section 2</a>
-        <a href="#section3">Section 3</a>
-        <a href="#math">Math</a>
-        <a href="#examples">Examples</a>
-        <a href="#visuals">Visuals</a>
-        <a href="#recording">Recording</a>
-        <a href="#quiz">Quiz</a>
-        <a href="#references">References</a>
-      </aside>
-
-      <!-- CONTENT -->
-      <div class="content">
-
-        <!-- =========================
+				<!-- CONTENT -->
+				<div class="content">
+					<!-- =========================
              SECTION 1
         ========================== -->
-        <section class="section" id="section1">
-          <h2 class="section-title">Section Title</h2>
+					<section class="section" id="section1">
+						<h2 class="section-title">Section Title</h2>
 
-          <p class="lead">
-            Intro paragraph explaining the concept clearly.
-          </p>
+						<p class="lead">Intro paragraph explaining the concept clearly.</p>
 
-          <div class="callout">
-            Important takeaway or intuition.
-          </div>
+						<div class="callout">Important takeaway or intuition.</div>
 
-          <p>
-            Additional explanation.
-          </p>
-        </section>
+						<p>Additional explanation.</p>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              TABLE EXAMPLE
         ========================== -->
-        <section class="section" id="section2">
-          <h2 class="section-title">Comparison / Table</h2>
+					<section class="section" id="section2">
+						<h2 class="section-title">Comparison / Table</h2>
 
-          <div class="table-wrapper">
-            <table class="custom-table">
-              <thead>
-                <tr>
-                  <th>Concept</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Item 1</td>
-                  <td>Explanation</td>
-                </tr>
-                <tr>
-                  <td>Item 2</td>
-                  <td>Explanation</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
+						<div class="table-wrapper">
+							<table class="custom-table">
+								<thead>
+									<tr>
+										<th>Concept</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Item 1</td>
+										<td>Explanation</td>
+									</tr>
+									<tr>
+										<td>Item 2</td>
+										<td>Explanation</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              MATH / FORMULA
         ========================== -->
-        <section class="section" id="math">
-          <h2 class="section-title">Mathematical Model</h2>
+					<section class="section" id="math">
+						<h2 class="section-title">Mathematical Model</h2>
 
-          <div class="formula">
-            h(x) = θ₀ + θ₁x
-          </div>
+						<div class="formula">h(x) = θ₀ + θ₁x</div>
 
-          <p>
-            Explain what the equation represents.
-          </p>
-        </section>
+						<p>Explain what the equation represents.</p>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              EXAMPLES
         ========================== -->
-        <section class="section" id="examples">
-          <h2 class="section-title">Examples</h2>
+					<section class="section" id="examples">
+						<h2 class="section-title">Examples</h2>
 
-          <div class="grid-2">
-            <div class="card">
-              <div class="card-title">Example 1</div>
-              <strong>Title</strong>
-              <p>Description</p>
-            </div>
+						<div class="grid-2">
+							<div class="card">
+								<div class="card-title">Example 1</div>
+								<strong>Title</strong>
+								<p>Description</p>
+							</div>
 
-            <div class="card">
-              <div class="card-title">Example 2</div>
-              <strong>Title</strong>
-              <p>Description</p>
-            </div>
-          </div>
-        </section>
+							<div class="card">
+								<div class="card-title">Example 2</div>
+								<strong>Title</strong>
+								<p>Description</p>
+							</div>
+						</div>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              VISUALS
         ========================== -->
-        <section class="section" id="visuals">
-          <h2 class="section-title">Key Visuals</h2>
+					<section class="section" id="visuals">
+						<h2 class="section-title">Key Visuals</h2>
 
-          <div class="figure-grid">
-            <div class="figure">
-              <img src="images/lectureXX/image1.png" alt="">
-              <div class="figure-body">
-                <div class="figure-kicker">From slides</div>
-                <div class="figure-caption">Explanation</div>
-              </div>
-            </div>
-          </div>
-        </section>
+						<div class="figure-grid">
+							<div class="figure">
+								<img src="images/lectureXX/image1.png" alt="" />
+								<div class="figure-body">
+									<div class="figure-kicker">From slides</div>
+									<div class="figure-caption">Explanation</div>
+								</div>
+							</div>
+						</div>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              VIDEO
         ========================== -->
-        <section class="section" id="recording">
-          <h2 class="section-title">Class Recording</h2>
+					<section class="section" id="recording">
+						<h2 class="section-title">Class Recording</h2>
 
-          <div class="video-card">
-            <a class="video-thumb" href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank">
-              <img src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg">
-              <div class="play-badge">▶ Watch on YouTube</div>
-            </a>
+						<div class="video-card">
+							<a
+								class="video-thumb"
+								href="https://www.youtube.com/watch?v=VIDEO_ID"
+								target="_blank"
+							>
+								<img
+									src="https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg"
+								/>
+								<div class="play-badge">▶ Watch on YouTube</div>
+							</a>
 
-            <div class="video-meta">
-              <div class="card-title">Lecture recording</div>
-              <p>Watch the full lecture.</p>
-            </div>
-          </div>
-        </section>
+							<div class="video-meta">
+								<div class="card-title">Lecture recording</div>
+								<p>Watch the full lecture.</p>
+							</div>
+						</div>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              QUIZ
         ========================== -->
-        <section class="section" id="quiz">
-          <h2 class="section-title">Review Quiz</h2>
+					<section class="section" id="quiz">
+						<h2 class="section-title">Review Quiz</h2>
 
-          <details>
-            <summary>Question?</summary>
-            <div class="details-body">
-              <p>Answer.</p>
-            </div>
-          </details>
+						<details>
+							<summary>Question?</summary>
+							<div class="details-body">
+								<p>Answer.</p>
+							</div>
+						</details>
 
-          <details>
-            <summary>Another question?</summary>
-            <div class="details-body">
-              <p>Answer.</p>
-            </div>
-          </details>
+						<details>
+							<summary>Another question?</summary>
+							<div class="details-body">
+								<p>Answer.</p>
+							</div>
+						</details>
+					</section>
 
-        </section>
-
-        <!-- =========================
+					<!-- =========================
              REFERENCES
         ========================== -->
-        <section class="section references" id="references">
-          <h2 class="section-title">References</h2>
+					<section class="section references" id="references">
+						<h2 class="section-title">References</h2>
 
-          <ol>
-            <li>
-              Slides —
-              <a href="slides/lectureXX.pdf" target="_blank">View PDF</a>
-            </li>
-            <li>
-              Transcript —
-              <a href="transcriptions/lectureXX.pdf" target="_blank">View PDF</a>
-            </li>
-          </ol>
-        </section>
+						<ol>
+							<li>
+								Slides —
+								<a href="slides/lectureXX.pdf" target="_blank">View PDF</a>
+							</li>
+							<li>
+								Transcript —
+								<a href="transcriptions/lectureXX.pdf" target="_blank"
+									>View PDF</a
+								>
+							</li>
+						</ol>
+					</section>
 
-        <!-- =========================
+					<!-- =========================
              FOOTER NAV
         ========================== -->
-        <div class="bottom-nav">
-          <a class="btn-link" href="index.html">← Back to Index</a>
+					<div class="bottom-nav">
+						<a class="btn-link" href="index.html">← Back to Index</a>
 
-          <div class="nav-group">
-            <a class="btn-link" href="LectureXX.html">← Previous</a>
-            <a class="btn-link" href="LectureXX.html">Next →</a>
-            <button class="btn btn-primary" data-complete-lecture>
-              Mark as Completed
-            </button>
-          </div>
-        </div>
+						<div class="nav-group">
+							<a class="btn-link" href="LectureXX.html">← Previous</a>
+							<a class="btn-link" href="LectureXX.html">Next →</a>
+							<button class="btn btn-primary" data-complete-lecture>
+								Mark as Completed
+							</button>
+						</div>
+					</div>
 
-        <div class="footer-note">
-          Lecture XX study page
-        </div>
+					<div class="footer-note">Lecture XX study page</div>
+				</div>
+			</div>
+		</main>
 
-      </div>
-    </div>
-  </main>
+		<div id="completionToast" class="completion-toast">
+			Lecture marked as completed.
+		</div>
 
-  <div id="completionToast" class="completion-toast">
-    Lecture marked as completed.
-  </div>
-
-  <div class="toc-backdrop"></div>
-  <script src="script.js"></script>
-  <script>
-    initLecturePage("lectureXX");
-  </script>
-
-</body>
+		<div class="toc-backdrop"></div>
+		<script src="script.js"></script>
+		<script>
+			initLecturePage("lectureXX");
+		</script>
+	</body>
 </html>
