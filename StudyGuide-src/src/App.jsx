@@ -1,5 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
+import CourseIntroLesson from "./lessons/phylogenetics/Lesson01.jsx";
+import TreeThinkingLesson from "./lessons/phylogenetics/Lesson02.jsx";
+
 
 const LANGS = [
   { code: "en", label: "English", short: "EN", dir: "ltr" },
@@ -177,6 +180,117 @@ const PHYLO_MODULES = {
   ],
 };
 
+
+const PHYLO_SLIDE_LINKS = {
+  1: "https://drive.google.com/file/d/1BtsEdfSn60OVFtj08iG5V8CvIARle5Ud/view?usp=drivesdk",
+  2: "https://drive.google.com/file/d/1IzlPw9RP3hwWPSY4IM2xzGPLrRz55OaW/view?usp=drivesdk",
+  3: "https://drive.google.com/file/d/10nMZQCGWbWFhDQIBq6mq898gqJLhL2nB/view?usp=drivesdk",
+  4: "https://drive.google.com/file/d/1NvwbLKbjdkBFyBq1cZWcJve_9KafPMyQ/view?usp=drivesdk",
+  5: "https://drive.google.com/file/d/12chFqpBP3f9gANusGztlvsYAi6ng00Kk/view?usp=drivesdk",
+  6: "https://drive.google.com/file/d/1vBSjDQE18zpb2yJ4-F91D87EjHx0VNZi/view?usp=drivesdk",
+  7: "https://drive.google.com/file/d/1WSAlYeiJI6sU89LQnz17356tZP2ExoCo/view?usp=drivesdk",
+  8: "https://drive.google.com/file/d/18NBVWpUBxkRfeyZ8ZjbvB_qYDr04Z3ev/view?usp=drivesdk",
+  9: "https://drive.google.com/file/d/111pZtNa0ich2jGaVxRlYSBU1T7Lf0j4K/view?usp=drivesdk",
+  10: "https://drive.google.com/file/d/17_mNBtE2owaRsIboLBWGbBDau6TKMxjj/view?usp=drivesdk",
+  11: "https://drive.google.com/file/d/12vAPxnca4yzyVPh_KBvv-jEu2Rp0M4Ht/view?usp=drivesdk",
+  12: "https://drive.google.com/file/d/1faf8N6KAYPwP08v1A-R1TsNSlL5Z0Ufl/view?usp=drivesdk",
+  13: "https://drive.google.com/file/d/1PR9G6FS2Qu2CtSHZ8Rkvzx5M4RyR7Im6/view?usp=drivesdk",
+  14: "https://drive.google.com/file/d/1RawGJtn2TM6a2mBloOx0pn8m8NbdI6gR/view?usp=drivesdk",
+  15: "https://drive.google.com/file/d/1bxbQC6Pluz4FeSHpSulfc2GMCSRsuAfm/view?usp=drivesdk",
+  16: "https://drive.google.com/file/d/1p0D7uy8DKynUejNLDNZr51brvTM0SlYz/view?usp=drivesdk",
+};
+
+const PHYLO_ALL_SLIDES_LINK = "https://drive.google.com/file/d/1yzDWi9XNii3FSHTrr0vxcP4DGayv7OGJ/view?usp=drivesdk";
+const PHYLO_RECORDINGS_LINK = "https://www.youtube.com/playlist?list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe";
+const PHYLO_RECORDING_LINKS = Object.fromEntries(
+  Array.from({ length: 16 }, (_, index) => {
+    const lesson = index + 1;
+    return [lesson, `${PHYLO_RECORDINGS_LINK}&index=${lesson}`];
+  })
+);
+
+// Add transcript URLs here when they are available. Missing transcripts are shown as "coming soon".
+const PHYLO_TRANSCRIPT_LINKS = {
+  // 1: "transcripts/lesson01.html",
+  // 2: "transcripts/lesson02.html",
+};
+
+function phyloResourceCopy(lang) {
+  return {
+    en: {
+      lessonMaterial: "Class material",
+      dashboardTitle: "Course resources",
+      dashboardBody: "Slides, recordings and transcripts for the phylogenetics course.",
+      slides: "Slides",
+      allSlides: "All slides",
+      transcript: "Transcript",
+      transcripts: "Transcripts",
+      recording: "Recording",
+      recordings: "Recordings",
+      slidesDesc: "Official PDF slides for this lesson.",
+      allSlidesDesc: "Combined PDF with the course slides.",
+      transcriptDesc: "Written class transcript for review.",
+      recordingDesc: "Recording for this lesson.",
+      recordingsDesc: "Course recording playlist.",
+      open: "Open",
+      comingSoon: "Coming soon",
+    },
+    es: {
+      lessonMaterial: "Material de clase",
+      dashboardTitle: "Recursos del curso",
+      dashboardBody: "Slides, grabaciones y transcripciones de Filogenética.",
+      slides: "Slides",
+      allSlides: "Todas las slides",
+      transcript: "Transcripción",
+      transcripts: "Transcripciones",
+      recording: "Grabación",
+      recordings: "Grabaciones",
+      slidesDesc: "PDF oficial de slides de esta lección.",
+      allSlidesDesc: "PDF combinado con las slides del curso.",
+      transcriptDesc: "Transcripción escrita de la clase para repasar.",
+      recordingDesc: "Grabación correspondiente a esta lección.",
+      recordingsDesc: "Playlist de grabaciones del curso.",
+      open: "Abrir",
+      comingSoon: "Próximamente",
+    },
+    fa: {
+      lessonMaterial: "مواد کلاس",
+      dashboardTitle: "منابع درس",
+      dashboardBody: "اسلایدها، ضبط‌ها و رونویسی‌های درس تبارزایی.",
+      slides: "اسلایدها",
+      allSlides: "همهٔ اسلایدها",
+      transcript: "رونویسی",
+      transcripts: "رونویسی‌ها",
+      recording: "ضبط کلاس",
+      recordings: "ضبط‌ها",
+      slidesDesc: "PDF رسمی اسلایدهای این درس.",
+      allSlidesDesc: "PDF ترکیبی اسلایدهای درس.",
+      transcriptDesc: "رونویسی نوشتاری کلاس برای مرور.",
+      recordingDesc: "ضبط مربوط به این درس.",
+      recordingsDesc: "فهرست پخش ضبط‌های درس.",
+      open: "باز کردن",
+      comingSoon: "به‌زودی",
+    },
+  }[lang] || {
+    lessonMaterial: "Class material",
+    dashboardTitle: "Course resources",
+    dashboardBody: "Slides, recordings and transcripts for the course.",
+    slides: "Slides",
+    allSlides: "All slides",
+    transcript: "Transcript",
+    transcripts: "Transcripts",
+    recording: "Recording",
+    recordings: "Recordings",
+    slidesDesc: "Official PDF slides for this lesson.",
+    allSlidesDesc: "Combined PDF with the course slides.",
+    transcriptDesc: "Written class transcript for review.",
+    recordingDesc: "Recording for this lesson.",
+      recordingsDesc: "Course recording playlist.",
+    open: "Open",
+    comingSoon: "Coming soon",
+  };
+}
+
 function currentMode() {
   const path = window.location.pathname.toLowerCase();
   if (path.includes("/amlb/")) return "amlb";
@@ -286,6 +400,63 @@ function AMLBLegacyLesson({ t, file, progress, save }) {
   return <main className="mx-auto w-[min(1280px,calc(100%-24px))] pb-10 pt-5"><div className="mb-4 flex flex-col justify-between gap-3 rounded-[2rem] border border-stone-200 bg-white/90 p-4 shadow-sm md:flex-row md:items-center"><div><a href="#/" className="text-sm font-black text-red-700">← {t.backToDashboard}</a><h1 className="mt-1 text-2xl font-black text-stone-950">{lesson.title}</h1><p className="text-sm text-stone-500">{t.legacyNote}</p></div><div className="flex flex-wrap gap-2"><button onClick={() => save({ ...progress, [lesson.id]: !isDone })} className={`rounded-full px-4 py-2 text-sm font-black ${isDone ? "bg-emerald-600 text-white" : "bg-red-700 text-white"}`}>{isDone ? t.markNotComplete : t.markComplete}</button><a href={`legacy/${file}`} target="_blank" className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-800">{t.openFullPage}</a></div></div><iframe src={`legacy/${file}`} title={lesson.title} className="h-[calc(100vh-170px)] w-full rounded-[2rem] border border-stone-200 bg-white shadow-xl"/></main>;
 }
 
+
+function ResourceCard({ title, description, href, action, disabled }) {
+  const baseClass = "block rounded-3xl border p-5 shadow-sm transition";
+  if (disabled || !href) {
+    return (
+      <div className={`${baseClass} border-stone-200 bg-stone-50 text-stone-400`}>
+        <div className="text-lg font-black">{title}</div>
+        <p className="mt-2 text-sm font-semibold leading-6">{description}</p>
+        <span className="mt-4 inline-flex rounded-full border border-stone-200 bg-white px-4 py-2 text-xs font-black text-stone-400">{action}</span>
+      </div>
+    );
+  }
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={`${baseClass} border-stone-200 bg-white text-stone-900 hover:-translate-y-1 hover:shadow-md`}>
+      <div className="text-lg font-black">{title}</div>
+      <p className="mt-2 text-sm font-semibold leading-6 text-stone-600">{description}</p>
+      <span className="mt-4 inline-flex rounded-full bg-red-700 px-4 py-2 text-xs font-black text-white">{action}</span>
+    </a>
+  );
+}
+
+function LessonResources({ lang, lessonNo }) {
+  const copy = phyloResourceCopy(lang);
+  const slides = PHYLO_SLIDE_LINKS[lessonNo];
+  const transcript = PHYLO_TRANSCRIPT_LINKS[lessonNo];
+  const recording = PHYLO_RECORDING_LINKS[lessonNo] || PHYLO_RECORDINGS_LINK;
+  return (
+    <section className="mb-8 rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm md:p-6">
+      <div className="mb-4">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.lessonMaterial}</div>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        <ResourceCard title={copy.slides} description={copy.slidesDesc} href={slides} action={copy.open} />
+        <ResourceCard title={copy.transcript} description={copy.transcriptDesc} href={transcript} action={transcript ? copy.open : copy.comingSoon} disabled={!transcript} />
+        <ResourceCard title={copy.recording} description={copy.recordingDesc || copy.recordingsDesc} href={recording} action={copy.open} />
+      </div>
+    </section>
+  );
+}
+
+function MPResourcesPanel({ lang }) {
+  const copy = phyloResourceCopy(lang);
+  return (
+    <section id="resources" className="mt-10 rounded-[2.5rem] border border-stone-200 bg-white/75 p-6 shadow-sm md:p-8">
+      <div className="mb-6">
+        <div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.dashboardTitle}</div>
+        <p className="max-w-2xl leading-7 text-stone-600">{copy.dashboardBody}</p>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        <ResourceCard title={copy.allSlides} description={copy.allSlidesDesc} href={PHYLO_ALL_SLIDES_LINK} action={copy.open} />
+        <ResourceCard title={copy.transcripts} description={copy.transcriptDesc} href={null} action={copy.comingSoon} disabled />
+        <ResourceCard title={copy.recordings} description={copy.recordingsDesc} href={PHYLO_RECORDINGS_LINK} action={copy.open} />
+      </div>
+    </section>
+  );
+}
+
 function MPApp({ t, lang, hash }) {
   const [progress, setProgress] = useState(() => getJSON("phylo_progress_v2", {}));
   const [query, setQuery] = useState("");
@@ -297,31 +468,142 @@ function MPApp({ t, lang, hash }) {
   const modules = PHYLO_MODULES[lang] || PHYLO_MODULES.es;
   const count = Object.values(progress).filter(Boolean).length;
   const percent = 100 * count / 16;
+  const activeLesson = Array.from({ length: 16 }, (_, i) => i + 1).find(n => !progress[`lesson${String(n).padStart(2,"0")}`]) || 1;
   const q = query.trim().toLowerCase();
   const filtered = q ? modules.map(m => ({ m, lessons: m[3].filter(n => `${n} ${titles[n-1]} ${m[1]} ${m[2]} ${m[4].join(" ")}`.toLowerCase().includes(q)) })).filter(x => x.lessons.length) : modules.map(m => ({ m, lessons: m[3] }));
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href="#/lesson/02" className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: 02</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
-    <section className="mt-10"><div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.modules}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.phylo}</h2></div><input value={query} onChange={e => setQuery(e.target.value)} placeholder={t.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/></div><div className="space-y-5">{filtered.map(({m, lessons}) => <MPModule key={m[0]} module={m} lessonNumbers={lessons} titles={titles} progress={progress} save={save} t={t}/>)}</div></section></main>;
+  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><Hero eyebrow={t.phylo} title={<>{t.phylo} <span className="text-red-700">Study Guide</span></>} subtitle={t.phyloDesc} actions={<><a href={`#/lesson/${String(activeLesson).padStart(2,"0")}`} className="rounded-full bg-red-700 px-5 py-3 text-sm font-black text-white shadow-lg shadow-red-900/10 transition hover:bg-red-800">{t.continue}: {String(activeLesson).padStart(2,"0")}</a><a href="#/tools" className="rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-black text-stone-800 transition hover:shadow-md">{t.quickReview}</a></>} visual={<div><div className="text-xs font-black uppercase tracking-[0.18em] text-red-700">{t.progress}</div><div className="mt-2 text-5xl font-black text-stone-950">{clamp(percent)}%</div><p className="mt-2 text-sm font-semibold text-stone-500">{count} / 16 {t.completed.toLowerCase()}</p><div className="mt-5"><ProgressBar value={percent}/></div><div className="mt-6 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">{t.studyPath}</div><p className="mt-2 text-lg font-bold leading-7">data → alignment → model → tree → support → interpretation</p></div></div>} />
+    <MPResourcesPanel lang={lang} />
+    <section className="mt-10"><div className="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end"><div><div className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-red-700">{t.modules}</div><h2 className="text-3xl font-black tracking-tight text-stone-950 md:text-4xl">{t.phylo}</h2></div><input value={query} onChange={e => setQuery(e.target.value)} placeholder={t.search} className="w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-bold text-stone-700 outline-none transition placeholder:text-stone-400 focus:border-red-300 focus:ring-4 focus:ring-red-100 md:w-80"/></div><div className="space-y-5">{filtered.map(({m, lessons}) => <MPModule key={m[0]} module={m} lessonNumbers={lessons} titles={titles} progress={progress} save={save} t={t} activeLesson={activeLesson}/>)}</div></section></main>;
 }
-function MPModule({ module, lessonNumbers, titles, progress, save, t }) {
+function MPModule({ module, lessonNumbers, titles, progress, save, t, activeLesson }) {
   const [num, title, desc, allNums, tags] = module;
   const moduleProgress = allNums.filter(n => progress[`lesson${String(n).padStart(2,"0")}`]).length / allNums.length * 100;
-  return <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm"><div className="grid gap-0 lg:grid-cols-[220px_1fr]"><div className="border-b border-stone-200 bg-stone-50 p-5 lg:border-b-0 lg:border-e"><div className="flex items-center justify-between gap-3"><div className="rounded-2xl bg-stone-950 px-3 py-2 text-lg font-black text-white">{num}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(moduleProgress)}%</span></div><MiniTreeIcon active={moduleProgress > 0}/><ProgressBar value={moduleProgress}/></div><div className="p-5 md:p-6"><h3 className="text-2xl font-black tracking-tight text-stone-950">{title}</h3><p className="mt-2 max-w-2xl leading-7 text-stone-600">{desc}</p><div className="mt-4 flex flex-wrap gap-2">{tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-black text-stone-600">{tag}</span>)}</div><div className="mt-5 grid gap-2">{lessonNumbers.map(n => { const id = `lesson${String(n).padStart(2,"0")}`; return <div key={n} className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 ${progress[id] ? "border-emerald-200 bg-emerald-50 text-emerald-800" : n === 2 ? "border-red-200 bg-red-50 text-red-800" : "border-stone-200 bg-stone-50 text-stone-600"}`}><a href={`#/lesson/${String(n).padStart(2,"0")}`} className="flex min-w-0 items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-xs font-black shadow-sm">{String(n).padStart(2,"0")}</span><span className="text-sm font-black">{titles[n-1]}</span></a><button onClick={() => save({ ...progress, [id]: !progress[id] })} className="rounded-full bg-white px-3 py-1 text-xs font-black shadow-sm">{progress[id] ? "✓" : "○"}</button></div> })}</div></div></div></article>;
+  return <article className="overflow-hidden rounded-[2rem] border border-stone-200 bg-white shadow-sm"><div className="grid gap-0 lg:grid-cols-[220px_1fr]"><div className="border-b border-stone-200 bg-stone-50 p-5 lg:border-b-0 lg:border-e"><div className="flex items-center justify-between gap-3"><div className="rounded-2xl bg-stone-950 px-3 py-2 text-lg font-black text-white">{num}</div><span className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-black text-red-700">{clamp(moduleProgress)}%</span></div><MiniTreeIcon active={moduleProgress > 0}/><ProgressBar value={moduleProgress}/></div><div className="p-5 md:p-6"><h3 className="text-2xl font-black tracking-tight text-stone-950">{title}</h3><p className="mt-2 max-w-2xl leading-7 text-stone-600">{desc}</p><div className="mt-4 flex flex-wrap gap-2">{tags.map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-black text-stone-600">{tag}</span>)}</div><div className="mt-5 grid gap-2">{lessonNumbers.map(n => { const id = `lesson${String(n).padStart(2,"0")}`; return <div key={n} className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 ${progress[id] ? "border-emerald-200 bg-emerald-50 text-emerald-800" : n === activeLesson ? "border-red-200 bg-red-50 text-red-800" : "border-stone-200 bg-stone-50 text-stone-600"}`}><a href={`#/lesson/${String(n).padStart(2,"0")}`} className="flex min-w-0 items-center gap-3"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-white text-xs font-black shadow-sm">{String(n).padStart(2,"0")}</span><span className="text-sm font-black">{titles[n-1]}</span></a><button onClick={() => save({ ...progress, [id]: !progress[id] })} className="rounded-full bg-white px-3 py-1 text-xs font-black shadow-sm">{progress[id] ? "✓" : "○"}</button></div> })}</div></div></div></article>;
 }
+
+function phyloNavCopy(lang) {
+  return {
+    en: {
+      previous: "Previous lesson",
+      next: "Next lesson",
+      back: "Back to dashboard",
+      current: "Current lesson",
+      completeTitle: "Finish this lesson",
+      completeBody: "Mark your progress here when you are done reviewing this reading.",
+      noPrevious: "First lesson",
+      noNext: "Last lesson",
+      lesson: "Lesson",
+    },
+    es: {
+      previous: "Lección anterior",
+      next: "Siguiente lección",
+      back: "Volver al dashboard",
+      current: "Lección actual",
+      completeTitle: "Cerrar esta lección",
+      completeBody: "Marca tu progreso aquí cuando termines de revisar esta lectura.",
+      noPrevious: "Primera lección",
+      noNext: "Última lección",
+      lesson: "Lección",
+    },
+    fa: {
+      previous: "درس قبلی",
+      next: "درس بعدی",
+      back: "بازگشت به داشبورد",
+      current: "درس فعلی",
+      completeTitle: "پایان این درس",
+      completeBody: "وقتی مرور این درس تمام شد، پیشرفت خود را اینجا علامت بزنید.",
+      noPrevious: "درس اول",
+      noNext: "درس آخر",
+      lesson: "درس",
+    },
+  }[lang] || {
+    previous: "Previous lesson",
+    next: "Next lesson",
+    back: "Back to dashboard",
+    current: "Current lesson",
+    completeTitle: "Finish this lesson",
+    completeBody: "Mark your progress here when you are done reviewing this reading.",
+    noPrevious: "First lesson",
+    noNext: "Last lesson",
+    lesson: "Lesson",
+  };
+}
+
+function LessonNavigation({ lang, lessonNo, titles, isDone, toggle, placement = "top" }) {
+  const copy = phyloNavCopy(lang);
+  const prevNo = lessonNo > 1 ? lessonNo - 1 : null;
+  const nextNo = lessonNo < titles.length ? lessonNo + 1 : null;
+  const formatNo = (n) => String(n).padStart(2, "0");
+  const currentTitle = titles[lessonNo - 1] || "";
+  const navButtonClass = "inline-flex items-center justify-center rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-black text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md";
+  const disabledClass = "inline-flex items-center justify-center rounded-full border border-stone-200 bg-stone-100 px-4 py-2 text-sm font-black text-stone-400";
+
+  if (placement === "bottom") {
+    return (
+      <section className="mt-8 rounded-[2rem] border border-stone-200 bg-white p-5 shadow-sm md:p-6">
+        <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+          <div>
+            <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy.completeTitle}</div>
+            <h2 className="mt-2 text-2xl font-black text-stone-950">{formatNo(lessonNo)} · {currentTitle}</h2>
+            <p className="mt-2 max-w-2xl text-sm font-semibold leading-6 text-stone-500">{copy.completeBody}</p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {prevNo ? <a href={`#/lesson/${formatNo(prevNo)}`} className={navButtonClass}>← {copy.previous}</a> : <span className={disabledClass}>{copy.noPrevious}</span>}
+            <button onClick={toggle} className={`inline-flex items-center justify-center rounded-full px-5 py-2 text-sm font-black text-white shadow-lg transition hover:-translate-y-0.5 ${isDone ? "bg-emerald-600 shadow-emerald-900/10" : "bg-red-700 shadow-red-900/10"}`}>
+              {isDone ? "✓ " + (lang === "fa" ? "کامل‌شده" : tSafeComplete(lang)) : (lang === "fa" ? "علامت کامل‌شده" : tSafeMarkComplete(lang))}
+            </button>
+            {nextNo ? <a href={`#/lesson/${formatNo(nextNo)}`} className="inline-flex items-center justify-center rounded-full bg-stone-950 px-4 py-2 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-stone-800">{copy.next} →</a> : <span className={disabledClass}>{copy.noNext}</span>}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="mb-6 rounded-[2rem] border border-stone-200 bg-white/90 p-4 shadow-sm">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+        <div>
+          <a href="#/" className="text-sm font-black text-red-700">← {copy.back}</a>
+          <div className="mt-2 text-xs font-black uppercase tracking-[0.22em] text-stone-400">{copy.current}</div>
+          <div className="mt-1 text-xl font-black text-stone-950">{formatNo(lessonNo)} · {currentTitle}</div>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {prevNo ? <a href={`#/lesson/${formatNo(prevNo)}`} className={navButtonClass}>← {copy.previous}</a> : <span className={disabledClass}>{copy.noPrevious}</span>}
+          {nextNo ? <a href={`#/lesson/${formatNo(nextNo)}`} className={navButtonClass}>{copy.next} →</a> : <span className={disabledClass}>{copy.noNext}</span>}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function tSafeComplete(lang) {
+  return lang === "es" ? "Completada" : "Completed";
+}
+
+function tSafeMarkComplete(lang) {
+  return lang === "es" ? "Marcar completada" : "Mark complete";
+}
+
 function MPLessonPage({ lang, lessonNo, progress, save, t }) {
   const titles = PHYLO_TITLES[lang] || PHYLO_TITLES.es;
   const id = `lesson${String(lessonNo).padStart(2,"0")}`;
   const isDone = !!progress[id];
-  if (lessonNo === 2) return <TreeThinkingLesson lang={lang} t={t} isDone={isDone} toggle={() => save({ ...progress, [id]: !isDone })}/>;
-  return <main className="mx-auto w-[min(980px,calc(100%-24px))] pb-16 pt-8"><div className="rounded-[2.5rem] border border-stone-200 bg-white p-8 shadow-sm"><a href="#/" className="text-sm font-black text-red-700">← {t.backToDashboard}</a><div className="mt-8 text-xs font-black uppercase tracking-[0.22em] text-red-700">Lesson {String(lessonNo).padStart(2,"0")}</div><h1 className="mt-2 text-4xl font-black tracking-tight text-stone-950">{titles[lessonNo-1]}</h1><p className="mt-4 text-lg leading-8 text-stone-600">This page is ready to be filled using the same study-guide template: summary, key concepts, common traps, flashcards, quiz and checklist.</p><button onClick={() => save({ ...progress, [id]: !isDone })} className={`mt-6 rounded-full px-5 py-3 text-sm font-black text-white ${isDone ? "bg-emerald-600" : "bg-red-700"}`}>{isDone ? t.markNotComplete : t.markComplete}</button></div></main>;
-}
-function TreeThinkingLesson({ lang, t, isDone, toggle }) {
-  const isFa = lang === "fa";
-  const copy = {
-    en: ["Lesson 02 · Tree thinking", "Read trees without falling into visual traps.", "Two organisms are more closely related if they share a more recent common ancestor, not if they appear next to each other.", ["Root gives direction", "Topology beats tip order", "Cladogram ≠ chronogram"], ["Root", "Internal node", "Branch", "Tip / OTU"], "Common mistakes", ["Adjacent tips are not automatically closest.", "Trees are not ladders of progress.", "Tips are sampled lineages, not ancestors.", "Branch length only has meaning when a scale is given."]],
-    es: ["Lección 02 · Tree thinking", "Leer árboles sin caer en trampas visuales.", "Dos organismos son más cercanos si comparten un ancestro común más reciente, no si aparecen juntos.", ["La raíz da dirección", "La topología importa más que el orden de tips", "Cladograma ≠ cronograma"], ["Raíz", "Nodo interno", "Rama", "Tip / OTU"], "Errores comunes", ["Tips adyacentes no son necesariamente los más cercanos.", "Los árboles no son escaleras de progreso.", "Los tips son linajes muestreados, no ancestros.", "La longitud de rama solo significa algo si hay escala."]],
-    fa: ["درس ۰۲ · تفکر درختی", "درخت‌ها را بدون افتادن در دام‌های بصری بخوانید.", "دو جاندار زمانی خویشاوندترند که نیای مشترک جدیدتری داشته باشند، نه وقتی کنار هم رسم شده‌اند.", ["ریشه جهت می‌دهد", "توپولوژی مهم‌تر از ترتیب نوک‌هاست", "کلادوگرام ≠ کرونوگرام"], ["ریشه", "گرهٔ داخلی", "شاخه", "نوک / OTU"], "خطاهای رایج", ["نوک‌های کنار هم الزاماً نزدیک‌ترین نیستند.", "درخت‌ها نردبان پیشرفت نیستند.", "نوک‌ها دودمان‌های نمونه‌برداری‌شده‌اند، نه نیاها.", "طول شاخه فقط با وجود مقیاس معنا دارد."]],
-  }[lang] || {};
-  return <main className="mx-auto w-[min(1180px,calc(100%-24px))] pb-16 pt-8 md:pt-12"><section className="overflow-hidden rounded-[2.5rem] border border-stone-200 bg-[#fffaf0]/92 shadow-xl shadow-stone-900/5"><div className="grid gap-0 lg:grid-cols-[1.08fr_0.92fr]"><div className="p-7 md:p-10 lg:p-12"><a href="#/" className="text-sm font-black text-red-700">← {t.backToDashboard}</a><div className="mt-6 inline-flex rounded-full border border-red-200 bg-red-50 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-red-700">{copy[0]}</div><h1 className="mt-5 max-w-3xl text-4xl font-black leading-[0.96] tracking-tight text-stone-950 md:text-6xl">{copy[1]}</h1><p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">{copy[2]}</p><div className="mt-7 flex flex-wrap gap-2">{["MRCA", "clade", "root", "outgroup", "monophyly", "topology"].map(tag => <span key={tag} className="rounded-full border border-stone-200 bg-white px-4 py-2 text-sm font-bold text-stone-700">{tag}</span>)}</div><button onClick={toggle} className={`mt-8 rounded-full px-5 py-3 text-sm font-black text-white ${isDone ? "bg-emerald-600" : "bg-red-700"}`}>{isDone ? t.markNotComplete : t.markComplete}</button></div><div className="border-t border-stone-200 bg-white/70 p-5 lg:border-l lg:border-t-0"><div className="h-full rounded-[2rem] border border-stone-200 bg-white p-5 shadow-inner"><MiniTreeIcon active/><div className="mt-5 rounded-3xl bg-stone-950 p-5 text-white"><div className="text-xs font-black uppercase tracking-[0.18em] text-red-200">MRCA</div><p className="mt-2 text-lg font-bold leading-7">{copy[2]}</p></div></div></div></div></section><section className="mt-8 grid gap-4 md:grid-cols-3">{copy[3].map((x, i) => <div key={x} className="rounded-3xl border border-stone-200 bg-white p-5 shadow-sm"><div className="text-2xl font-black text-red-700">0{i+1}</div><div className="mt-2 text-lg font-black text-stone-950">{x}</div></div>)}</section><section className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.9fr]"><div className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm"><div className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-red-700">Tree anatomy</div><div className="grid gap-3 sm:grid-cols-2">{copy[4].map(x => <div key={x} className="rounded-2xl border border-stone-200 bg-stone-50 p-4 text-lg font-black text-stone-900">{x}</div>)}</div></div><div className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-sm"><div className="mb-4 text-xs font-black uppercase tracking-[0.22em] text-red-700">{copy[5]}</div><div className="space-y-3">{copy[6].map(x => <div key={x} className="rounded-2xl border border-red-100 bg-red-50 p-4 text-sm font-bold leading-6 text-red-950">⚠️ {x}</div>)}</div></div></section></main>;
+  const toggle = () => save({ ...progress, [id]: !isDone });
+  const lessonShared = { LessonNavigation, LessonResources, MiniTreeIcon };
+  if (lessonNo === 1) return <CourseIntroLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  if (lessonNo === 2) return <TreeThinkingLesson lang={lang} t={t} isDone={isDone} toggle={toggle} lessonNo={lessonNo} titles={titles} shared={lessonShared}/>;
+  return (
+    <main className="mx-auto w-[min(980px,calc(100%-24px))] pb-16 pt-8">
+      <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} />
+      <LessonResources lang={lang} lessonNo={lessonNo} />
+      <div className="rounded-[2.5rem] border border-stone-200 bg-white p-8 shadow-sm">
+        <div className="text-xs font-black uppercase tracking-[0.22em] text-red-700">Lesson {String(lessonNo).padStart(2,"0")}</div>
+        <h1 className="mt-2 text-4xl font-black tracking-tight text-stone-950">{titles[lessonNo-1]}</h1>
+        <p className="mt-4 text-lg leading-8 text-stone-600">This page is ready to be filled using the same study-guide template: summary, key concepts, common traps, flashcards, quiz and checklist.</p>
+      </div>
+      <LessonNavigation lang={lang} lessonNo={lessonNo} titles={titles} isDone={isDone} toggle={toggle} placement="bottom" />
+    </main>
+  );
 }
 
 function App() {
