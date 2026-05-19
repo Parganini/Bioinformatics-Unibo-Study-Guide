@@ -202,17 +202,46 @@ const PHYLO_SLIDE_LINKS = {
 
 const PHYLO_ALL_SLIDES_LINK = "https://drive.google.com/file/d/1yzDWi9XNii3FSHTrr0vxcP4DGayv7OGJ/view?usp=drivesdk";
 const PHYLO_RECORDINGS_LINK = "https://www.youtube.com/playlist?list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe";
-const PHYLO_RECORDING_LINKS = Object.fromEntries(
-  Array.from({ length: 16 }, (_, index) => {
-    const lesson = index + 1;
-    return [lesson, `${PHYLO_RECORDINGS_LINK}&index=${lesson}`];
-  })
-);
 
-// Add transcript URLs here when they are available. Missing transcripts are shown as "coming soon".
+// null means that this lesson does not have an individual recording available yet.
+const PHYLO_RECORDING_LINKS = {
+  1: null,
+  2: "https://www.youtube.com/watch?v=B-9LPCeWK1o&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=2",
+  3: "https://www.youtube.com/watch?v=a1Od5IfqdBw&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=2",
+  4: "https://www.youtube.com/watch?v=7dhFrrPurYM&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=3",
+  5: null,
+  6: "https://www.youtube.com/watch?v=TP2nNjLkPr0&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=4",
+  7: null,
+  8: "https://www.youtube.com/watch?v=xOIssujTS1c&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=5",
+  9: "https://www.youtube.com/watch?v=zIOsT_4nuj0&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=6",
+  10: "https://www.youtube.com/watch?v=z7GYp-i8AEc&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=7",
+  11: "https://www.youtube.com/watch?v=wyAdXbeyJVM&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=8",
+  12: null,
+  13: "https://www.youtube.com/watch?v=CnzE47dpyik&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=9",
+  14: "https://www.youtube.com/watch?v=OkkvUteBeF8&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=10",
+  15: "https://www.youtube.com/watch?v=XGsa968Vti8&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=11",
+  16: "https://www.youtube.com/watch?v=PEtVcPdJybQ&list=PLZSGWjLWZL3Kw8VPmITZpgRqxmarkn0Xe&index=12",
+};
+
 const PHYLO_TRANSCRIPT_LINKS = {
-  // 1: "transcripts/lesson01.html",
-  // 2: "transcripts/lesson02.html",
+  1: "https://docs.google.com/document/d/1NhWsCuZRupr9Fx0uxqSICa9xFehtqh6RTTY7CuyzfrE/edit?usp=drivesdk",
+  2: "https://docs.google.com/document/d/1BINjTQWm-TmXJv0nD2gLSrBzZAW4FM4Tz2ho0fl-hgA/edit?usp=drivesdk",
+  3: "https://docs.google.com/document/d/13uQUsZkS7XkYzr3TAOLkoSrL0PkaWqZ7C8f-RwHB7IM/edit?usp=drivesdk",
+  4: "https://docs.google.com/document/d/1Y5exc7rUYPuJr0H9iWvQ89scxcuhe3HvdwCvVzuX8aA/edit?usp=drivesdk",
+  5: "https://docs.google.com/document/d/1gzdPHewhfrO_LQ0PFiTfP3qFijzAr-DHQaB-FaMsXyA/edit?usp=drivesdk",
+  6: "https://docs.google.com/document/d/1CFbn_DjTf6ECN3mlJ-uk1TcJbZ4WzPvWSNteODi8rYE/edit?usp=drivesdk",
+  7: "https://docs.google.com/document/d/1ojOmeOMNJV39vQQa0zZ2xOnOXyZKW7J48fw6XV-emno/edit?usp=drivesdk",
+  8: "https://docs.google.com/document/d/10Bwfo7muihJ0kAVJ9czrbC8smiHBTedEEux_EzMnPlU/edit?usp=drivesdk",
+  9: "https://docs.google.com/document/d/1muT20sFBQO8p2dVi_39ysctxg7QJzPQxp3jwxfJkUcE/edit?usp=drivesdk",
+  10: "https://docs.google.com/document/d/1F53DzXmPiEQ9FCkhKDPc33hNH1BEw5ftfE43zQbVI14/edit?usp=drivesdk",
+  11: "https://docs.google.com/document/d/1YIZmzSsZ3W0Ja1nJ4Q8MdlP9AqUwegFtIVsMucXkNjs/edit?usp=drivesdk",
+  12: "https://docs.google.com/document/d/1Kvtcy27qMiZDA3zXS0_DUIFQak-k6H25yFn6d3rVgyA/edit?usp=drivesdk",
+  13: "https://docs.google.com/document/d/1mo-7KVbVpxy_Rr7BiQbB2YxfNEUZdPpvj9FcSddjmSA/edit?usp=drivesdk",
+  14: "https://docs.google.com/document/d/1i1PslkkPKhdqg3YNJ2WkPWm4YpxC7hpWyZiOaU57y4U/edit?usp=drivesdk",
+  15: "https://docs.google.com/document/d/18kH6wDueLF-pC-xYMY7Ig9hztLXBfKg2Bnl8tv-5WU4/edit?usp=drivesdk",
+  // Lesson 16 did not have an MP-prefixed document in the Transcriptions folder;
+  // this is the exact L16 Google Doc from that folder.
+  16: "https://docs.google.com/document/d/1t6VnEXxrR1GrEGuu8srlFByxDS0rYWku2Av-lbUr_sk/edit?usp=drivesdk",
 };
 
 function phyloResourceCopy(lang) {
@@ -234,6 +263,8 @@ function phyloResourceCopy(lang) {
       recordingsDesc: "Course recording playlist.",
       open: "Open",
       comingSoon: "Coming soon",
+      noRecording: "No recording available",
+      noRecordingDesc: "There is no individual recording for this lesson yet.",
     },
     es: {
       lessonMaterial: "Material de clase",
@@ -252,6 +283,8 @@ function phyloResourceCopy(lang) {
       recordingsDesc: "Playlist de grabaciones del curso.",
       open: "Abrir",
       comingSoon: "Próximamente",
+      noRecording: "Sin grabación disponible",
+      noRecordingDesc: "Esta clase todavía no tiene una grabación individual disponible.",
     },
     fa: {
       lessonMaterial: "مواد کلاس",
@@ -270,6 +303,8 @@ function phyloResourceCopy(lang) {
       recordingsDesc: "فهرست پخش ضبط‌های درس.",
       open: "باز کردن",
       comingSoon: "به‌زودی",
+      noRecording: "ضبطی موجود نیست",
+      noRecordingDesc: "برای این جلسه هنوز ضبط جداگانه‌ای موجود نیست.",
     },
   }[lang] || {
     lessonMaterial: "Class material",
@@ -288,6 +323,8 @@ function phyloResourceCopy(lang) {
       recordingsDesc: "Course recording playlist.",
     open: "Open",
     comingSoon: "Coming soon",
+    noRecording: "No recording available",
+    noRecordingDesc: "There is no individual recording for this lesson yet.",
   };
 }
 
@@ -425,7 +462,8 @@ function LessonResources({ lang, lessonNo }) {
   const copy = phyloResourceCopy(lang);
   const slides = PHYLO_SLIDE_LINKS[lessonNo];
   const transcript = PHYLO_TRANSCRIPT_LINKS[lessonNo];
-  const recording = PHYLO_RECORDING_LINKS[lessonNo] || PHYLO_RECORDINGS_LINK;
+  const recording = PHYLO_RECORDING_LINKS[lessonNo];
+  const hasRecording = Boolean(recording);
   return (
     <section className="mb-8 rounded-[2rem] border border-stone-200 bg-white/90 p-5 shadow-sm md:p-6">
       <div className="mb-4">
@@ -434,7 +472,13 @@ function LessonResources({ lang, lessonNo }) {
       <div className="grid gap-4 md:grid-cols-3">
         <ResourceCard title={copy.slides} description={copy.slidesDesc} href={slides} action={copy.open} />
         <ResourceCard title={copy.transcript} description={copy.transcriptDesc} href={transcript} action={transcript ? copy.open : copy.comingSoon} disabled={!transcript} />
-        <ResourceCard title={copy.recording} description={copy.recordingDesc || copy.recordingsDesc} href={recording} action={copy.open} />
+        <ResourceCard
+          title={copy.recording}
+          description={hasRecording ? copy.recordingDesc : copy.noRecordingDesc}
+          href={recording}
+          action={hasRecording ? copy.open : copy.noRecording}
+          disabled={!hasRecording}
+        />
       </div>
     </section>
   );
